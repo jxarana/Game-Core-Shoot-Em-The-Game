@@ -984,10 +984,10 @@ MonoBehaviour:
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 8
-  orientation: {fileID: 0}
+  orientation: {fileID: 2123151513068002784}
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   HPOrig: 10
   speed: 5
   sprintMod: 3
@@ -997,11 +997,11 @@ MonoBehaviour:
   dashMax: 0
   camPivot: {fileID: 8370416268082413848}
   mouseSensitivity: 3
-  climbSpeed: 0
-  maxClimbTime: 0
-  detectLength: 0
-  sphereCastRadius: 0
-  maxWallLookAngle: 0
+  climbSpeed: 8
+  maxClimbTime: 10
+  detectLength: 0.5
+  sphereCastRadius: 0.25
+  maxWallLookAngle: 30
   goldCount: 0
   upgradePoints: 0
   shootDamage: 1
