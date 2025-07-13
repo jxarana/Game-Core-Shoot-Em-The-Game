@@ -9,6 +9,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] Animator anim;
+    [SerializeField] AudioClip yellClip;
 
     [SerializeField] int goldDropped;
     [SerializeField] int HP;
@@ -147,6 +148,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             gameManager.instance.playerScript.goldCount += goldDropped;
             gameManager.instance.updateGameGoal(-1);
+            gameManager.instance.playAudio(yellClip, transform, 0.75f);
             Destroy(gameObject);
         }
         else

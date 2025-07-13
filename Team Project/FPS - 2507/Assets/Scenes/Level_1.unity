@@ -2031,6 +2031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f224d0c687ac0849add59232a4873c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b122a1f6f7f5c5e4a8fcd85d6c0f5b47, type: 3}
 --- !u!1001 &47266008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70619,6 +70620,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8644582347369775646, guid: 6ac8e9313ec981344a498f6c53b2f667, type: 3}
+      propertyPath: arenaClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1477e51e048525f4681ff66dac72263c, type: 3}
+    - target: {fileID: 8644582347369775646, guid: 6ac8e9313ec981344a498f6c53b2f667, type: 3}
+      propertyPath: audioObject
+      value: 
+      objectReference: {fileID: 1944536348276989160, guid: 9ad54e31a56e30a46a7e136dee536026, type: 3}
     - target: {fileID: 8644582347369775646, guid: 6ac8e9313ec981344a498f6c53b2f667, type: 3}
       propertyPath: playerSpawnPoint
       value: 

@@ -15,6 +15,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuUnlocks;
     [SerializeField] TMP_Text gameGoalCountText;
+    [SerializeField] AudioClip arenaClip;
+
+    [SerializeField] private AudioSource audioObject;
 
     public  TMP_Text goldCount;
     public  TMP_Text unlockCount;
@@ -71,8 +74,11 @@ public class gameManager : MonoBehaviour
             playerScript = player.GetComponent<playerController>();
             timeScaleOrig = Time.timeScale;
         }
-
-        SpawnEnemies();
+        if(!menuActive)
+        {
+            gameManager.instance.playAudio(arenaClip, transform, 0.1f);
+        }
+            SpawnEnemies();
     }
 
     private void Start()
@@ -224,7 +230,24 @@ public class gameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-   
+   public void  playAudio(AudioClip gunAudio, Transform transform, float volume)
+    {
+        // spawns game object
+        AudioSource audioSource = Instantiate(audioObject, transform.position, Quaternion.identity);
 
+        // assigns audio clip
+        audioSource.clip = gunAudio;
 
+        // assigning the volume
+        audioSource.volume = volume;
+
+        // plays sound
+        audioSource.Play();
+
+        // assigns length of audio
+        float clipDuration = audioSource.clip.length;
+
+        // destroy object after it is finished playing
+        Destroy(audioSource.gameObject, clipDuration);
+    }
 }
