@@ -995,6 +995,7 @@ MonoBehaviour:
   jumpMax: 1
   gravity: 30
   dashMax: 0
+  deathDepth: -10
   camPivot: {fileID: 8370416268082413848}
   mouseSensitivity: 3
   climbSpeed: 8
