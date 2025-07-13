@@ -18,7 +18,11 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int dashMax;
     [SerializeField] Transform camPivot;
     [SerializeField] float mouseSensitivity = 3f;
-
+    //---------------------------------------------------------------
+    // Title: Full CLIMBING SYSTEM in 10 Minutes - Unity Tutorial
+    // Author: Dave / GameDevelopment
+    // Date: 05/04/2022
+    // Availability: https://www.youtube.com/watch?v=tAJLiOEfbQg
     [SerializeField] float climbSpeed;
     [SerializeField] float maxClimbTime;
     private float climbTimer;
@@ -27,7 +31,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float sphereCastRadius;
     [SerializeField] float maxWallLookAngle;
     private float wallLookAngle;
-
+    //----------------------------------------------------------------
     public int goldCount;
     public int upgradePoints;
 
@@ -80,11 +84,15 @@ public class playerController : MonoBehaviour, IDamage
 
 
     public bool isGrappling;
-
+    //------------------------------------------------------------
+    // Title: Full CLIMBING SYSTEM in 10 Minutes - Unity Tutorial
+    // Author: Dave / GameDevelopment
+    // Date: 05/04/2022
+    // Availability: https://www.youtube.com/watch?v=tAJLiOEfbQg
     private bool isClimbing;
     private bool isWallFront;
     private RaycastHit wallHit;
-
+    //------------------------------------------------------------
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -202,9 +210,14 @@ public class playerController : MonoBehaviour, IDamage
                 updatePlayerUI();
             }
         }
-
+        //--------------------------------------------------------------
+        // Title: Full CLIMBING SYSTEM in 10 Minutes - Unity Tutorial
+        // Author: Dave / GameDevelopment
+        // Date: 05/04/2022
+        // Availability: https://www.youtube.com/watch?v=tAJLiOEfbQg
         if (isClimbing)
             climbingMovement();
+        //---------------------------------------------------------------
     }
 
     void jump()
@@ -214,9 +227,14 @@ public class playerController : MonoBehaviour, IDamage
             playerVel.y = jumpVel;
             jumpCount++;
         }
-
+        //----------------------------------------------------------------
+        // Title: Full CLIMBING SYSTEM in 10 Minutes - Unity Tutorial
+        // Author: Dave / GameDevelopment
+        // Date: 05/04/2022
+        // Availability: https://www.youtube.com/watch?v=tAJLiOEfbQg
         if (isClimbing)
             climbingMovement();
+        //-----------------------------------------------------------------
     }
 
     void sprint()
@@ -398,6 +416,11 @@ public class playerController : MonoBehaviour, IDamage
         camPivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
 
+    //----------------------------------------------------------------------------------------------------------------------------------------
+    // Title: Full CLIMBING SYSTEM in 10 Minutes - Unity Tutorial
+    // Author: Dave / GameDevelopment
+    // Date: 05/04/2022
+    // Availability: https://www.youtube.com/watch?v=tAJLiOEfbQg
     private void wallCheck()
     {
         isWallFront = Physics.SphereCast(transform.position, sphereCastRadius, orientation.forward, out wallHit, detectLength, wallLayer);
@@ -423,4 +446,5 @@ public class playerController : MonoBehaviour, IDamage
     {
         isClimbing = false;
     }
+    //---------------------------------------------------------------------------------------------------------------------------------------------
 }

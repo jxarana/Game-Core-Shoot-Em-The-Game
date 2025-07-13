@@ -2,6 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class gameManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class gameManager : MonoBehaviour
     public static gameManager instance;
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
+    [SerializeField] GameObject menuLevelComplete;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuUnlocks;
@@ -49,7 +51,6 @@ public class gameManager : MonoBehaviour
     // Randomized spawn for the enemy
     public GameObject enemyPrefab;
     public int numberOfEnemiesToSpawn = 5;
-    public List<Transform> enemySpawnPoints;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -70,12 +71,12 @@ public class gameManager : MonoBehaviour
             playerScript = player.GetComponent<playerController>();
             timeScaleOrig = Time.timeScale;
         }
+
+        SpawnEnemies();
     }
 
     private void Start()
     {
-        SpawnEnemies();
-
         gameGoalCount = numberOfEnemiesToSpawn;
     }
 
@@ -100,37 +101,35 @@ public class gameManager : MonoBehaviour
 
     void SpawnEnemies()
     {
-        if (enemyPrefab == null)
-        {
-            return;
-        }
+        // Exit early if no enemy prefab is assigned
+        if (enemyPrefab == null) return;
 
-        if (enemySpawnPoints == null || enemySpawnPoints.Count == 0)
-        {
-            return;
-        }
+        // Find all spawn points in the scene tagged "EnemySpawn"
+        GameObject[] spawnObjects = GameObject.FindGameObjectsWithTag("EnemySpawn");
+        if (spawnObjects.Length == 0) return;
 
-        List<Transform> availableSpawnPoints = new List<Transform>(enemySpawnPoints);
+        // Create a pool of available spawn points to randomize selection without
+        List<GameObject> availableSpawns = new List<GameObject>(spawnObjects);
 
         for (int i = 0; i < numberOfEnemiesToSpawn; i++)
         {
-            if (availableSpawnPoints.Count == 0)
+            if (availableSpawns.Count == 0)
             {
-                availableSpawnPoints = new List<Transform>(enemySpawnPoints);
-
-                if (availableSpawnPoints.Count == 0)
-                {
-                    break;
-                }
+                // If we've used up all spawn points, reset the pool so spawns can repeat
+                availableSpawns = new List<GameObject>(spawnObjects);
             }
 
 
-            int randomIndex = Random.Range(0, availableSpawnPoints.Count);
-            Transform spawnLocation = availableSpawnPoints[randomIndex];
+            // Select a random spawn point from the available list
+            int randomIndex = Random.Range(0, availableSpawns.Count);
+            GameObject spawnPoint = availableSpawns[randomIndex];
 
-            GameObject spawnedEnemy = Instantiate(enemyPrefab, spawnLocation.position, spawnLocation.rotation);
+            // Instantiate the enemy at the chosen spawn location
+            Instantiate(enemyPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
 
-            availableSpawnPoints.RemoveAt(randomIndex);
+            // Remove this spawn point to avoid duplicate use until reset
+            availableSpawns.RemoveAt(randomIndex);
+
         }
     }
 
@@ -171,27 +170,48 @@ public class gameManager : MonoBehaviour
         {
             // you win!
             statePause();
-            menuActive = menuWin;
+            int currentIndex = SceneManager.GetActiveScene().buildIndex;
+            int finalIndex = SceneManager.sceneCountInBuildSettings - 1;
+
+            if (currentIndex >= finalIndex)
+            {
+                // End of last level (show true win menu)
+                menuActive = menuWin;
+            }
+            else
+            {
+                // Intermediate level completed (show level complete screen)
+                menuActive = menuLevelComplete;
+            }
+
             menuActive.SetActive(true);
-            /*
-             *  statePause();   
-                menuActive = menuUlocks;
-                menuActive.setActive(true);
-        
-             
-             
-             
-             */
-
-
-
         }
+
+    /*
+     *  statePause();   
+        menuActive = menuUlocks;
+        menuActive.setActive(true);
+
+
+
+
+     */
+
+
+
     }
 
     public void youLose()
     {
         statePause();
         menuActive = menuLose;
+        menuActive.SetActive(true);
+    }
+
+    public void levelComplete()
+    {
+        statePause();
+        menuActive = menuLevelComplete;
         menuActive.SetActive(true);
     }
 

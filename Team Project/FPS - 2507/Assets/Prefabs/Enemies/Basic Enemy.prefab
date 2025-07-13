@@ -2134,7 +2134,7 @@ GameObject:
   - component: {fileID: 3345171119762567069}
   m_Layer: 7
   m_Name: Basic Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2194,16 +2194,15 @@ MonoBehaviour:
   agent: {fileID: 8612520119126565578}
   shootPos: {fileID: 4188377515715764064}
   headPos: {fileID: 3176997715959273163}
-  chestPos: {fileID: 0}
   anim: {fileID: 4436404700428490623}
-  goldDropped: 2
+  goldDropped: 10
   HP: 3
   fov: 90
   faceTargetSpeed: 30
   roamDist: 15
   roamPauseTime: 3
   bullet: {fileID: 6739715287767683668, guid: b975ac02f50fd374c94d738ec80b2a7a, type: 3}
-  shootRate: 0.25
+  shootRate: 0.65
 --- !u!195 &8612520119126565578
 NavMeshAgent:
   m_ObjectHideFlags: 0

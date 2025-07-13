@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Shop
+  - EnemySpawn
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - Enemy
   - Enemy Bullet
   - Grapple Layer
-  - NavMesh Ignore
-  - Wall Layer
+  - 
+  - 
   - 
   - 
   - 
