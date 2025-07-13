@@ -162,7 +162,7 @@ public class playerController : MonoBehaviour, IDamage
     void movement()
     {
         // Player instantly dies if he falls to a certain depth on the map
-        if (gameManager.instance.player.transform.position.y <= deathDepth)
+        if (gameObject.transform.position.y <= deathDepth)
         {
             gameManager.instance.youLose();
         }
