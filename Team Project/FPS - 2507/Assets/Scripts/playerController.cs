@@ -16,6 +16,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int jumpMax;
     [SerializeField] int gravity;
     [SerializeField] int dashMax;
+    [SerializeField] int deathDepth; // Set the height that the player can fall to before dieing
     [SerializeField] Transform camPivot;
     [SerializeField] float mouseSensitivity = 3f;
     //---------------------------------------------------------------
@@ -157,6 +158,12 @@ public class playerController : MonoBehaviour, IDamage
 
     void movement()
     {
+        // Player instantly dies if he falls to a certain depth on the map
+        if (gameManager.instance.player.transform.position.y <= deathDepth)
+        {
+            gameManager.instance.youLose();
+        }
+
         if( isMantling)
         {
             return;
