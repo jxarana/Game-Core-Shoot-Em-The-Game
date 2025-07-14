@@ -70623,7 +70623,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8644582347369775646, guid: 6ac8e9313ec981344a498f6c53b2f667, type: 3}
-<<<<<<< Updated upstream
       propertyPath: arenaClip
       value: 
       objectReference: {fileID: 8300000, guid: 1477e51e048525f4681ff66dac72263c, type: 3}
@@ -70644,8 +70643,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 797127805173607183}
     - target: {fileID: 8644582347369775646, guid: 6ac8e9313ec981344a498f6c53b2f667, type: 3}
-=======
->>>>>>> Stashed changes
       propertyPath: playerSpawnPoint
       value: 
       objectReference: {fileID: 1994915953}
