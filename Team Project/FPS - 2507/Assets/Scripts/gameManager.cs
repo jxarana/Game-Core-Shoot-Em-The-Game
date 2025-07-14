@@ -32,6 +32,7 @@ public class gameManager : MonoBehaviour
 
     public Image ammoBar;
     public Image playerHPBar;
+    public Image playerStaminaBar;
     public GameObject playerDamagePanel;
 
     public bool isPaused;

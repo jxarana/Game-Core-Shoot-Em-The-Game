@@ -18,7 +18,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int gravity;
     [SerializeField] int dashMax;
     [SerializeField] int deathDepth; // Set the height that the player can fall to before dieing
-    [SerializeField] Transform camPivot;
+    //[SerializeField] Transform camPivot;
     [SerializeField] float mouseSensitivity = 3f;
     //---------------------------------------------------------------
     // Title: Full CLIMBING SYSTEM in 10 Minutes - Unity Tutorial
@@ -65,6 +65,15 @@ public class playerController : MonoBehaviour, IDamage
     float dashTimeLeft;
     private Vector3 dashDirection;
 
+    public int staminaOrig;
+    [HideInInspector] public float stamina;
+    [SerializeField] float staminaRegenRate;
+    [SerializeField] float sprintStaminaCost;
+    [SerializeField] float mantleStaminaCost;
+    [SerializeField] float climbStaminaCost;
+    public float grappleStaminaCost;
+    bool isSprinting;
+    bool canUseStamina;
 
 
     Vector3 moveDir;
@@ -104,7 +113,11 @@ public class playerController : MonoBehaviour, IDamage
         animator = gameObject.GetComponent<Animator>();
         HP = HPOrig;
         speedOrig = speed;
+        canUseStamina = true;
+        isSprinting = false;
+        stamina = staminaOrig;
         isGrappling = false;
+        isMantling = false;
         magCurrent = magMax;
         currentAmmo = maxAmmo;
         updatePlayerUI();
@@ -113,6 +126,14 @@ public class playerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        // Regenerate stamina only if not doing stamina-draining actions
+        if (!isSprinting && !isGrappling && !isClimbing && !isMantling && stamina < staminaOrig)
+        {
+            stamina += staminaRegenRate * Time.deltaTime;
+            stamina = Mathf.Clamp(stamina, 0, staminaOrig);
+            updatePlayerUI();
+        }
+
         if (gameManager.instance != null && gameManager.instance.isPaused)
         {
             return;
@@ -132,19 +153,17 @@ public class playerController : MonoBehaviour, IDamage
         {
             TryMantle();
         }
-        handleCamera();
+       // handleCamera();
 
         wallCheck();
         stateMachine();
-
-       
     }
 
     private void stateMachine()
     {
         if (isWallFront && Input.GetKey(KeyCode.W) && wallLookAngle < maxWallLookAngle)
         {
-            if (!isClimbing && climbTimer > 0)
+            if (!isClimbing && climbTimer > 0 && stamina >0)
                 startClimbing();
 
             if (climbTimer > 0)
@@ -153,7 +172,6 @@ public class playerController : MonoBehaviour, IDamage
             if (climbTimer < 0)
                 stopClimbing();
         }
-
         else
         {
             if (isClimbing)
@@ -252,13 +270,37 @@ public class playerController : MonoBehaviour, IDamage
 
     void sprint()
     {
-        if (Input.GetButtonDown("Sprint"))
+        //Sprint trigger logic
+        if(Input.GetButton("Sprint") && controller.isGrounded && moveDir.magnitude > 0.1f && stamina > 0)
         {
-            speed *= sprintMod;
+            if(!isSprinting)
+            {
+                isSprinting = true;
+                speed *= sprintMod;
+            }
+
+            //reduce stamina by the cost and clamp so it doesn't go outside of the stamina range
+            stamina -= sprintStaminaCost * Time.deltaTime;
+            stamina = Mathf.Clamp(stamina, 0, staminaOrig);
+            updatePlayerUI();   
+
+            if (stamina <= 0)
+            {
+                StopSprinting();
+            }
         }
-        else if (Input.GetButtonUp("Sprint"))
+        else if(Input.GetButtonUp("Sprint"))
         {
-            speed /= sprintMod;
+            StopSprinting();
+        }
+    }
+
+    void StopSprinting()
+    {
+        if(isSprinting)
+        {
+            speed = speedOrig;
+            isSprinting = false;
         }
     }
 
@@ -272,10 +314,16 @@ public class playerController : MonoBehaviour, IDamage
             Vector3 ledgeCheckOrigin = wallHit.point + Vector3.up * mantleHeight;
             if(Physics.Raycast(ledgeCheckOrigin,Vector3.down,out RaycastHit topHit, mantleHeight, mantleLayer))
             {
-                isMantling = true;
-                mantleTimer = 0f;
-                mantleStartPos = transform.position;
-                mantleEndPos = new Vector3(topHit.point.x,topHit.point.y +0.1f,topHit.point.z);
+                if (stamina >= mantleStaminaCost)
+                {
+                    stamina -= mantleStaminaCost;
+                    updatePlayerUI();
+
+                    isMantling = true;
+                    mantleTimer = 0f;
+                    mantleStartPos = transform.position;
+                    mantleEndPos = new Vector3(topHit.point.x, topHit.point.y + 0.1f, topHit.point.z);
+                }
             }
         }
     }
@@ -332,6 +380,7 @@ public class playerController : MonoBehaviour, IDamage
     public void updatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+        gameManager.instance.playerStaminaBar.fillAmount = (float)stamina / staminaOrig;
         gameManager.instance.ammoBar.fillAmount = (float)magCurrent / magMax;
         gameManager.instance.inMagCount.text = magCurrent.ToString();
         gameManager.instance.currAmmoCount.text = currentAmmo.ToString();
@@ -418,17 +467,17 @@ public class playerController : MonoBehaviour, IDamage
 
         return hasSlamunlocked;
     }
-    void handleCamera()
-    {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+    //void handleCamera()
+    //{
+    //    float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+    //    float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-        transform.Rotate(Vector3.up * mouseX);
+    //    transform.Rotate(Vector3.up * mouseX);
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -60f, 60f);
-        camPivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-    }
+    //    xRotation -= mouseY;
+    //    xRotation = Mathf.Clamp(xRotation, -60f, 60f);
+    //    camPivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+    //}
 
     //----------------------------------------------------------------------------------------------------------------------------------------
     // Title: Full CLIMBING SYSTEM in 10 Minutes - Unity Tutorial
@@ -453,7 +502,20 @@ public class playerController : MonoBehaviour, IDamage
 
     private void climbingMovement()
     {
-        playerVel = new Vector3(playerVel.y, climbSpeed, playerVel.z);
+        if (stamina > 0)
+        {
+            stamina -= climbStaminaCost * Time.deltaTime;
+            stamina = Mathf.Clamp(stamina, 0, staminaOrig);
+            updatePlayerUI();
+
+            //Move upward while stamina is still available
+            playerVel = new Vector3(playerVel.y, climbSpeed, playerVel.z);
+        }
+        else
+        {
+            //Stop climbing if stamina runs out
+            stopClimbing();
+        }
     }
 
     private void stopClimbing()
