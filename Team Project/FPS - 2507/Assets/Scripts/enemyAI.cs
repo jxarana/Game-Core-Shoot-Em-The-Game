@@ -9,6 +9,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] Animator anim;
+    [SerializeField] AudioClip yellClip;
+    [SerializeField] ParticleSystem deathAnim;
 
     [SerializeField] int goldDropped;
     [SerializeField] int HP;
@@ -87,7 +89,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         Transform player = gameManager.instance.player.transform;
         Vector3 targetPos = player.position + Vector3.up * 1f;
-        playerDir = targetPos - headPos.position; 
+        playerDir = targetPos - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
         Debug.DrawRay(headPos.position, playerDir);
@@ -147,6 +149,8 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             gameManager.instance.playerScript.goldCount += goldDropped;
             gameManager.instance.updateGameGoal(-1);
+            gameManager.instance.playAudio(yellClip, transform, 0.75f);
+            Instantiate(deathAnim, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
         else

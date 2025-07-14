@@ -48,6 +48,9 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float mantleDuration = 0.3f;
     [SerializeField] LayerMask mantleLayer;
 
+    [SerializeField] AudioClip gunClip;
+    [SerializeField] AudioClip deathClip;
+
     bool isMantling = false;
     Vector3 mantleStartPos;
     Vector3 mantleEndPos;
@@ -202,6 +205,7 @@ public class playerController : MonoBehaviour, IDamage
             if(!isGrappling && shootTimer > shootRate && magCurrent > 0)
             {
                 shoot();
+                gameManager.instance.playAudio(gunClip, transform, 1f);
                 updatePlayerUI();
             }
             else if(!isGrappling &&  shootTimer > shootRate && magCurrent == 0)
@@ -321,6 +325,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             //you dead!
             gameManager.instance.youLose();
+            gameManager.instance.playAudio(deathClip, transform, 0.75f);
         }
     }
 
