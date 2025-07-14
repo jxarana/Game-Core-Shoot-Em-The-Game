@@ -998,7 +998,7 @@ MonoBehaviour:
   deathDepth: -10
   camPivot: {fileID: 8370416268082413848}
   mouseSensitivity: 3
-  climbSpeed: 8
+  climbSpeed: 2.5
   maxClimbTime: 10
   detectLength: 0.5
   sphereCastRadius: 0.25
