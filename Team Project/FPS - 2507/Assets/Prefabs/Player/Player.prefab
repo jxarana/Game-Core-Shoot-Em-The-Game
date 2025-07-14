@@ -988,10 +988,10 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 512
-  animator: {fileID: 0}
+  animator: {fileID: 1826274449887941595}
   HPOrig: 10
   speed: 5
-  sprintMod: 3
+  sprintMod: 2
   jumpVel: 12
   jumpMax: 1
   gravity: 30
