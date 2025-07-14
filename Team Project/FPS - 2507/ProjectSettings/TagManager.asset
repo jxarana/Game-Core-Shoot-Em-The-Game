@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Shop
   - EnemySpawn
+  - Enemy
+  - Key
+  - KeySpawn
   layers:
   - Default
   - TransparentFX

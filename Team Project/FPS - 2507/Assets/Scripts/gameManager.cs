@@ -19,8 +19,8 @@ public class gameManager : MonoBehaviour
 
     [SerializeField] private AudioSource audioObject;
 
-    public  TMP_Text goldCount;
-    public  TMP_Text unlockCount;
+    public TMP_Text goldCount;
+    public TMP_Text unlockCount;
 
     public TMP_Text inMagCount;
     public TMP_Text currAmmoCount;
@@ -32,6 +32,7 @@ public class gameManager : MonoBehaviour
 
     public Image ammoBar;
     public Image playerHPBar;
+    public Image playerStaminaBar;
     public GameObject playerDamagePanel;
 
     public bool isPaused;
@@ -42,14 +43,17 @@ public class gameManager : MonoBehaviour
     float timeScaleNew;
 
     int gameGoalCount;
+    int gameGoalCountOrig;
     int levelCount;
 
-    
 
     // Spawn point for the player
     public Transform playerSpawnPoint;
     public GameObject playerPrefab;
 
+    // Spawn point for the key
+    public Transform keySpawnPoint;
+    public GameObject keyPrefab;
 
     // Randomized spawn for the enemy
     public GameObject enemyPrefab;
@@ -74,16 +78,17 @@ public class gameManager : MonoBehaviour
             playerScript = player.GetComponent<playerController>();
             timeScaleOrig = Time.timeScale;
         }
-        if(!menuActive)
+        if (!menuActive)
         {
             gameManager.instance.playAudio(arenaClip, transform, 0.1f);
         }
-            SpawnEnemies();
+        SpawnEnemies();
     }
 
     private void Start()
     {
         gameGoalCount = numberOfEnemiesToSpawn;
+        gameGoalCountOrig = gameGoalCount;
     }
 
     // Update is called once per frame
@@ -102,7 +107,7 @@ public class gameManager : MonoBehaviour
                 stateUnpause();
             }
         }
-        
+
     }
 
     void SpawnEnemies()
@@ -172,6 +177,11 @@ public class gameManager : MonoBehaviour
          
          
          */
+        if (gameGoalCount < gameGoalCountOrig)
+        {
+            spawnKey();
+        }
+
         if (gameGoalCount <= 0)
         {
             // you win!
@@ -193,15 +203,15 @@ public class gameManager : MonoBehaviour
             menuActive.SetActive(true);
         }
 
-    /*
-     *  statePause();   
-        menuActive = menuUlocks;
-        menuActive.setActive(true);
+        /*
+         *  statePause();   
+            menuActive = menuUlocks;
+            menuActive.setActive(true);
 
 
 
 
-     */
+         */
 
 
 
@@ -230,7 +240,7 @@ public class gameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-   public void  playAudio(AudioClip gunAudio, Transform transform, float volume)
+    public void playAudio(AudioClip gunAudio, Transform transform, float volume)
     {
         // spawns game object
         AudioSource audioSource = Instantiate(audioObject, transform.position, Quaternion.identity);
@@ -249,5 +259,15 @@ public class gameManager : MonoBehaviour
 
         // destroy object after it is finished playing
         Destroy(audioSource.gameObject, clipDuration);
+    }
+
+    public void spawnKey()
+    {
+        if (keyPrefab == null) return;
+
+        // Find all spawn points in the scene tagged "KeySpawn"
+        GameObject spawnObjects = GameObject.FindGameObjectWithTag("KeySpawn");
+
+        Instantiate(keyPrefab, keySpawnPoint.transform.position, keySpawnPoint.transform.rotation);
     }
 }

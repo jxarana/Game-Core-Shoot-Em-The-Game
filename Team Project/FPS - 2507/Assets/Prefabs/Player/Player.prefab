@@ -772,12 +772,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3226448409696829189}
   serializedVersion: 2
-  m_LocalRotation: {x: 5.6141078e-11, y: -1, z: -0.000000007450892, w: 0.00000026822084}
-  m_LocalPosition: {x: 0, y: 0.2, z: -0.03}
+  m_LocalRotation: {x: 0.00000001117587, y: 0.004163143, z: 1.0186339e-10, w: -0.99999136}
+  m_LocalPosition: {x: -0.002, y: 1.541, z: 0.178}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8370416268082413848}
+  m_Father: {fileID: 2123151513068002784}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3113390420465769507
 MonoBehaviour:
@@ -793,7 +793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sens: 300
   lockVertMin: -90
-  lockVertMax: 90
+  lockVertMax: 80
   invertY: 0
 --- !u!20 &6764977584745810500
 Camera:
@@ -966,6 +966,7 @@ Transform:
   m_Children:
   - {fileID: 6163604052434108575}
   - {fileID: 6161124679932005764}
+  - {fileID: 5405313720513887369}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180.477, z: 0}
 --- !u!114 &6884281475306913266
@@ -988,16 +989,15 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 512
-  animator: {fileID: 0}
+  animator: {fileID: 1826274449887941595}
   HPOrig: 10
   speed: 5
-  sprintMod: 3
+  sprintMod: 2
   jumpVel: 12
   jumpMax: 1
   gravity: 30
   dashMax: 0
   deathDepth: -10
-  camPivot: {fileID: 8370416268082413848}
   mouseSensitivity: 3
   climbSpeed: 2.5
   maxClimbTime: 10
@@ -1022,6 +1022,13 @@ MonoBehaviour:
   dashSpeed: 0
   dashDuration: 0
   dashCooldown: 0
+  staminaOrig: 50
+  stamina: 0
+  staminaRegenRate: 5
+  sprintStaminaCost: 20
+  mantleStaminaCost: 25
+  climbStaminaCost: 5
+  grappleStaminaCost: 20
   dmgUp: 0
   isGrappling: 0
 --- !u!114 &6285925340704239505
@@ -1716,7 +1723,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1.0000006, z: 0.99999964}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8370416268082413848}
   - {fileID: 560895127624014567}
   m_Father: {fileID: 8876138176459108684}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2099,38 +2105,6 @@ Transform:
   m_Children:
   - {fileID: 3843758305168905802}
   m_Father: {fileID: 1265676739657943074}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7458595047708886523
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8370416268082413848}
-  m_Layer: 0
-  m_Name: PlayerCamPivot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8370416268082413848
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7458595047708886523}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.000000002328306, y: -0.99999136, z: 0.00000055879343, w: -0.004163411}
-  m_LocalPosition: {x: 0, y: 0.15, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5405313720513887369}
-  m_Father: {fileID: 5485891107219177148}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8059216573823455889
 GameObject:
