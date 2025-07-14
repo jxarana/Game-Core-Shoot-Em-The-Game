@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GrappleHook : MonoBehaviour
@@ -32,15 +33,31 @@ public class GrappleHook : MonoBehaviour
         {
             ShootGrapple();
         }
-
+        
         if (isGrappling)
         {
             lr.enabled = true;
             lr.SetPosition(0, grappleOrigin.position);
             lr.SetPosition(1, grapplePoint);
-            
-            if(!isAttached)
+
+
+            if (!isAttached)
             {
+               //Drain stamina while pulling
+               if(player.stamina > 0f)
+                {
+                    player.stamina -= player.grappleStaminaCost * Time.deltaTime;
+                    player.stamina = Mathf.Clamp(player.stamina,0f, player.staminaOrig);
+                    player.updatePlayerUI();
+               }
+
+               //Cancel grapple if stamina depletes
+               if(player.stamina <= 0f)
+                {
+                    StopGrappling();
+                    return;
+                }
+
                 Vector3 direction = (grapplePoint - transform.position);
                 float distance = direction.magnitude;
 
