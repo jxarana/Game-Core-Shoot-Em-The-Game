@@ -8,6 +8,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] Transform orientation;
     [SerializeField] LayerMask wallLayer;
+    [SerializeField] Animator animator;
 
     [SerializeField] int HPOrig;
     [SerializeField] int speed;
@@ -100,6 +101,7 @@ public class playerController : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        animator = gameObject.GetComponent<Animator>();
         HP = HPOrig;
         speedOrig = speed;
         isGrappling = false;
@@ -183,6 +185,11 @@ public class playerController : MonoBehaviour, IDamage
 
         moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
         controller.Move(moveDir * speed * Time.deltaTime);
+
+        float horizontalMovement = Input.GetAxis("Horizontal");
+        float verticalMovement = Input.GetAxis("Vertical");
+        animator.SetFloat("Horizontal", horizontalMovement);
+        animator.SetFloat("Vertical", verticalMovement);
 
         jump();
 
