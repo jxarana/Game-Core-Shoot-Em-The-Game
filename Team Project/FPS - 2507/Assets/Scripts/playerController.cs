@@ -181,11 +181,6 @@ public class playerController : MonoBehaviour, IDamage
             dashCount = 0;
         }
 
-        if(gameManager.instance.player.transform.position.y < -20)
-        {
-            gameManager.instance.youLose();
-        }
-
         moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
         controller.Move(moveDir * speed * Time.deltaTime);
 
