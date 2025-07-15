@@ -186,10 +186,10 @@ public class gameManager : MonoBehaviour
          
          
          */
-        if (gameGoalCount < gameGoalCountOrig)
-        {
-            spawnKey();
-        }
+        //if (gameGoalCount < gameGoalCountOrig)
+        //{
+        //    spawnKey();
+        //}
 
         if (gameGoalCount <= 0)
         {
@@ -270,13 +270,13 @@ public class gameManager : MonoBehaviour
         Destroy(audioSource.gameObject, clipDuration);
     }
 
-    public void spawnKey()
-    {
-        if (keyPrefab == null) return;
+    //public void spawnKey()
+    //{
+    //    if (keyPrefab == null) return;
 
-        // Find all spawn points in the scene tagged "KeySpawn"
-        GameObject spawnObjects = GameObject.FindGameObjectWithTag("KeySpawn");
+    //    // Find all spawn points in the scene tagged "KeySpawn"
+    //    GameObject spawnObjects = GameObject.FindGameObjectWithTag("KeySpawn");
 
-        Instantiate(keyPrefab, keySpawnPoint.transform.position, keySpawnPoint.transform.rotation);
-    }
+    //    Instantiate(keyPrefab, keySpawnPoint.transform.position, keySpawnPoint.transform.rotation);
+    //}
 }
