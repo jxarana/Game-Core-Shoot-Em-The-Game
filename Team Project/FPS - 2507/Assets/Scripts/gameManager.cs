@@ -15,8 +15,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuUnlocks;
     [SerializeField] TMP_Text gameGoalCountText;
-
-    private AudioClip arenaClip;
+    [SerializeField] AudioClip arenaClip;
 
     [SerializeField] private AudioSource audioObject;
 
@@ -66,8 +65,6 @@ public class gameManager : MonoBehaviour
         instance = this;
 
         player = GameObject.FindWithTag("Player");
-        arenaClip = Resources.Load<AudioClip>("ARENA");
-        
         if (player == null)
         {
             if (playerPrefab != null && playerSpawnPoint != null)
@@ -81,16 +78,10 @@ public class gameManager : MonoBehaviour
             playerScript = player.GetComponent<playerController>();
             timeScaleOrig = Time.timeScale;
         }
-        if (arenaClip != null)
+        if (!menuActive)
         {
-            audioObject = GetComponent<AudioSource>();
-            if (audioObject != null)
-            {
-                audioObject.clip = arenaClip;
-                playAudio(arenaClip, transform, 0.5f);
-            }
+            gameManager.instance.playAudio(arenaClip, transform, 0.1f);
         }
-
         SpawnEnemies();
     }
 
