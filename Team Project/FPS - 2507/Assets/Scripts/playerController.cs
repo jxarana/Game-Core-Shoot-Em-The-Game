@@ -55,7 +55,7 @@ public class playerController : MonoBehaviour, IDamage
     Vector3 mantleStartPos;
     Vector3 mantleEndPos;
     float mantleTimer;
-  
+
     int dashCount;
     public float dashSpeed;
     public float dashDuration;
@@ -90,10 +90,10 @@ public class playerController : MonoBehaviour, IDamage
     bool hasDashUnlocked = false;
     bool hasGrappleUnlocked = false;
 
-    
+
     int magCurrent;
     int currentAmmo;
-   
+
     public int dmgUp;
 
 
@@ -139,7 +139,7 @@ public class playerController : MonoBehaviour, IDamage
             return;
         }
 
-        if(isMantling)
+        if (isMantling)
         {
             MantleMove();
             return;
@@ -149,11 +149,11 @@ public class playerController : MonoBehaviour, IDamage
 
         sprint();
         movement();
-        if(!controller.isGrounded && Input.GetKey(KeyCode.Space))
+        if (!controller.isGrounded && Input.GetKey(KeyCode.Space))
         {
             TryMantle();
         }
-       // handleCamera();
+        // handleCamera();
 
         wallCheck();
         stateMachine();
@@ -163,7 +163,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (isWallFront && Input.GetKey(KeyCode.W) && wallLookAngle < maxWallLookAngle)
         {
-            if (!isClimbing && climbTimer > 0 && stamina >0)
+            if (!isClimbing && climbTimer > 0 && stamina > 0)
                 startClimbing();
 
             if (climbTimer > 0)
@@ -187,7 +187,7 @@ public class playerController : MonoBehaviour, IDamage
             gameManager.instance.youLose();
         }
 
-        if( isMantling)
+        if (isMantling)
         {
             return;
         }
@@ -220,22 +220,22 @@ public class playerController : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Fire1"))
         {
-            if(!isGrappling && shootTimer > shootRate && magCurrent > 0)
+            if (!isGrappling && shootTimer > shootRate && magCurrent > 0)
             {
                 shoot();
                 gameManager.instance.playAudio(gunClip, transform, 1f);
                 updatePlayerUI();
             }
-            else if(!isGrappling &&  shootTimer > shootRate && magCurrent == 0)
+            else if (!isGrappling && shootTimer > shootRate && magCurrent == 0)
             {
                 reload();
                 updatePlayerUI();
             }
         }
 
-        if(Input.GetButtonDown("Reload"))
+        if (Input.GetButtonDown("Reload"))
         {
-            if(magCurrent != magMax)
+            if (magCurrent != magMax)
             {
                 reload();
                 updatePlayerUI();
@@ -271,9 +271,9 @@ public class playerController : MonoBehaviour, IDamage
     void sprint()
     {
         //Sprint trigger logic
-        if(Input.GetButton("Sprint") && controller.isGrounded && moveDir.magnitude > 0.1f && stamina > 0)
+        if (Input.GetButton("Sprint") && controller.isGrounded && moveDir.magnitude > 0.1f && stamina > 0)
         {
-            if(!isSprinting)
+            if (!isSprinting)
             {
                 isSprinting = true;
                 speed *= sprintMod;
@@ -282,14 +282,14 @@ public class playerController : MonoBehaviour, IDamage
             //reduce stamina by the cost and clamp so it doesn't go outside of the stamina range
             stamina -= sprintStaminaCost * Time.deltaTime;
             stamina = Mathf.Clamp(stamina, 0, staminaOrig);
-            updatePlayerUI();   
+            updatePlayerUI();
 
             if (stamina <= 0)
             {
                 StopSprinting();
             }
         }
-        else if(Input.GetButtonUp("Sprint"))
+        else if (Input.GetButtonUp("Sprint"))
         {
             StopSprinting();
         }
@@ -297,7 +297,7 @@ public class playerController : MonoBehaviour, IDamage
 
     void StopSprinting()
     {
-        if(isSprinting)
+        if (isSprinting)
         {
             speed = speedOrig;
             isSprinting = false;
@@ -309,10 +309,10 @@ public class playerController : MonoBehaviour, IDamage
         Vector3 origin = transform.position + Vector3.up * 1f;
         Vector3 forward = transform.forward;
 
-        if(Physics.Raycast(origin,forward,out RaycastHit wallHit, mantleCheckDist,mantleLayer))
+        if (Physics.Raycast(origin, forward, out RaycastHit wallHit, mantleCheckDist, mantleLayer))
         {
             Vector3 ledgeCheckOrigin = wallHit.point + Vector3.up * mantleHeight;
-            if(Physics.Raycast(ledgeCheckOrigin,Vector3.down,out RaycastHit topHit, mantleHeight, mantleLayer))
+            if (Physics.Raycast(ledgeCheckOrigin, Vector3.down, out RaycastHit topHit, mantleHeight, mantleLayer))
             {
                 if (stamina >= mantleStaminaCost)
                 {
@@ -331,12 +331,12 @@ public class playerController : MonoBehaviour, IDamage
     void MantleMove()
     {
         mantleTimer += Time.deltaTime;
-        float t = mantleTimer/ mantleDuration;
+        float t = mantleTimer / mantleDuration;
         t = Mathf.Clamp01(t);
         controller.enabled = false;
-        transform.position = Vector3.Lerp(mantleStartPos,mantleEndPos,t);
+        transform.position = Vector3.Lerp(mantleStartPos, mantleEndPos, t);
 
-        if(t >= 1f)
+        if (t >= 1f)
         {
             isMantling = false;
             controller.enabled = true;
@@ -408,15 +408,15 @@ public class playerController : MonoBehaviour, IDamage
     public void replenishAmmo()
     {
         currentAmmo = maxAmmo;
-        updatePlayerUI();   
+        updatePlayerUI();
     }
 
     void dash()
     {
-        
+
     }
 
-    public void  healhp(int ammount)
+    public void healhp(int ammount)
     {
         HP = Mathf.Min(HP + ammount, HPOrig);
         updatePlayerUI();
@@ -463,7 +463,8 @@ public class playerController : MonoBehaviour, IDamage
         return hasGrappleUnlocked;
     }
 
-    public bool slamReturn() {
+    public bool slamReturn()
+    {
 
         return hasSlamunlocked;
     }
