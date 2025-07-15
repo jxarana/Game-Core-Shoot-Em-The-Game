@@ -29,6 +29,7 @@ public class gameManager : MonoBehaviour
 
 
     public GameObject menuShop;
+    public bool isShopScene;
 
     public Image ammoBar;
     public Image playerHPBar;
@@ -64,6 +65,16 @@ public class gameManager : MonoBehaviour
     {
         instance = this;
 
+        isShopScene = SceneManager.GetActiveScene().name.Contains("Shop");
+
+        if(!isShopScene)
+        {
+            gameGoalCount = numberOfEnemiesToSpawn;
+            gameGoalCountOrig = gameGoalCount;
+
+            SpawnEnemies();
+        }
+
         player = GameObject.FindWithTag("Player");
         if (player == null)
         {
@@ -82,13 +93,11 @@ public class gameManager : MonoBehaviour
         {
             gameManager.instance.playAudio(arenaClip, transform, 0.1f);
         }
-        SpawnEnemies();
     }
 
     private void Start()
     {
-        gameGoalCount = numberOfEnemiesToSpawn;
-        gameGoalCountOrig = gameGoalCount;
+
     }
 
     // Update is called once per frame
@@ -177,12 +186,12 @@ public class gameManager : MonoBehaviour
          
          
          */
-        if (gameGoalCount < gameGoalCountOrig)
+        if (gameGoalCount < gameGoalCountOrig && !isShopScene)
         {
             spawnKey();
         }
 
-        if (gameGoalCount <= 0)
+        if (gameGoalCount <= 0 && !isShopScene)
         {
             // you win!
             statePause();
