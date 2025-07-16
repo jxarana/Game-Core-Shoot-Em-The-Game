@@ -77368,7 +77368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2861433249010630657, guid: 8f0c63aa981c3884a8433cf283c9c35f, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: PlayerSpawn
       objectReference: {fileID: 0}
     - target: {fileID: 5027104815820650185, guid: 8f0c63aa981c3884a8433cf283c9c35f, type: 3}
       propertyPath: m_LocalPosition.x
