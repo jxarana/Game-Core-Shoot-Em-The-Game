@@ -18,8 +18,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] AudioClip arenaClip;
 
-    public GameObject audioObject;
-    public AudioSource audioSource;
+    [SerializeField] private AudioSource audioObject;
 
     public TMP_Text goldCount;
     public TMP_Text unlockCount;
@@ -31,6 +30,7 @@ public class gameManager : MonoBehaviour
 
 
     public GameObject menuShop;
+    public bool isShopScene;
 
     public Image ammoBar;
     public Image playerHPBar;
@@ -50,7 +50,7 @@ public class gameManager : MonoBehaviour
 
 
     // Spawn point for the player
-    public Transform playerSpawnPoint;
+    Transform playerSpawnPoint;
     public GameObject playerPrefab;
 
     // Spawn point for the key
@@ -61,15 +61,23 @@ public class gameManager : MonoBehaviour
     public GameObject enemyPrefab;
     public int numberOfEnemiesToSpawn = 5;
 
-    public bool loop;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         instance = this;
 
-        player = GameObject.FindWithTag("Player");
+        // Detect whethere we're in the shop scene
+        isShopScene = SceneManager.GetActiveScene().name.Contains("Shop");
 
+        // Dynamically find the player spawn point
+        GameObject spawnPointObj = GameObject.FindWithTag("PlayerSpawn");
+        if (spawnPointObj != null )
+        {
+            playerSpawnPoint = spawnPointObj.transform;
+        }
+
+        // Find the player at the correct spawn
+        player = GameObject.FindWithTag("Player");
         if (player == null)
         {
             if (playerPrefab != null && playerSpawnPoint != null)
@@ -78,20 +86,29 @@ public class gameManager : MonoBehaviour
                 player.tag = "Player";
             }
         }
+
+        // Grab the player script and enable movement
         if (player != null)
         {
             playerScript = player.GetComponent<playerController>();
+            playerScript.enabled = true;
             timeScaleOrig = Time.timeScale;
         }
-       
-        SpawnEnemies();
+        if (!menuActive)
+        {
+            gameManager.instance.playAudio(arenaClip, transform, 0.1f);
+        }
+        if (!isShopScene)
+        {
+            gameGoalCount = numberOfEnemiesToSpawn;
+            gameGoalCountOrig = gameGoalCount;
+            SpawnEnemies();
+        }
     }
 
     private void Start()
     {
-        gameGoalCount = numberOfEnemiesToSpawn;
-        gameGoalCountOrig = gameGoalCount;
-        gameManager.instance.playAudio(arenaClip, transform, 0.25f, true);
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
@@ -180,12 +197,12 @@ public class gameManager : MonoBehaviour
          
          
          */
-        if (gameGoalCount < gameGoalCountOrig)
+        if (gameGoalCount < gameGoalCountOrig && !isShopScene)
         {
             spawnKey();
         }
 
-        if (gameGoalCount <= 0)
+        if (gameGoalCount <= 0 && !isShopScene)
         {
             // you win!
             statePause();
@@ -243,54 +260,25 @@ public class gameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    public void playAudio(AudioClip gunAudio, Transform transform, float volume, bool loop)
+    public void playAudio(AudioClip gunAudio, Transform transform, float volume)
     {
-
-        audioObject = gameManager.instance.audioObject;
-
         // spawns game object
-        audioSource = audioObject.GetComponent<AudioSource>();
+        AudioSource audioSource = Instantiate(audioObject, transform.position, Quaternion.identity);
 
-        if (!menuActive)
-        {
-            if (audioSource.clip.name == "ArenaAudio")
-            {
-                // assigns audio clip
-                audioSource.clip = gunAudio;
+        // assigns audio clip
+        audioSource.clip = gunAudio;
 
-                // assigning the volume
-                audioSource.volume = volume;
+        // assigning the volume
+        audioSource.volume = volume;
 
-                audioSource.loop = loop;
+        // plays sound
+        audioSource.Play();
 
-                // plays sound
-                audioSource.Play();
+        // assigns length of audio
+        float clipDuration = audioSource.clip.length;
 
-                // assigns length of audio
-                float clipDuration = audioSource.clip.length;
-
-                Destroy(audioSource.gameObject, clipDuration);
-            }
-
-            else
-            {
-                audioSource.clip = gunAudio;
-
-                // assigning the volume
-                audioSource.volume = volume;
-
-                audioSource.loop = loop;
-
-                // plays sound
-                audioSource.Play();
-
-                // assigns length of audio
-                float clipDuration = audioSource.clip.length;
-
-                // destroy object after it is finished playing
-                Destroy(audioSource.gameObject, clipDuration);
-            }
-        }
+        // destroy object after it is finished playing
+        Destroy(audioSource.gameObject, clipDuration);
     }
 
     public void spawnKey()

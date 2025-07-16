@@ -9,7 +9,7 @@ TagManager:
   - Enemy
   - Key
   - KeySpawn
-  - ArenaAudio
+  - PlayerSpawn
   layers:
   - Default
   - TransparentFX
