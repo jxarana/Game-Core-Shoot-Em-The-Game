@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Unity.VisualScripting;
 
 public class gameManager : MonoBehaviour
 {
@@ -64,6 +65,17 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        // Detect whethere we're in the shop scene
+        isShopScene = SceneManager.GetActiveScene().name.Contains("Shop");
+
+        // Dynamically find the player spawn point
+        GameObject spawnPointObj = GameObject.FindWithTag("PlayerSpawn");
+        if (spawnPointObj != null)
+        {
+            playerSpawnPoint = spawnPointObj.transform;
+        }
+
         // Find the player at the correct spawn
         player = GameObject.FindWithTag("Player");
         if (player == null)
@@ -86,11 +98,17 @@ public class gameManager : MonoBehaviour
         {
             gameManager.instance.playAudio(arenaClip, transform, 0.1f);
         }
-        SpawnEnemies();
+        if (!isShopScene)
+        {
+            gameGoalCount = numberOfEnemiesToSpawn;
+            gameGoalCountOrig = gameGoalCount;
+            SpawnEnemies();
+        }
     }
 
     private void Start()
     {
+        Time.timeScale = 1f;
         gameGoalCount = numberOfEnemiesToSpawn;
         gameGoalCountOrig = gameGoalCount;
     }
