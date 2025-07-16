@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class playerController : MonoBehaviour, IDamage
 {
+    #region Fields
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] Transform orientation;
@@ -37,25 +38,28 @@ public class playerController : MonoBehaviour, IDamage
     public int goldCount;
     public int upgradePoints;
 
+    [Header("Shoot Settings:")]
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] int magMax;
     [SerializeField] int maxAmmo;
 
+    [Header("Mantle Settings:")]
     [SerializeField] float mantleCheckDist = 1f;
     [SerializeField] float mantleHeight = 1.5f;
     [SerializeField] float mantleDuration = 0.3f;
     [SerializeField] LayerMask mantleLayer;
-
-    [SerializeField] AudioClip gunClip;
-    [SerializeField] AudioClip deathClip;
-
     bool isMantling = false;
     Vector3 mantleStartPos;
     Vector3 mantleEndPos;
     float mantleTimer;
 
+
+    [SerializeField] AudioClip gunClip;
+    [SerializeField] AudioClip deathClip;
+
+    
     int dashCount;
     public float dashSpeed;
     public float dashDuration;
@@ -108,6 +112,9 @@ public class playerController : MonoBehaviour, IDamage
     private RaycastHit wallHit;
     //------------------------------------------------------------
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    #endregion
+
     void Start()
     {
         animator = gameObject.GetComponent<Animator>();
