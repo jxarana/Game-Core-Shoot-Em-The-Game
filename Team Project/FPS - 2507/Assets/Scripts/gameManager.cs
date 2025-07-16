@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Unity.VisualScripting;
 
 public class gameManager : MonoBehaviour
 {
@@ -49,7 +50,7 @@ public class gameManager : MonoBehaviour
 
 
     // Spawn point for the player
-    public Transform playerSpawnPoint;
+    Transform playerSpawnPoint;
     public GameObject playerPrefab;
 
     // Spawn point for the key
@@ -65,16 +66,17 @@ public class gameManager : MonoBehaviour
     {
         instance = this;
 
+        // Detect whethere we're in the shop scene
         isShopScene = SceneManager.GetActiveScene().name.Contains("Shop");
 
-        if(!isShopScene)
+        // Dynamically find the player spawn point
+        GameObject spawnPointObj = GameObject.FindWithTag("PlayerSpawn");
+        if (spawnPointObj != null )
         {
-            gameGoalCount = numberOfEnemiesToSpawn;
-            gameGoalCountOrig = gameGoalCount;
-
-            SpawnEnemies();
+            playerSpawnPoint = spawnPointObj.transform;
         }
 
+        // Find the player at the correct spawn
         player = GameObject.FindWithTag("Player");
         if (player == null)
         {
@@ -84,20 +86,29 @@ public class gameManager : MonoBehaviour
                 player.tag = "Player";
             }
         }
+
+        // Grab the player script and enable movement
         if (player != null)
         {
             playerScript = player.GetComponent<playerController>();
+            playerScript.enabled = true;
             timeScaleOrig = Time.timeScale;
         }
         if (!menuActive)
         {
             gameManager.instance.playAudio(arenaClip, transform, 0.1f);
         }
+        if (!isShopScene)
+        {
+            gameGoalCount = numberOfEnemiesToSpawn;
+            gameGoalCountOrig = gameGoalCount;
+            SpawnEnemies();
+        }
     }
 
     private void Start()
     {
-
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame

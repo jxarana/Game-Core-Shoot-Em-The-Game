@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Key
   - KeySpawn
+  - PlayerSpawn
   layers:
   - Default
   - TransparentFX
