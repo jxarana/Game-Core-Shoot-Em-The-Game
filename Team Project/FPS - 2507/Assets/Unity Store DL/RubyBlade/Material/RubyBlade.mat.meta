@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 72cc89286722c4624bb8bba7153edd34
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213457
+  packageName: Ruby Blade - Low Poly
+  packageVersion: 1.1
+  assetPath: Assets/RubyBlade/Material/RubyBlade.mat
+  uploadId: 635087
