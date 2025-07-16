@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerController : MonoBehaviour, IDamage, IInventorySystem
+public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
@@ -223,7 +223,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
             if (!isGrappling && shootTimer > shootRate && magCurrent > 0)
             {
                 shoot();
-                gameManager.instance.playAudio(gunClip, transform, 1f, false);
+                gameManager.instance.playAudio(gunClip, transform, 1f);
                 updatePlayerUI();
             }
             else if (!isGrappling && shootTimer > shootRate && magCurrent == 0)
@@ -373,7 +373,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
         {
             //you dead!
             gameManager.instance.youLose();
-            gameManager.instance.playAudio(deathClip, transform, 0.75f, false);
+            gameManager.instance.playAudio(deathClip, transform, 0.75f);
         }
     }
 
@@ -522,13 +522,6 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     private void stopClimbing()
     {
         isClimbing = false;
-    }
-
-    public void getGunStats(gunStats gun)
-    {
-        shootDamage = gun.shootDamage;
-        shootDist = gun.shootDist;
-        shootRate = gun.shootRate;
     }
     //---------------------------------------------------------------------------------------------------------------------------------------------
 }
