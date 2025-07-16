@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
@@ -122,6 +123,16 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, faceTargetSpeed * Time.deltaTime);
+    }
+
+    public void FacePlayerInstantly(Transform player)
+    {
+        Vector3 direction = (player.position - transform.position).normalized;
+        direction.y = 0; //Keep upright
+
+        //Rotate to face target
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation,faceTargetSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
