@@ -12,6 +12,8 @@ public class GrappleHook : MonoBehaviour
     [SerializeField] Transform grappleOrigin;
     public LayerMask grappleLayer;
 
+    Transform grappledEnemy;
+    Vector3 enemyGrapplePoint;
     bool isGrappling;
     bool isAttached;
     Vector3 grapplePoint;
@@ -38,7 +40,7 @@ public class GrappleHook : MonoBehaviour
         {
             lr.enabled = true;
             lr.SetPosition(0, grappleOrigin.position);
-            lr.SetPosition(1, grapplePoint);
+            lr.SetPosition(1, grappledEnemy != null ? enemyGrapplePoint : grapplePoint);
 
 
             if (!isAttached)
@@ -58,18 +60,44 @@ public class GrappleHook : MonoBehaviour
                     return;
                 }
 
-                Vector3 direction = (grapplePoint - transform.position);
-                float distance = direction.magnitude;
-
-                if(distance < 1f)
+                if (grappledEnemy != null)
                 {
-                    isAttached = true;
+                    //Set up to look at pleyer when grabbed by grapple
+                    enemyAI enemy = grappledEnemy.GetComponent<enemyAI>();
+                    if(enemy != null)
+                    {
+                        enemy.FacePlayerInstantly(transform);
+                    }
+
+                    //Pull enemy toward player
+                    Vector3 pullDirection = (transform.position - grappledEnemy.position).normalized;
+                    float enemyDistance = Vector3.Distance(grappledEnemy.position, transform.position);
+
+                    if (enemyDistance > 1f)
+                    {
+                        grappledEnemy.position += pullDirection * pullSpeed * Time.deltaTime;
+                    }
+                    else
+                    {
+                        isAttached = true;
+                        StopGrappling(); // Optional auto-stop when enemy reaches you 
+                    }
                 }
                 else
                 {
-                    direction.Normalize();
-                    Vector3 move = direction * pullSpeed * Time.deltaTime;
-                    controller.Move(move);
+                    Vector3 direction = (grapplePoint - transform.position);
+                    float distance = direction.magnitude;
+
+                    if (distance < 1f)
+                    {
+                        isAttached = true;
+                    }
+                    else
+                    {
+                        direction.Normalize();
+                        Vector3 move = direction * pullSpeed * Time.deltaTime;
+                        controller.Move(move);
+                    }
                 }
             }
             else
@@ -94,6 +122,7 @@ public class GrappleHook : MonoBehaviour
         isGrappling = false;
         isAttached = false; 
         player.isGrappling = false;
+        grappledEnemy = null;
     }
 
     void ShootGrapple()
@@ -105,6 +134,19 @@ public class GrappleHook : MonoBehaviour
             isGrappling = true;
             isAttached = false;
             player.isGrappling = true;
+
+
+            //Check if we hit an enemy
+            if(hit.collider.CompareTag("Enemy"))
+            {
+                grappledEnemy = hit.collider.transform;
+                enemyGrapplePoint = hit.point;
+            }
+            else
+            {
+                grappledEnemy = null;
+                grapplePoint = hit.point;
+            }
         }
     }
 }
