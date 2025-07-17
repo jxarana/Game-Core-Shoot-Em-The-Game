@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerController : MonoBehaviour, IDamage, IInventorySystem
+public class playerController : MonoBehaviour, IDamage, inventorySystem
 {
-    [SerializeField] CharacterController controller;
+    #region Fields
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] Transform orientation;
     [SerializeField] LayerMask wallLayer;
@@ -12,6 +12,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject keyModel;
 
+    [Header("Character Settings:")]
+    [SerializeField] CharacterController controller;
     [SerializeField] int HPOrig;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
@@ -39,25 +41,28 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     public int goldCount;
     public int upgradePoints;
 
+    [Header("Shoot Settings:")]
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] int magMax;
     [SerializeField] int maxAmmo;
 
+    [Header("Mantle Settings:")]
     [SerializeField] float mantleCheckDist = 1f;
     [SerializeField] float mantleHeight = 1.5f;
     [SerializeField] float mantleDuration = 0.3f;
     [SerializeField] LayerMask mantleLayer;
-
-    [SerializeField] AudioClip gunClip;
-    [SerializeField] AudioClip deathClip;
-
     bool isMantling = false;
     Vector3 mantleStartPos;
     Vector3 mantleEndPos;
     float mantleTimer;
 
+    [Header("Audio Settings:")]
+    [SerializeField] AudioClip gunClip;
+    [SerializeField] AudioClip deathClip;
+
+    
     int dashCount;
     public float dashSpeed;
     public float dashDuration;
@@ -67,6 +72,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     float dashTimeLeft;
     private Vector3 dashDirection;
 
+    [Header("Stamina Settings:")]
     public int staminaOrig;
     [HideInInspector] public float stamina;
     [SerializeField] float staminaRegenRate;
@@ -110,6 +116,9 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     private RaycastHit wallHit;
     //------------------------------------------------------------
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    #endregion
+
     void Start()
     {
         animator = gameObject.GetComponent<Animator>();
