@@ -10,6 +10,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     [SerializeField] LayerMask wallLayer;
     [SerializeField] Animator animator;
     [SerializeField] GameObject gunModel;
+    [SerializeField] GameObject keyModel;
 
     [SerializeField] int HPOrig;
     [SerializeField] int speed;
@@ -224,7 +225,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
             if (!isGrappling && shootTimer > shootRate && magCurrent > 0)
             {
                 shoot();
-                gameManager.instance.playAudio(gunClip, transform, 1f, false);
+                //gameManager.instance.playAudio(gunClip, transform, 1f, false);
                 updatePlayerUI();
             }
             else if (!isGrappling && shootTimer > shootRate && magCurrent == 0)
@@ -374,7 +375,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
         {
             //you dead!
             gameManager.instance.youLose();
-            gameManager.instance.playAudio(deathClip, transform, 0.75f, false);
+            //gameManager.instance.playAudio(deathClip, transform, 0.75f, false);
         }
     }
 
@@ -533,5 +534,13 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    public void getItemPickUp(itemPickUp item)
+    {
+        gameManager.instance.keyPrefab = item.keyItem;
+
+        keyModel.GetComponent<MeshFilter>().sharedMesh = item.keyItem.GetComponent<MeshFilter>().sharedMesh;
+        keyModel.GetComponent<MeshRenderer>().sharedMaterial = item.keyItem.GetComponent<MeshRenderer>().sharedMaterial;
     }
 }

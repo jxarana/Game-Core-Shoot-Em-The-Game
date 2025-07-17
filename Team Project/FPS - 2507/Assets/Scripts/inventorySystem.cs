@@ -4,28 +4,33 @@ using UnityEngine;
 
 public class inventorySystem : MonoBehaviour
 {
-    enum guntype { shotgun, pistol, rifle }
-    [SerializeField] guntype type;
+    enum itemtype { shotgun, pistol, rifle, useableItem, statusEffect }
+    [SerializeField] itemtype type;
     [SerializeField] gunStats gun;
-
+    [SerializeField] itemPickUp item;
 
     private void OnTriggerEnter(Collider other)
     {
         IInventorySystem pickUppable = other.GetComponent<IInventorySystem>();
 
-        if (pickUppable != null && type == guntype.shotgun)
+        if (pickUppable != null && type == itemtype.shotgun)
         {
             pickUppable.getGunStats(gun);
             Destroy(gameObject);
         }
-        else if (pickUppable != null && type == guntype.pistol)
+        else if (pickUppable != null && type == itemtype.pistol)
         {
             pickUppable.getGunStats(gun);
             Destroy(gameObject);
         }
-        else if (pickUppable != null && type == guntype.rifle)
+        else if (pickUppable != null && type == itemtype.rifle)
         {
             pickUppable.getGunStats(gun);
+            Destroy(gameObject);
+        }
+        else if (pickUppable != null && type == itemtype.useableItem)
+        {
+            pickUppable.getItemPickUp(item);
             Destroy(gameObject);
         }
     }
