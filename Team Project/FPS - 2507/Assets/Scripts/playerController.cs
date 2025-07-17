@@ -9,6 +9,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     [SerializeField] Transform orientation;
     [SerializeField] LayerMask wallLayer;
     [SerializeField] Animator animator;
+    [SerializeField] GameObject gunModel;
 
     [SerializeField] int HPOrig;
     [SerializeField] int speed;
@@ -529,5 +530,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
         shootDamage = gun.shootDamage;
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
     }
 }
