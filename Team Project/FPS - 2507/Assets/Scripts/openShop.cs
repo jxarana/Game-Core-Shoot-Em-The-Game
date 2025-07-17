@@ -17,7 +17,7 @@ public class openShop : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             gameManager.instance.openShop();
-            gameManager.instance.playAudio(audioClip, transform, 1f);
+            //gameManager.instance.playAudio(audioClip, transform, 1f, true);
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, IDamage, IInventorySystem
 {
     #region Fields
     [SerializeField] CharacterController controller;
@@ -10,6 +10,8 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] Transform orientation;
     [SerializeField] LayerMask wallLayer;
     [SerializeField] Animator animator;
+    [SerializeField] GameObject gunModel;
+    [SerializeField] GameObject keyModel;
 
     [SerializeField] int HPOrig;
     [SerializeField] int speed;
@@ -230,7 +232,7 @@ public class playerController : MonoBehaviour, IDamage
             if (!isGrappling && shootTimer > shootRate && magCurrent > 0)
             {
                 shoot();
-                gameManager.instance.playAudio(gunClip, transform, 1f);
+                //gameManager.instance.playAudio(gunClip, transform, 1f, false);
                 updatePlayerUI();
             }
             else if (!isGrappling && shootTimer > shootRate && magCurrent == 0)
@@ -380,7 +382,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             //you dead!
             gameManager.instance.youLose();
-            gameManager.instance.playAudio(deathClip, transform, 0.75f);
+            //gameManager.instance.playAudio(deathClip, transform, 0.75f, false);
         }
     }
 
@@ -530,5 +532,22 @@ public class playerController : MonoBehaviour, IDamage
     {
         isClimbing = false;
     }
-    //---------------------------------------------------------------------------------------------------------------------------------------------
+
+    public void getGunStats(gunStats gun)
+    {
+        shootDamage = gun.shootDamage;
+        shootDist = gun.shootDist;
+        shootRate = gun.shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    public void getItemPickUp(itemPickUp item)
+    {
+        gameManager.instance.keyPrefab = item.keyItem;
+
+        keyModel.GetComponent<MeshFilter>().sharedMesh = item.keyItem.GetComponent<MeshFilter>().sharedMesh;
+        keyModel.GetComponent<MeshRenderer>().sharedMaterial = item.keyItem.GetComponent<MeshRenderer>().sharedMaterial;
+    }
 }
