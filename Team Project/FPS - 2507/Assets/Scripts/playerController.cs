@@ -2,10 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerController : MonoBehaviour, IDamage, IInventorySystem
+public class playerController : MonoBehaviour, IDamage, inventorySystem
 {
     #region Fields
-    [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] Transform orientation;
     [SerializeField] LayerMask wallLayer;
@@ -13,6 +12,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject keyModel;
 
+    [Header("Character Settings:")]
+    [SerializeField] CharacterController controller;
     [SerializeField] int HPOrig;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
@@ -57,7 +58,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     Vector3 mantleEndPos;
     float mantleTimer;
 
-
+    [Header("Audio Settings:")]
     [SerializeField] AudioClip gunClip;
     [SerializeField] AudioClip deathClip;
 
@@ -71,6 +72,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     float dashTimeLeft;
     private Vector3 dashDirection;
 
+    [Header("Stamina Settings:")]
     public int staminaOrig;
     [HideInInspector] public float stamina;
     [SerializeField] float staminaRegenRate;
