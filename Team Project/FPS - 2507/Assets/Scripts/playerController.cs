@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerController : MonoBehaviour, IDamage, inventorySystem
+public class playerController : MonoBehaviour, IDamage, IInventorySystem
 {
     #region Fields
     [SerializeField] LayerMask ignoreLayer;
