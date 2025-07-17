@@ -18,7 +18,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] AudioClip arenaClip;
 
-    [SerializeField] private AudioSource audioObject;
+    public GameObject audioObject;
+    public AudioSource audioSource;
 
     public TMP_Text goldCount;
     public TMP_Text unlockCount;
@@ -61,6 +62,8 @@ public class gameManager : MonoBehaviour
     public GameObject enemyPrefab;
     public int numberOfEnemiesToSpawn = 5;
 
+    public bool loop;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -96,7 +99,7 @@ public class gameManager : MonoBehaviour
         }
         if (!menuActive)
         {
-            gameManager.instance.playAudio(arenaClip, transform, 0.1f);
+            gameManager.instance.playAudio(arenaClip, transform, 0.1f, true);
         }
         if (!isShopScene)
         {
@@ -262,27 +265,55 @@ public class gameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    public void playAudio(AudioClip gunAudio, Transform transform, float volume)
+    public void playAudio(AudioClip gunAudio, Transform transform, float volume, bool loop)
     {
         // spawns game object
-        AudioSource audioSource = Instantiate(audioObject, transform.position, Quaternion.identity);
+        audioObject = gameManager.instance.audioObject;
 
-        // assigns audio clip
-        audioSource.clip = gunAudio;
+        audioSource = audioObject.GetComponent<AudioSource>();
 
-        // assigning the volume
-        audioSource.volume = volume;
+        if (!menuActive)
+        {
+            if (audioSource.clip.name == "ArenaAudio")
+            {
+                // assigns audio clip
+                audioSource.clip = gunAudio;
 
-        // plays sound
-        audioSource.Play();
+                // assigning the volume
+                audioSource.volume = volume;
 
-        // assigns length of audio
-        float clipDuration = audioSource.clip.length;
+                audioSource.loop = loop;
 
-        // destroy object after it is finished playing
-        Destroy(audioSource.gameObject, clipDuration);
+                // plays sound
+                audioSource.Play();
+
+                // assigns length of audio
+                float clipDuration = audioSource.clip.length;
+
+                // destroy object after it is finished playing
+                Destroy(audioSource.gameObject, clipDuration);
+            }
+
+            else
+            {
+                audioSource.clip = gunAudio;
+
+                // assigning the volume
+                audioSource.volume = volume;
+
+                audioSource.loop = loop;
+
+                // plays sound
+                audioSource.Play();
+
+                // assigns length of audio
+                float clipDuration = audioSource.clip.length;
+
+                // destroy object after it is finished playing
+                Destroy(audioSource.gameObject, clipDuration);
+            }
+        }
     }
-
     public void spawnKey()
     {
         if (keyPrefab == null) return;
