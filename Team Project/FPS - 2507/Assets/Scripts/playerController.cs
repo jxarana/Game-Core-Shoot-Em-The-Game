@@ -64,8 +64,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     float mantleTimer;
 
     [Header("Audio Settings:")]
-    [SerializeField] AudioSource gunClip;
-    [SerializeField] AudioSource deathClip;
+    [SerializeField] AudioClip gunClip;
+    [SerializeField] AudioClip deathClip;
 
 
     int dashCount;
@@ -243,7 +243,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
             {
 
                 shoot();
-                //gameManager.instance.playAudio(gunClip, transform, 1f);
+                gameManager.instance.playAudio(gunClip, transform, 1f, false);
                 updatePlayerUI();
             }
             else if (!isGrappling && shootTimer > shootRate && magCurrent == 0)
@@ -398,7 +398,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
         {
             //you dead!
             gameManager.instance.youLose();
-            //gameManager.instance.playAudio(deathClip, transform, 0.75f);
+            gameManager.instance.playAudio(deathClip, transform, 0.75f, false);
         }
     }
 

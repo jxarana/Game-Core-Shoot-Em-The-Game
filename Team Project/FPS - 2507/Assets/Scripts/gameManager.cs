@@ -16,6 +16,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuUnlocks;
     [SerializeField] TMP_Text gameGoalCountText;
+    [SerializeField] AudioClip arenaClip;
+
+    public AudioSource audioSource;
 
     public TMP_Text goldCount;
     public TMP_Text unlockCount;
@@ -76,13 +79,13 @@ public class gameManager : MonoBehaviour
         }
 
         // Find the player at the correct spawn
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
             if (playerPrefab != null && playerSpawnPoint != null)
             {
                 player = Instantiate(playerPrefab, playerSpawnPoint.position, playerSpawnPoint.rotation);
-                player.tag = "Player";
+                //player.tag = "Player";
             }
         }
 
@@ -93,15 +96,17 @@ public class gameManager : MonoBehaviour
             playerScript.enabled = true;
             timeScaleOrig = Time.timeScale;
         }
-        if (!menuActive)
-        {
-            //gameManager.instance.playAudio(arenaClip, transform, 0.1f, true);
-        }
+       
         if (!isShopScene)
         {
             gameGoalCount = numberOfEnemiesToSpawn;
             gameGoalCountOrig = gameGoalCount;
             SpawnEnemies();
+        }
+
+        if (!menuActive)
+        {
+            playAudio(arenaClip, transform, 0.1f, false);
         }
     }
 
@@ -261,45 +266,44 @@ public class gameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    //public void playAudio(AudioSource gunAudio, Transform transform, float volume)
-    //{
-    //    AudioSource audioSource = GetComponent<AudioSource>();
+    public void playAudio(AudioClip clipAudio, Transform transform, float volume, bool loops)
+    {
+        
+        if (!menuActive)
+        {
+            if (loops == true)
+            {
+                audioSource.clip = clipAudio;
 
+                // assigning the volume
+                audioSource.volume = volume;
 
-    //    if (!menuActive)
-    //    {
-    //        if (audioSource.clip.name == "ARENA" || audioSource.clip.name == "shop")
-    //        {
-    //            // assigning the volume
-    //            audioSource.volume = volume;
+                audioSource.loop = loops;
 
-    //            audioSource.loop = true;
+                // plays sound
+                audioSource.Play();
 
-    //            // plays sound
-    //            audioSource.Play();
+                //assigns length of audio
+                //float clipDuration = audioSource.clip.length;
+            }
 
-    //            // assigns length of audio
-    //            float clipDuration = audioSource.clip.length;
-    //        }
+            else if (loops == false)
+            {
+                audioSource.clip = clipAudio;
 
-    //        else
-    //        {
-    //            // assigning the volume
-    //            audioSource.volume = volume;
+                // assigning the volume
+                audioSource.volume = volume;
 
-    //            audioSource.loop = false;
+                audioSource.loop = loops;
 
-    //            // plays sound
-    //            audioSource.Play();
+                // plays sound
+                audioSource.Play();
 
-    //            // assigns length of audio
-    //            float clipDuration = audioSource.clip.length;
-
-    //            // destroy object after it is finished playing
-    //            Destroy(audioSource.gameObject, clipDuration);
-    //        }
-    //    }
-    //}
+                // assigns length of audio
+                //float clipDuration = audioSource.clip.length;
+            }
+        }
+    }
 
     public void spawnKey()
     {

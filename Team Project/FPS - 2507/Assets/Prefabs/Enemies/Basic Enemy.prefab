@@ -2196,7 +2196,7 @@ MonoBehaviour:
   shootPos: {fileID: 4188377515715764064}
   headPos: {fileID: 3176997715959273163}
   anim: {fileID: 4436404700428490623}
-  yellClip: {fileID: 7517872204301845542, guid: bf620e7989e74394ebc55b67cb99b4a0, type: 3}
+  yellClip: {fileID: 8300000, guid: e93bb802125035f41b6b823af7151f91, type: 3}
   deathAnim: {fileID: 5669690308035986126, guid: dd1a78c3169c2bc47b6f636c043960d0, type: 3}
   goldDropped: 10
   HP: 3
