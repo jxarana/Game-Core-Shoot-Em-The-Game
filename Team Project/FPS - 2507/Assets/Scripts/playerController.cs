@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +23,9 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     [SerializeField] int jumpMax;
     [SerializeField] int gravity;
     [SerializeField] int dashMax;
+    [SerializeField] List<gunStats> gunList = new List<gunStats>();
+    [SerializeField] List<itemPickUp> itemList = new List<itemPickUp>();
+
     [SerializeField] int deathDepth; // Set the height that the player can fall to before dieing
     //[SerializeField] Transform camPivot;
     [SerializeField] float mouseSensitivity = 3f;
@@ -59,10 +64,10 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     float mantleTimer;
 
     [Header("Audio Settings:")]
-    [SerializeField] AudioClip gunClip;
-    [SerializeField] AudioClip deathClip;
+    [SerializeField] AudioSource gunClip;
+    [SerializeField] AudioSource deathClip;
 
-    
+
     int dashCount;
     public float dashSpeed;
     public float dashDuration;
@@ -90,6 +95,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     int jumpCount;
     int HP;
     int speedOrig;
+    int gunListPos;
 
     float shootTimer;
     float xRotation = 0f;
@@ -159,7 +165,9 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
 
         sprint();
-        movement();
+        if (!gameManager.instance.isPaused)
+            movement();
+
         if (!controller.isGrounded && Input.GetKey(KeyCode.Space))
         {
             TryMantle();
@@ -231,15 +239,17 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
 
         if (Input.GetButtonDown("Fire1"))
         {
-            if (!isGrappling && shootTimer > shootRate && magCurrent > 0)
+            if (!isGrappling && gunList.Count > 0 && gunList[gunListPos].ammoCurr > 0 && magCurrent > 0 && shootTimer > shootRate)
             {
+
                 shoot();
-                //gameManager.instance.playAudio(gunClip, transform, 1f, false);
+                //gameManager.instance.playAudio(gunClip, transform, 1f);
                 updatePlayerUI();
             }
             else if (!isGrappling && shootTimer > shootRate && magCurrent == 0)
             {
                 reload();
+
                 updatePlayerUI();
             }
         }
@@ -259,6 +269,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
         // Availability: https://www.youtube.com/watch?v=tAJLiOEfbQg
         if (isClimbing)
             climbingMovement();
+
+        selectGun();
         //---------------------------------------------------------------
     }
 
@@ -358,11 +370,13 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
     {
         shootTimer = 0;
         magCurrent--;
-        RaycastHit hit;
+        gunList[gunListPos].ammoCurr--;
 
+        RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
         {
-            Debug.Log(hit.collider.name);
+            //Debug.Log(hit.collider.name);
+            Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
             IDamage dmg = hit.collider.GetComponent<IDamage>();
 
             if (dmg != null)
@@ -384,7 +398,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
         {
             //you dead!
             gameManager.instance.youLose();
-            //gameManager.instance.playAudio(deathClip, transform, 0.75f, false);
+            //gameManager.instance.playAudio(deathClip, transform, 0.75f);
         }
     }
 
@@ -409,8 +423,9 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
 
     void reload()
     {
-        if (currentAmmo > 0)
+        if (Input.GetButtonDown("Reload"))
         {
+            gunList[gunListPos].ammoCurr = gunList[gunListPos].ammoMax;
             magCurrent = magMax;
             currentAmmo -= magMax;
         }
@@ -537,16 +552,41 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem
 
     public void getGunStats(gunStats gun)
     {
-        shootDamage = gun.shootDamage;
-        shootDist = gun.shootDist;
-        shootRate = gun.shootRate;
+        gunList.Add(gun);
+        gunListPos = gunList.Count - 1;
 
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
+        changeGun();
+    }
+
+    void changeGun()
+    {
+
+        shootDamage = gunList[gunListPos].shootDamage;
+        shootDist = gunList[gunListPos].shootDist;
+        shootRate = gunList[gunListPos].shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].model.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    void selectGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
+        {
+            gunListPos++;
+            changeGun();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+        {
+            gunListPos--;
+            changeGun();
+        }
     }
 
     public void getItemPickUp(itemPickUp item)
     {
+        itemList.Add(item);
+
         gameManager.instance.keyPrefab = item.keyItem;
 
         keyModel.GetComponent<MeshFilter>().sharedMesh = item.keyItem.GetComponent<MeshFilter>().sharedMesh;

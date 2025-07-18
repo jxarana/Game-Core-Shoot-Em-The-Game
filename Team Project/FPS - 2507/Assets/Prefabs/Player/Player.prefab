@@ -981,7 +981,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fddd937acaefa7f48938c083d770f61a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 1208243026059026127}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -990,6 +989,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   animator: {fileID: 1826274449887941595}
+  gunModel: {fileID: 0}
+  keyModel: {fileID: 0}
+  controller: {fileID: 1208243026059026127}
   HPOrig: 10
   speed: 5
   sprintMod: 2
@@ -997,6 +999,8 @@ MonoBehaviour:
   jumpMax: 1
   gravity: 30
   dashMax: 0
+  gunList: []
+  itemList: []
   deathDepth: -10
   mouseSensitivity: 3
   climbSpeed: 2.5

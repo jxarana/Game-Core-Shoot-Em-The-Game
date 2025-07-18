@@ -16,10 +16,6 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuUnlocks;
     [SerializeField] TMP_Text gameGoalCountText;
-    [SerializeField] AudioClip arenaClip;
-
-    public GameObject audioObject;
-    public AudioSource audioSource;
 
     public TMP_Text goldCount;
     public TMP_Text unlockCount;
@@ -62,7 +58,7 @@ public class gameManager : MonoBehaviour
     public GameObject enemyPrefab;
     public int numberOfEnemiesToSpawn = 5;
 
-    public bool loop;
+    //public bool loop;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -265,43 +261,33 @@ public class gameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    //public void playAudio(AudioClip gunAudio, Transform transform, float volume, bool loop)
+    //public void playAudio(AudioSource gunAudio, Transform transform, float volume)
     //{
-    //    // spawns game object
-    //    audioObject = gameManager.instance.audioObject;
+    //    AudioSource audioSource = GetComponent<AudioSource>();
 
-    //    audioSource = audioObject.GetComponent<AudioSource>();
 
     //    if (!menuActive)
     //    {
-    //        if (audioSource.clip.name == "ArenaAudio")
+    //        if (audioSource.clip.name == "ARENA" || audioSource.clip.name == "shop")
     //        {
-    //            // assigns audio clip
-    //            audioSource.clip = gunAudio;
-
     //            // assigning the volume
     //            audioSource.volume = volume;
 
-    //            audioSource.loop = loop;
+    //            audioSource.loop = true;
 
     //            // plays sound
     //            audioSource.Play();
 
     //            // assigns length of audio
     //            float clipDuration = audioSource.clip.length;
-
-    //            // destroy object after it is finished playing
-    //            Destroy(audioSource.gameObject, clipDuration);
     //        }
 
     //        else
     //        {
-    //            audioSource.clip = gunAudio;
-
     //            // assigning the volume
     //            audioSource.volume = volume;
 
-    //            audioSource.loop = loop;
+    //            audioSource.loop = false;
 
     //            // plays sound
     //            audioSource.Play();
@@ -314,6 +300,7 @@ public class gameManager : MonoBehaviour
     //        }
     //    }
     //}
+
     public void spawnKey()
     {
         if (keyPrefab == null) return;

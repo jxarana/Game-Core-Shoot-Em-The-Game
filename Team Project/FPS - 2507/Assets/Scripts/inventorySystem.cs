@@ -16,16 +16,19 @@ public class inventorySystem : MonoBehaviour
         if (pickUppable != null && type == itemtype.shotgun)
         {
             pickUppable.getGunStats(gun);
+            gun.ammoCurr = gun.ammoMax;
             Destroy(gameObject);
         }
         else if (pickUppable != null && type == itemtype.pistol)
         {
             pickUppable.getGunStats(gun);
+            gun.ammoCurr = gun.ammoMax;
             Destroy(gameObject);
         }
         else if (pickUppable != null && type == itemtype.rifle)
         {
             pickUppable.getGunStats(gun);
+            gun.ammoCurr = gun.ammoMax;
             Destroy(gameObject);
         }
         else if (pickUppable != null && type == itemtype.useableItem)
