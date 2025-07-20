@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
@@ -9,6 +10,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] Animator anim;
+    [SerializeField] AudioClip yellClip;
+    [SerializeField] ParticleSystem deathAnim;
 
     [SerializeField] int goldDropped;
     [SerializeField] int HP;
@@ -45,6 +48,7 @@ public class enemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
 
         if (agent.remainingDistance < 0.01f)
         {
@@ -84,7 +88,9 @@ public class enemyAI : MonoBehaviour, IDamage
 
     bool canSeePlayer()
     {
-        playerDir = gameManager.instance.player.transform.position - headPos.position;
+        Transform player = gameManager.instance.player.transform;
+        Vector3 targetPos = player.position + Vector3.up * 1f;
+        playerDir = targetPos - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
         Debug.DrawRay(headPos.position, playerDir);
@@ -119,6 +125,16 @@ public class enemyAI : MonoBehaviour, IDamage
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, faceTargetSpeed * Time.deltaTime);
     }
 
+    public void FacePlayerInstantly(Transform player)
+    {
+        Vector3 direction = (player.position - transform.position).normalized;
+        direction.y = 0; //Keep upright
+
+        //Rotate to face target
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation,faceTargetSpeed * Time.deltaTime);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -144,6 +160,8 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             gameManager.instance.playerScript.goldCount += goldDropped;
             gameManager.instance.updateGameGoal(-1);
+            gameManager.instance.playAudio(yellClip, transform, 0.75f, false);
+            Instantiate(deathAnim, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
         else
@@ -163,6 +181,12 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         shootTimer = 0;
 
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        Transform player = gameManager.instance.player.transform;
+        Vector3 targetPos = player.position + Vector3.up * 1f;
+        Vector3 direction = (targetPos - shootPos.position).normalized;
+
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+        Instantiate(bullet, shootPos.position, lookRotation);
     }
 }

@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - Shop
+  - EnemySpawn
+  - Enemy
+  - Key
+  - KeySpawn
+  - PlayerSpawn
   layers:
   - Default
   - TransparentFX
@@ -16,7 +21,7 @@ TagManager:
   - Enemy
   - Enemy Bullet
   - Grapple Layer
-  - 
+  - Guns
   - 
   - 
   - 
