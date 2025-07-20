@@ -284,7 +284,7 @@ public class gameManager : MonoBehaviour
                 audioSource.Play();
 
                 //assigns length of audio
-                //float clipDuration = audioSource.clip.length;
+                float clipDuration = audioSource.clip.length;
             }
 
             else if (loops == false)
@@ -300,7 +300,7 @@ public class gameManager : MonoBehaviour
                 audioSource.Play();
 
                 // assigns length of audio
-                //float clipDuration = audioSource.clip.length;
+                float clipDuration = audioSource.clip.length;
             }
         }
     }

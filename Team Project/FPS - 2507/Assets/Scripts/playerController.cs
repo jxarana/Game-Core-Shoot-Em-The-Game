@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerController : MonoBehaviour, IDamage, IInventorySystem
+public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGrappleNow
 {
     #region Fields
     [SerializeField] LayerMask ignoreLayer;
