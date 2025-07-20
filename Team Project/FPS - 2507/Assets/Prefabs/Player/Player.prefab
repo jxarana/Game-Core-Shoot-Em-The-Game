@@ -290,7 +290,7 @@ Camera:
   m_GameObject: {fileID: 1438142844478339583}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 3
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -344,10 +344,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
+  m_CameraType: 1
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
@@ -1899,7 +1899,7 @@ MonoBehaviour:
   shootRate: 0
   shootDist: 0
   magMax: 5
-  maxAmmo: 0
+  maxAmmo: 25
   mantleCheckDist: 1
   mantleHeight: 1.5
   mantleDuration: 0.3
