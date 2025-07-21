@@ -3556,12 +3556,13 @@ MonoBehaviour:
   menuUnlocks: {fileID: 246626298913885470}
   gameGoalCountText: {fileID: 3795354046611514332}
   arenaClip: {fileID: 8300000, guid: 1477e51e048525f4681ff66dac72263c, type: 3}
-  audioObject: {fileID: 1944536348276989160, guid: 9ad54e31a56e30a46a7e136dee536026, type: 3}
+  audioSource: {fileID: 3842269201780360718, guid: 3918938c1559e154e86beb5e2a2e983b, type: 3}
   goldCount: {fileID: 8505161384034060245}
   unlockCount: {fileID: 4291284252688001157}
   inMagCount: {fileID: 7520348113948273144}
   currAmmoCount: {fileID: 7293874436238846899}
   menuShop: {fileID: 3001860462188647720}
+  isShopScene: 0
   ammoBar: {fileID: 9014853722544568734}
   playerHPBar: {fileID: 835626048537812540}
   playerStaminaBar: {fileID: 7826728873713483193}
@@ -3569,8 +3570,9 @@ MonoBehaviour:
   isPaused: 0
   player: {fileID: 0}
   playerScript: {fileID: 0}
-  playerSpawnPoint: {fileID: 0}
-  playerPrefab: {fileID: 3523615374131453137, guid: f487c8c9939e95e42abd6fa80df42be5, type: 3}
+  playerPrefab: {fileID: 5912554715197378585, guid: 3733b857c0a63304bb508b93293c2e8f, type: 3}
+  keySpawnPoint: {fileID: 0}
+  keyPrefab: {fileID: 0}
   enemyPrefab: {fileID: 8724715533652853607, guid: 78138165b57f2ab4a9c071d70836f978, type: 3}
   numberOfEnemiesToSpawn: 5
 --- !u!1 &2658010754084396670

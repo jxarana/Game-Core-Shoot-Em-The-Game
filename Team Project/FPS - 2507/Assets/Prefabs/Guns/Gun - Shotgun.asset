@@ -16,8 +16,8 @@ MonoBehaviour:
   shootDamage: 10
   shootDist: 70
   shootRate: 1
-  ammoCurr: 0
+  ammoCurr: 6
   ammoMax: 6
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 8443315704496310908, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
   shootSpeed: []
   shootVol: 0.5
