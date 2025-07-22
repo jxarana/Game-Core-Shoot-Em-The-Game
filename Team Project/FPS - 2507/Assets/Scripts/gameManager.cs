@@ -203,10 +203,6 @@ public class gameManager : MonoBehaviour
          
          
          */
-        if (gameGoalCount < gameGoalCountOrig && !isShopScene)
-        {
-            spawnKey();
-        }
 
         if (gameGoalCount <= 0 && !isShopScene)
         {
@@ -303,15 +299,5 @@ public class gameManager : MonoBehaviour
                 float clipDuration = audioSource.clip.length;
             }
         }
-    }
-
-    public void spawnKey()
-    {
-        if (keyPrefab == null) return;
-
-        // Find all spawn points in the scene tagged "KeySpawn"
-        GameObject spawnObjects = GameObject.FindGameObjectWithTag("KeySpawn");
-
-        Instantiate(keyPrefab, keySpawnPoint.transform.position, keySpawnPoint.transform.rotation);
     }
 }
