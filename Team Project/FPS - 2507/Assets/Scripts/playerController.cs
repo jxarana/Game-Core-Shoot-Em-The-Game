@@ -426,9 +426,12 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     {
         if (Input.GetButtonDown("Reload"))
         {
-            gunList[gunListPos].ammoCurr = gunList[gunListPos].ammoMax;
-            magCurrent = magMax;
-            currentAmmo -= magMax;
+            if (currentAmmo > 0)
+            {
+                gunList[gunListPos].ammoCurr = gunList[gunListPos].ammoMax;
+                magCurrent = magMax;
+                currentAmmo -= magMax;
+            }
         }
     }
 
