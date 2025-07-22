@@ -112,7 +112,10 @@ public class gameManager : MonoBehaviour
         Time.timeScale = 1f;
         gameGoalCount = numberOfEnemiesToSpawn;
         gameGoalCountOrig = gameGoalCount;
-
+        if (!menuActive)
+        {
+            playAudio(arenaClip, transform, 0.1f, false);
+        }
     }
 
     // Update is called once per frame
@@ -132,15 +135,6 @@ public class gameManager : MonoBehaviour
             }
         }
 
-    }
-
-    private void FixedUpdate()
-    {
-
-        if (!menuActive)
-        {
-            playAudio(arenaClip, transform, 0.1f, false);
-        }
     }
 
     void SpawnEnemies()
