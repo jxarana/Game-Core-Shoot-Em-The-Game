@@ -111,7 +111,7 @@ public class gameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1f;
-        gameGoalCount = numberOfEnemiesToSpawn;
+        gameGoalCount += numberOfEnemiesToSpawn;
         gameGoalCountOrig = gameGoalCount;
         if (!menuActive)
         {

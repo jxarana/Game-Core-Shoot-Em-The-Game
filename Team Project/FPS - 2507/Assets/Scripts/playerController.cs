@@ -458,10 +458,13 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     {
         if (Input.GetButtonDown("Reload"))
         {
-            gunList[gunListPos].ammoCurr = gunList[gunListPos].ammoMax;
-            magCurrent = magMax;
-            currentAmmo -= magMax;
-            playerSounds.PlayOneShot(playerReloadClip[Random.Range(0, playerReloadClip.Length)], reloadVol);
+            if (currentAmmo > 0)
+            {
+                gunList[gunListPos].ammoCurr = gunList[gunListPos].ammoMax;
+                magCurrent = magMax;
+                currentAmmo -= magMax;
+		playerSounds.PlayOneShot(playerReloadClip[Random.Range(0, playerReloadClip.Length)], reloadVol);
+            }
         }
     }
 
