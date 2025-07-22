@@ -15,6 +15,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuUnlocks;
+    [SerializeField] GameObject menuTutorial;
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] AudioClip arenaClip;
 
@@ -68,7 +69,7 @@ public class gameManager : MonoBehaviour
     {
         instance = this;
 
-        // Detect whethere we're in the shop scene
+        // Detect whether we're in the shop scene
         isShopScene = SceneManager.GetActiveScene().name.Contains("Shop");
 
         // Dynamically find the player spawn point
@@ -238,6 +239,13 @@ public class gameManager : MonoBehaviour
 
 
 
+    }
+
+    public void tutorial()
+    {
+        statePause();
+        menuActive = menuTutorial;
+        menuActive.SetActive(true);
     }
 
     public void youLose()
