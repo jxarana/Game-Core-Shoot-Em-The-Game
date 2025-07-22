@@ -213,6 +213,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
         shootTimer += Time.deltaTime;
 
+        // If Grounded
         if (controller.isGrounded)
         {
             playerVel = Vector3.zero;

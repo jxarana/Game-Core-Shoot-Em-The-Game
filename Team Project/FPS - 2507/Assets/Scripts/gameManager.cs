@@ -68,7 +68,7 @@ public class gameManager : MonoBehaviour
     {
         instance = this;
 
-        // Detect whethere we're in the shop scene
+        // Detect whether we're in the shop scene
         isShopScene = SceneManager.GetActiveScene().name.Contains("Shop");
 
         // Dynamically find the player spawn point
