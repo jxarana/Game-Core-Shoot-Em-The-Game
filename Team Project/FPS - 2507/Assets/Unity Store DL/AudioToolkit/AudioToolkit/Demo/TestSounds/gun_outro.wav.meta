@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3cf7f885d89678c418b214b3042be57b
+guid: 371431195bea08743838ed7a6c728439
 AudioImporter:
   serializedVersion: 4
   format: -1
@@ -15,5 +15,5 @@ AssetOrigin:
   productId: 2679
   packageName: Audio Toolkit Free Version
   packageVersion: 12.0
-  assetPath: Assets/Unity Store DL/AudioToolkit/Demo/TestSounds/gun_loop.wav
+  assetPath: Assets/Unity Store DL/AudioToolkit/AudioToolkit/Demo/TestSounds/gun_outro.wav
   uploadId: 761856

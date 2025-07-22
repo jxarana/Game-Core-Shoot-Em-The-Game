@@ -64,9 +64,17 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     float mantleTimer;
 
     [Header("Audio Settings:")]
-    [SerializeField] AudioClip gunClip;
-    [SerializeField] AudioClip deathClip;
-
+    [SerializeField] AudioSource playerSounds;
+    [SerializeField] AudioClip[] playerSoundsClip;
+    [SerializeField] float audJumpVol;
+    [SerializeField] AudioClip[] deathClip;
+    [SerializeField] float deathVolume;
+    [SerializeField] AudioClip[] playerHurtClip;
+    [SerializeField] float hurtVol;
+    [SerializeField] AudioClip[] playerReloadClip;
+    [SerializeField] float reloadVol;
+    [SerializeField] AudioClip[] audStep;
+    [SerializeField] float audStepVol;
 
     int dashCount;
     public float dashSpeed;
@@ -122,6 +130,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     private RaycastHit wallHit;
     //------------------------------------------------------------
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    bool isPlayingStep;
 
     #endregion
 
@@ -215,6 +225,11 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
         if (controller.isGrounded)
         {
+            if(!isPlayingStep && moveDir.normalized.magnitude > 0.3f)
+            {
+                StartCoroutine(playStep());
+            }
+
             playerVel = Vector3.zero;
             jumpCount = 0;
             dashCount = 0;
@@ -241,9 +256,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         {
             if (!isGrappling && gunList.Count > 0 && gunList[gunListPos].ammoCurr > 0 && magCurrent > 0 && shootTimer > shootRate)
             {
-
                 shoot();
-                gameManager.instance.playAudio(gunClip, transform, 1f, false);
                 updatePlayerUI();
             }
             else if (!isGrappling && shootTimer > shootRate && magCurrent == 0)
@@ -280,6 +293,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         {
             playerVel.y = jumpVel;
             jumpCount++;
+            playerSounds.PlayOneShot(playerSoundsClip[Random.Range(0, playerSoundsClip.Length)], audJumpVol);
         }
         //----------------------------------------------------------------
         // Title: Full CLIMBING SYSTEM in 10 Minutes - Unity Tutorial
@@ -316,6 +330,20 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         {
             StopSprinting();
         }
+    }
+
+    IEnumerator playStep()
+    {
+        isPlayingStep = true;
+        playerSounds.PlayOneShot(audStep[Random.Range(0, audStep.Length)], audStepVol);
+
+        if (isSprinting)
+            yield return new WaitForSeconds(0.3f);
+
+        else
+            yield return new WaitForSeconds(0.5f);
+
+        isPlayingStep = false;
     }
 
     void StopSprinting()
@@ -372,6 +400,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         magCurrent--;
         gunList[gunListPos].ammoCurr--;
 
+        playerSounds.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootVol);
+
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
         {
@@ -394,11 +424,13 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
         StartCoroutine(damageFlashScreen());
 
+        playerSounds.PlayOneShot(playerHurtClip[Random.Range(0, playerHurtClip.Length)], hurtVol);
+
         if (HP <= 0)
         {
             //you dead!
             gameManager.instance.youLose();
-            gameManager.instance.playAudio(deathClip, transform, 0.75f, false);
+            playerSounds.PlayOneShot(deathClip[Random.Range(0, deathClip.Length)], deathVolume);
         }
     }
 
@@ -428,6 +460,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             gunList[gunListPos].ammoCurr = gunList[gunListPos].ammoMax;
             magCurrent = magMax;
             currentAmmo -= magMax;
+            playerSounds.PlayOneShot(playerReloadClip[Random.Range(0, playerReloadClip.Length)], reloadVol);
         }
     }
 
