@@ -15,6 +15,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuUnlocks;
+    [SerializeField] GameObject menuTutorial;
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] AudioClip arenaClip;
 
@@ -241,6 +242,13 @@ public class gameManager : MonoBehaviour
 
 
 
+    }
+
+    public void tutorial()
+    {
+        statePause();
+        menuActive = menuTutorial;
+        menuActive.SetActive(true);
     }
 
     public void youLose()
