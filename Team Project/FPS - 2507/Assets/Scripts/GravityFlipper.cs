@@ -5,6 +5,10 @@ public class RightAngleFlip : MonoBehaviour
     private Quaternion rot;
     private Vector3 origGravity;
 
+    [SerializeField] public Vector3 floor; //get the floor to keep track of level
+
+
+
     private void Start()
     {
         origGravity = Physics.gravity;

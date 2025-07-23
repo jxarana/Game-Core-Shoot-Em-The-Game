@@ -33,6 +33,7 @@ public class gameManager : MonoBehaviour
     public GameObject menuShop;
     public bool isShopScene;
 
+    [Header("Player Display")]
     public Image ammoBar;
     public Image playerHPBar;
     public Image playerStaminaBar;
@@ -41,6 +42,7 @@ public class gameManager : MonoBehaviour
     public bool isPaused;
     public GameObject player;
     public playerController playerScript;
+   
 
     float timeScaleOrig;
     float timeScaleNew;
@@ -49,16 +51,21 @@ public class gameManager : MonoBehaviour
     int gameGoalCountOrig;
     int levelCount;
 
+    [Header("Follower")]
+  
+    public GameObject followerPrefab;
+    public GameObject follower;
+    Transform followerSpawn;
 
-    // Spawn point for the player
-    Transform playerSpawnPoint;
+    [Header("Player")] 
     public GameObject playerPrefab;
+    Transform playerSpawnPoint;
 
-    // Spawn point for the key
+    [Header("Key")]
     public Transform keySpawnPoint;
     public GameObject keyPrefab;
 
-    // Randomized spawn for the enemy
+    [Header("Enemy")]
     public GameObject enemyPrefab;
     public int numberOfEnemiesToSpawn = 5;
 
