@@ -5,6 +5,10 @@ public class RightAngleFlip : MonoBehaviour
     private Quaternion rot;
     private Vector3 origGravity;
 
+    [SerializeField] public Vector3 floor; //get the floor to keep track of level
+
+
+
     private void Start()
     {
         origGravity = Physics.gravity;
@@ -31,7 +35,7 @@ public class RightAngleFlip : MonoBehaviour
         var rotationDifference = Quaternion.FromToRotation(tr.up, newUpDirection);
         tr.rotation = rotationDifference * tr.rotation;
 
-        rot = GameManager.instance.player.transform.rotation;
+        rot = gameManager.instance.player.transform.rotation;
         Physics.gravity = rot * origGravity;
     }
 }

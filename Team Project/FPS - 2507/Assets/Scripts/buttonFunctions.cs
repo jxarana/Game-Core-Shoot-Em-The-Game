@@ -34,7 +34,8 @@ public class buttonFunctions : MonoBehaviour
     {
         if (gameManager.instance.playerScript.goldCount >= 80)
         {
-            gameManager.instance.playerScript.dmgUp++;
+            
+            gameManager.instance.playerScript.upgradeableStats.dmgIncreased++;
             gameManager.instance.playerScript.goldCount -= 80;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
         }
@@ -80,39 +81,18 @@ public class buttonFunctions : MonoBehaviour
 
     
 
-    public void unlockDash() //done
-    {
-        if (gameManager.instance.playerScript.upgradePoints > 0 && !gameManager.instance.playerScript.dashReturn())
-        {
-            gameManager.instance.playerScript.dashUnlock();
-            gameManager.instance.playerScript.upgradePoints -= 1;
-        }
-    }
+  
 
-    public void unlockGrap()
-    {
-        if (gameManager.instance.playerScript.upgradePoints > 0 && !gameManager.instance.playerScript.grappleReturn())
-        {
-            gameManager.instance.playerScript.grappleUnlock();
-            gameManager.instance.playerScript.upgradePoints -= 1;
-        }
-    }
+   
 
-    public void unlockSlam()
-    {
-        if (gameManager.instance.playerScript.upgradePoints > 0 && !gameManager.instance.playerScript.slamReturn())
-        {
-            gameManager.instance.playerScript.slamUnlock();
-            gameManager.instance.playerScript.upgradePoints -= 1;
-
-        }
-    }
+    
 
     public void dashUp()
     {
         if (gameManager.instance.playerScript.goldCount >= 30)
         {
-            gameManager.instance.playerScript.dashCountUp();
+            
+            gameManager.instance.playerScript.upgradeableStats.maxDashes++;
             gameManager.instance.playerScript.goldCount -= 30;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
         }
@@ -122,7 +102,7 @@ public class buttonFunctions : MonoBehaviour
     {
         if (gameManager.instance.playerScript.goldCount >= 45)
         {
-            gameManager.instance.playerScript.jumpCountUp();
+            gameManager.instance.playerScript.upgradeableStats.maxJumps++;
             gameManager.instance.playerScript.goldCount -= 45;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
         }
@@ -132,7 +112,7 @@ public class buttonFunctions : MonoBehaviour
     {
         if (gameManager.instance.playerScript.goldCount >= 20)
         {
-            gameManager.instance.playerScript.speedUp();
+            gameManager.instance.playerScript.upgradeableStats.speed++;
             gameManager.instance.playerScript.goldCount -= 20;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
             

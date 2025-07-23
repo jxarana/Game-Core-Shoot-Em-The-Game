@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +8,7 @@ public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
-
+    [Header("General Stats")]
     [SerializeField] int HPOrig;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
@@ -14,17 +16,38 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int jumpMax;
     [SerializeField] int gravity;
     [SerializeField] int dashMax;
+    [SerializeField] int dashCd;
     [SerializeField] Transform camPivot;
     [SerializeField] float mouseSensitivity = 3f;
+    [SerializeField] public playerStats upgradeableStats;
 
     public int goldCount;
     public int upgradePoints;
-
+    [Header("Damage")]
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] int magMax;
     [SerializeField] int maxAmmo;
+    [SerializeField] List<gunStats> gunInventory = new List<gunStats>();
+    int gunListLocal;
+
+    [Header("Slam")]
+    [SerializeField] private float minSlamHeight = 3f; // distance needed to be above closest ground to slam
+    [SerializeField] private float slamForce = 30f;    //how fast the play slams down
+    [SerializeField] private float slamRadius = 5f;    
+    [SerializeField] private LayerMask enemyLayer;     
+    [SerializeField] private GameObject slamEffect;
+    [SerializeField] private int minSlamDmg;
+    [SerializeField] private int maxSlamDmg;
+    [SerializeField] int slamCD;
+    bool slaming;
+    bool canSlam;
+
+    int dashDuration = 1;
+
+    [SerializeField] public float grappleStaminaCost;
+    [SerializeField] public float staminaOrig;
 
     [SerializeField] float mantleCheckDist = 1f;
     [SerializeField] float mantleHeight = 1.5f;
@@ -35,14 +58,14 @@ public class playerController : MonoBehaviour, IDamage
     Vector3 mantleStartPos;
     Vector3 mantleEndPos;
     float mantleTimer;
-  
+
+    public float stamina;
     int dashCount;
     public float dashSpeed;
-    public float dashDuration;
-    public float dashCooldown;
+    
     float dashCooldownTimer;
     bool isDashing;
-    float dashTimeLeft;
+
     private Vector3 dashDirection;
 
 
@@ -57,34 +80,38 @@ public class playerController : MonoBehaviour, IDamage
     float shootTimer;
     float xRotation = 0f;
 
-    bool hasSlamunlocked = false;
-    bool hasDashUnlocked = false;
-    bool hasGrappleUnlocked = false;
+    
 
     
     int magCurrent;
     int currentAmmo;
-   
+
     public int dmgUp;
 
 
     public bool isGrappling;
-  
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         HP = HPOrig;
-        speedOrig = speed;
+        speedOrig = speed + upgradeableStats.speed;
         isGrappling = false;
         magCurrent = magMax;
         currentAmmo = maxAmmo;
+        dashCount = dashMax + upgradeableStats.maxDashes;
+        jumpMax = jumpMax + upgradeableStats.maxJumps;
+        stamina = staminaOrig;
+
+
+
         updatePlayerUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isMantling)
+        if (isMantling)
         {
             MantleMove();
             return;
@@ -94,7 +121,7 @@ public class playerController : MonoBehaviour, IDamage
 
         sprint();
         movement();
-        if(!controller.isGrounded && Input.GetKey(KeyCode.Space))
+        if (!controller.isGrounded && Input.GetKey(KeyCode.Space))
         {
             TryMantle();
         }
@@ -104,18 +131,27 @@ public class playerController : MonoBehaviour, IDamage
 
     void movement()
     {
-        if( isMantling)
+        if (isMantling)
         {
             return;
         }
 
         shootTimer += Time.deltaTime;
+        if (dashCount < dashMax)
+        {
+            dashCooldownTimer -= Time.deltaTime;
+            if (dashCooldownTimer <= 0) // gives the player a dash after x amount of time
+            {
+                dashCount++;
+                dashCooldownTimer = dashCd;
+            }
+        }
 
         if (controller.isGrounded)
         {
             playerVel = Vector3.zero;
             jumpCount = 0;
-            dashCount = 0;
+
         }
 
         moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
@@ -130,23 +166,34 @@ public class playerController : MonoBehaviour, IDamage
             playerVel.y -= gravity * Time.deltaTime;
         }
 
+        if (Input.GetButtonDown("Dash") && dashCount > 0) // so long as the player has a dash stack they can dash
+
+        {
+            StartCoroutine(Dash());
+        }
+
+        if(Input.GetButtonDown("Crouch / Slam") && !isMantling && !canSlam)
+        {
+
+
+        }
         if (Input.GetButtonDown("Fire1"))
         {
-            if(!isGrappling && shootTimer > shootRate && magCurrent > 0)
+            if (!isGrappling && shootTimer > shootRate && magCurrent > 0)
             {
                 shoot();
                 updatePlayerUI();
             }
-            else if(!isGrappling &&  shootTimer > shootRate && magCurrent == 0)
+            else if (!isGrappling && shootTimer > shootRate && magCurrent == 0)
             {
                 reload();
                 updatePlayerUI();
             }
         }
 
-        if(Input.GetButtonDown("Reload"))
+        if (Input.GetButtonDown("Reload"))
         {
-            if(magCurrent != magMax)
+            if (magCurrent != magMax)
             {
                 reload();
                 updatePlayerUI();
@@ -159,7 +206,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (!isMantling && Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
-            playerVel.y = jumpVel;
+            playerVel += transform.up * jumpVel;
             jumpCount++;
         }
     }
@@ -181,15 +228,15 @@ public class playerController : MonoBehaviour, IDamage
         Vector3 origin = transform.position + Vector3.up * 1f;
         Vector3 forward = transform.forward;
 
-        if(Physics.Raycast(origin,forward,out RaycastHit wallHit, mantleCheckDist,mantleLayer))
+        if (Physics.Raycast(origin, forward, out RaycastHit wallHit, mantleCheckDist, mantleLayer))
         {
             Vector3 ledgeCheckOrigin = wallHit.point + Vector3.up * mantleHeight;
-            if(Physics.Raycast(ledgeCheckOrigin,Vector3.down,out RaycastHit topHit, mantleHeight, mantleLayer))
+            if (Physics.Raycast(ledgeCheckOrigin, Vector3.down, out RaycastHit topHit, mantleHeight, mantleLayer))
             {
                 isMantling = true;
                 mantleTimer = 0f;
                 mantleStartPos = transform.position;
-                mantleEndPos = new Vector3(topHit.point.x,topHit.point.y +0.1f,topHit.point.z);
+                mantleEndPos = new Vector3(topHit.point.x, topHit.point.y + 0.1f, topHit.point.z);
             }
         }
     }
@@ -197,12 +244,12 @@ public class playerController : MonoBehaviour, IDamage
     void MantleMove()
     {
         mantleTimer += Time.deltaTime;
-        float t = mantleTimer/ mantleDuration;
+        float t = mantleTimer / mantleDuration;
         t = Mathf.Clamp01(t);
         controller.enabled = false;
-        transform.position = Vector3.Lerp(mantleStartPos,mantleEndPos,t);
+        transform.position = Vector3.Lerp(mantleStartPos, mantleEndPos, t);
 
-        if(t >= 1f)
+        if (t >= 1f)
         {
             isMantling = false;
             controller.enabled = true;
@@ -272,34 +319,16 @@ public class playerController : MonoBehaviour, IDamage
     public void replenishAmmo()
     {
         currentAmmo = maxAmmo;
-        updatePlayerUI();   
+        updatePlayerUI();
     }
 
-    void dash()
-    {
-        
-    }
-
-    public void  healhp(int ammount)
+    public void healhp(int ammount)
     {
         HP = Mathf.Min(HP + ammount, HPOrig);
         updatePlayerUI();
     }
 
-    public void dashUnlock()
-    {
-        hasDashUnlocked = true;
-    }
-
-    public void grappleUnlock()
-    {
-        hasGrappleUnlocked = true;
-    }
-
-    public void slamUnlock()
-    {
-        hasSlamunlocked = true;
-    }
+   
 
     public void dashCountUp()
     {
@@ -317,20 +346,7 @@ public class playerController : MonoBehaviour, IDamage
         speedOrig = speed;
     }
 
-    public bool dashReturn()
-    {
-        return hasDashUnlocked;
-    }
-
-    public bool grappleReturn()
-    {
-        return hasGrappleUnlocked;
-    }
-
-    public bool slamReturn() {
-
-        return hasSlamunlocked;
-    }
+   
     void handleCamera()
     {
         if (Time.timeScale <= 0f) return;
@@ -344,4 +360,82 @@ public class playerController : MonoBehaviour, IDamage
         camPivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
 
+    IEnumerator Dash()
+    {
+        isDashing = true;
+       
+        dashCount--;
+
+        float startTime = Time.time;
+
+        while (Time.time < startTime + dashDuration)
+        {
+            if (moveDir.magnitude > 0.1f) // if input detected dash in that direction
+            {
+                controller.Move(moveDir * (dashSpeed * Time.deltaTime));
+            }
+            else
+                controller.Move(-transform.forward * (dashSpeed * Time.deltaTime));
+            yield return null;
+        }
+
+
+        isDashing = false;
+    }
+
+    void slamDistCheck()
+    {
+        RaycastHit hit;
+       bool groundClose = Physics.Raycast(transform.position, Vector3.down, out hit, minSlamHeight); //want to make it scale off of distance
+
+
+        if (!groundClose) 
+        {
+            StartCoroutine(SLAM());
+        }
+    }
+
+    void slamImpact()
+    {
+            if(slamEffect != null)
+        {
+            slamEffect.SetActive(true);
+            StartCoroutine(waitSec(.7f));
+            slamEffect.SetActive(false);
+
+
+        }
+        Collider[] enemiesIn = Physics.OverlapSphere(transform.position, slamRadius, enemyLayer);
+    foreach(Collider enemy in enemiesIn)
+        {
+            if (enemy.TryGetComponent(out enemyAI Enemy))
+                Enemy.takeDamage(minSlamDmg);
+                    
+        }
+    
+    }
+
+    IEnumerator SLAM()
+    {
+        slaming = true;
+        canSlam = false;
+
+        controller.Move(Vector3.down * slamForce * Time.deltaTime);
+
+        while (!controller.isGrounded)
+        {
+            yield return null;
+        }
+
+
+        slamImpact();
+        yield return new WaitForSeconds(slamCD);
+        slaming=false;
+        canSlam=true;
+    }
+
+    IEnumerator waitSec(float secs)
+    {
+        yield return new WaitForSeconds(secs);
+    }
 }
