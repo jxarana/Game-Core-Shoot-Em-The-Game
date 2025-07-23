@@ -15,6 +15,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuUnlocks;
+    [SerializeField] GameObject menuTutorial;
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] AudioClip arenaClip;
 
@@ -68,7 +69,7 @@ public class gameManager : MonoBehaviour
     {
         instance = this;
 
-        // Detect whethere we're in the shop scene
+        // Detect whether we're in the shop scene
         isShopScene = SceneManager.GetActiveScene().name.Contains("Shop");
 
         // Dynamically find the player spawn point
@@ -104,17 +105,18 @@ public class gameManager : MonoBehaviour
             SpawnEnemies();
         }
 
-        if (!menuActive)
-        {
-            playAudio(arenaClip, transform, 0.1f, false);
-        }
+       
     }
 
     private void Start()
     {
         Time.timeScale = 1f;
-        gameGoalCount = numberOfEnemiesToSpawn;
+        gameGoalCount += numberOfEnemiesToSpawn;
         gameGoalCountOrig = gameGoalCount;
+        if (!menuActive)
+        {
+            playAudio(arenaClip, transform, 0.1f, false);
+        }
     }
 
     // Update is called once per frame
@@ -203,10 +205,6 @@ public class gameManager : MonoBehaviour
          
          
          */
-        if (gameGoalCount < gameGoalCountOrig && !isShopScene)
-        {
-            spawnKey();
-        }
 
         if (gameGoalCount <= 0 && !isShopScene)
         {
@@ -241,6 +239,13 @@ public class gameManager : MonoBehaviour
 
 
 
+    }
+
+    public void tutorial()
+    {
+        statePause();
+        menuActive = menuTutorial;
+        menuActive.SetActive(true);
     }
 
     public void youLose()
@@ -303,15 +308,5 @@ public class gameManager : MonoBehaviour
                 float clipDuration = audioSource.clip.length;
             }
         }
-    }
-
-    public void spawnKey()
-    {
-        if (keyPrefab == null) return;
-
-        // Find all spawn points in the scene tagged "KeySpawn"
-        GameObject spawnObjects = GameObject.FindGameObjectWithTag("KeySpawn");
-
-        Instantiate(keyPrefab, keySpawnPoint.transform.position, keySpawnPoint.transform.rotation);
     }
 }

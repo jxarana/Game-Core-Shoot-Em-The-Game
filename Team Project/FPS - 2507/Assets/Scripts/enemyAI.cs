@@ -10,7 +10,9 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] Animator anim;
-    [SerializeField] AudioClip yellClip;
+    [SerializeField] AudioSource enemySounds;
+    [SerializeField] AudioClip[] enemydeathClip;
+    [SerializeField] float deathVol;
     [SerializeField] ParticleSystem deathAnim;
 
     [SerializeField] int goldDropped;
@@ -160,7 +162,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             gameManager.instance.playerScript.goldCount += goldDropped;
             gameManager.instance.updateGameGoal(-1);
-            gameManager.instance.playAudio(yellClip, transform, 0.75f, false);
+            enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], deathVol);
             Instantiate(deathAnim, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }

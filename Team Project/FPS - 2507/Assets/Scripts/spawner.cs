@@ -28,7 +28,7 @@ public class spawner : MonoBehaviour
         {
             for (int i = 0; i < objectToSpawn.Length; ++i)
             {
-                Instantiate(objectToSpawn[i], transform.position, Quaternion.identity);
+                objectToSpawn[i].SetActive(true);
             }
         }
     }
