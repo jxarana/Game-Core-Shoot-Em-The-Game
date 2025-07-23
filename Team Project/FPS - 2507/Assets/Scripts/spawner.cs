@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -9,12 +11,14 @@ public class spawner : MonoBehaviour
     [SerializeField] float spawnRate;
     [SerializeField] Transform[] location;
 
+    List<Transform> spawnlocal;
     bool spawning;
     int spawned;
     float timeTracker;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        spawnlocal = new List<Transform>(location);
         gameManager.instance.updateGameGoal(howMany);
     }
 
@@ -53,9 +57,12 @@ public class spawner : MonoBehaviour
 
     void spawn()
     {
-        int arrayPos = Random.Range(0, location.Length);
+        
+       
+        
+        Instantiate(toSpawn, spawnlocal.First().transform.position, spawnlocal.First().transform.rotation);
+         spawnlocal.Remove(spawnlocal.First());
 
-        Instantiate(toSpawn, location[arrayPos].transform.position, location[arrayPos].transform.rotation);
         spawned++;
         timeTracker = 0;
     }

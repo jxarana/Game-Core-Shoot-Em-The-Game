@@ -51,11 +51,12 @@ public class gameManager : MonoBehaviour
     int gameGoalCountOrig;
     int levelCount;
 
-    [Header("Follower")]
+   /* [Header("Follower")]
   
     public GameObject followerPrefab;
     public GameObject follower;
     Transform followerSpawn;
+   */
 
     [Header("Player")] 
     public GameObject playerPrefab;

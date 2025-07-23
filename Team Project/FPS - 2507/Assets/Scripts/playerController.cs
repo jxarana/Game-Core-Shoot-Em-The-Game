@@ -17,7 +17,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int gravity;
     [SerializeField] int dashMax;
     [SerializeField] int dashCd;
-    [SerializeField] Transform camPivot;
+   // [SerializeField] Transform camPivot;
     [SerializeField] float mouseSensitivity = 3f;
     [SerializeField] public playerStats upgradeableStats;
 
@@ -174,7 +174,18 @@ public class playerController : MonoBehaviour, IDamage
 
         if(Input.GetButtonDown("Crouch / Slam") && !isMantling && !canSlam)
         {
+            RaycastHit hit;
+            bool groundClose = Physics.Raycast(transform.position, Vector3.down, out hit, minSlamHeight); //want to make it scale off of distance
 
+
+            if (!groundClose) // player is x distance above the ground so slam
+            {
+                StartCoroutine(SLAM());
+            }
+            else // not high enough, slam
+            {
+
+            }
 
         }
         if (Input.GetButtonDown("Fire1"))
@@ -357,7 +368,7 @@ public class playerController : MonoBehaviour, IDamage
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -60f, 60f);
-        camPivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+       // camPivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
 
     IEnumerator Dash()
