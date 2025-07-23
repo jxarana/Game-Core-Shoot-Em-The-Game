@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGrappleNow
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
@@ -20,6 +20,8 @@ public class playerController : MonoBehaviour, IDamage
    // [SerializeField] Transform camPivot;
     [SerializeField] float mouseSensitivity = 3f;
     [SerializeField] public playerStats upgradeableStats;
+    [SerializeField] GameObject gunModel;
+    [SerializeField] GameObject keyModel;
 
     public int goldCount;
     public int upgradePoints;
@@ -29,14 +31,14 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
     [SerializeField] int magMax;
     [SerializeField] int maxAmmo;
-    [SerializeField] List<gunStats> gunInventory = new List<gunStats>();
-    int gunListLocal;
+    [SerializeField] List<gunStats> gunList = new List<gunStats>();
+    [SerializeField] List<itemPickUp> itemList = new List<itemPickUp>();
 
     [Header("Slam")]
     [SerializeField] private float minSlamHeight = 3f; // distance needed to be above closest ground to slam
     [SerializeField] private float slamForce = 30f;    //how fast the play slams down
-    [SerializeField] private float slamRadius = 5f;    
-    [SerializeField] private LayerMask enemyLayer;     
+    [SerializeField] private float slamRadius = 5f;
+    [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private GameObject slamEffect;
     [SerializeField] private int minSlamDmg;
     [SerializeField] private int maxSlamDmg;
@@ -62,7 +64,7 @@ public class playerController : MonoBehaviour, IDamage
     public float stamina;
     int dashCount;
     public float dashSpeed;
-    
+
     float dashCooldownTimer;
     bool isDashing;
 
@@ -76,13 +78,14 @@ public class playerController : MonoBehaviour, IDamage
     int jumpCount;
     int HP;
     int speedOrig;
+    int gunListPos;
 
     float shootTimer;
     float xRotation = 0f;
 
-    
 
-    
+
+
     int magCurrent;
     int currentAmmo;
 
@@ -172,7 +175,7 @@ public class playerController : MonoBehaviour, IDamage
             StartCoroutine(Dash());
         }
 
-        if(Input.GetButtonDown("Crouch / Slam") && !isMantling && !canSlam)
+        if (Input.GetButtonDown("Crouch / Slam") && !isMantling && !canSlam)
         {
             RaycastHit hit;
             bool groundClose = Physics.Raycast(transform.position, Vector3.down, out hit, minSlamHeight); //want to make it scale off of distance
@@ -190,7 +193,7 @@ public class playerController : MonoBehaviour, IDamage
         }
         if (Input.GetButtonDown("Fire1"))
         {
-            if (!isGrappling && shootTimer > shootRate && magCurrent > 0)
+            if (!isGrappling && gunList.Count > 0 && gunList[gunListPos].ammoCurr > 0 && magCurrent > 0 && shootTimer > shootRate)
             {
                 shoot();
                 updatePlayerUI();
@@ -211,6 +214,7 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
 
+        selectGun();
     }
 
     void jump()
@@ -271,11 +275,13 @@ public class playerController : MonoBehaviour, IDamage
     {
         shootTimer = 0;
         magCurrent--;
+        gunList[gunListPos].ammoCurr--;
         RaycastHit hit;
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
         {
-            Debug.Log(hit.collider.name);
+            //Debug.Log(hit.collider.name);
+            Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
             IDamage dmg = hit.collider.GetComponent<IDamage>();
 
             if (dmg != null)
@@ -339,7 +345,7 @@ public class playerController : MonoBehaviour, IDamage
         updatePlayerUI();
     }
 
-   
+
 
     public void dashCountUp()
     {
@@ -357,7 +363,7 @@ public class playerController : MonoBehaviour, IDamage
         speedOrig = speed;
     }
 
-   
+
     void handleCamera()
     {
         if (Time.timeScale <= 0f) return;
@@ -374,7 +380,7 @@ public class playerController : MonoBehaviour, IDamage
     IEnumerator Dash()
     {
         isDashing = true;
-       
+
         dashCount--;
 
         float startTime = Time.time;
@@ -397,10 +403,10 @@ public class playerController : MonoBehaviour, IDamage
     void slamDistCheck()
     {
         RaycastHit hit;
-       bool groundClose = Physics.Raycast(transform.position, Vector3.down, out hit, minSlamHeight); //want to make it scale off of distance
+        bool groundClose = Physics.Raycast(transform.position, Vector3.down, out hit, minSlamHeight); //want to make it scale off of distance
 
 
-        if (!groundClose) 
+        if (!groundClose)
         {
             StartCoroutine(SLAM());
         }
@@ -408,7 +414,7 @@ public class playerController : MonoBehaviour, IDamage
 
     void slamImpact()
     {
-            if(slamEffect != null)
+        if (slamEffect != null)
         {
             slamEffect.SetActive(true);
             StartCoroutine(waitSec(.7f));
@@ -417,13 +423,13 @@ public class playerController : MonoBehaviour, IDamage
 
         }
         Collider[] enemiesIn = Physics.OverlapSphere(transform.position, slamRadius, enemyLayer);
-    foreach(Collider enemy in enemiesIn)
+        foreach (Collider enemy in enemiesIn)
         {
             if (enemy.TryGetComponent(out enemyAI Enemy))
                 Enemy.takeDamage(minSlamDmg);
-                    
+
         }
-    
+
     }
 
     IEnumerator SLAM()
@@ -441,12 +447,54 @@ public class playerController : MonoBehaviour, IDamage
 
         slamImpact();
         yield return new WaitForSeconds(slamCD);
-        slaming=false;
-        canSlam=true;
+        slaming = false;
+        canSlam = true;
     }
 
     IEnumerator waitSec(float secs)
     {
         yield return new WaitForSeconds(secs);
+    }
+
+    public void getItemPickUp(itemPickUp item)
+    {
+        itemList.Add(item);
+        gameManager.instance.keyPrefab = item.keyItem;
+
+        keyModel.GetComponent<MeshFilter>().sharedMesh = item.keyItem.GetComponent<MeshFilter>().sharedMesh;
+        keyModel.GetComponent<MeshRenderer>().sharedMaterial = item.keyItem.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    public void getGunStats(gunStats gun)
+    {
+        gunList.Add(gun);
+        gunListPos = gunList.Count - 1;
+
+        changeGun();
+    }
+
+    void changeGun()
+    {
+
+        shootDamage = gunList[gunListPos].shootDamage;
+        shootDist = gunList[gunListPos].shootDist;
+        shootRate = gunList[gunListPos].shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].model.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    void selectGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
+        {
+            gunListPos++;
+            changeGun();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+        {
+            gunListPos--;
+            changeGun();
+        }
     }
 }
