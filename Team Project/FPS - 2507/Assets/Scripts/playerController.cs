@@ -476,7 +476,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     void changeGun()
     {
 
-        shootDamage = gunList[gunListPos].shootDamage;
+        shootDamage = gunList[gunListPos].shootDamage + upgradeableStats.dmgIncreased;
         shootDist = gunList[gunListPos].shootDist;
         shootRate = gunList[gunListPos].shootRate;
 
