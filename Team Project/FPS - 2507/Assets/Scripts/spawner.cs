@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 
 public class spawner : MonoBehaviour
 {
-    //[SerializeField] GameObject[] objectToSpawn;  why is it an array?
+    [SerializeField] GameObject[] objectsToSpawn;
     [SerializeField] GameObject toSpawn;
     [SerializeField] int howMany;
     [SerializeField] float spawnRate;
@@ -35,18 +35,18 @@ public class spawner : MonoBehaviour
     {
         if (other.isTrigger)
             return;
-        /*
-        ICanGrappleNow spawned = other.GetComponent<ICanGrappleNow>(); what is this
+
+        ICanGrappleNow spawned = other.GetComponent<ICanGrappleNow>();
 
         if (spawned != null)
         {
-            for (int i = 0; i < objectToSpawn.Length; ++i)
+            for (int i = 0; i < objectsToSpawn.Length; ++i)
             {
-                objectToSpawn[i].SetActive(true);
+                objectsToSpawn[i].SetActive(true);
             }
-        }*/
+        }
 
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
             spawning = true;    
 
     }
