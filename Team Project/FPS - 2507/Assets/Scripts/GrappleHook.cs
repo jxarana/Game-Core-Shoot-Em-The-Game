@@ -17,7 +17,7 @@ public class GrappleHook : MonoBehaviour
     bool isGrappling;
     bool isAttached;
     Vector3 grapplePoint;
-   
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,7 +35,7 @@ public class GrappleHook : MonoBehaviour
         {
             ShootGrapple();
         }
-        
+
         if (isGrappling)
         {
             lr.enabled = true;
@@ -45,26 +45,25 @@ public class GrappleHook : MonoBehaviour
 
             if (!isAttached)
             {
-               //Drain stamina while pulling
-               if(player.stamina > 0f)
+                //Drain stamina while pulling
+                if (player.stamina > 0f)
                 {
                     player.stamina -= player.grappleStaminaCost * Time.deltaTime;
-                    player.stamina = Mathf.Clamp(player.stamina,0f, player.staminaOrig);
+                    player.stamina = Mathf.Clamp(player.stamina, 0f, player.staminaOrig);
                     player.updatePlayerUI();
-               }
+                }
 
-               //Cancel grapple if stamina depletes
-               if(player.stamina <= 0f)
+                //Cancel grapple if stamina depletes
+                if (player.stamina <= 0f)
                 {
                     StopGrappling();
                     return;
                 }
-
                 if (grappledEnemy != null)
                 {
                     //Set up to look at pleyer when grabbed by grapple
                     enemyAI enemy = grappledEnemy.GetComponent<enemyAI>();
-                    if(enemy != null)
+                    if (enemy != null)
                     {
                         enemy.FacePlayerInstantly(transform);
                     }
@@ -82,7 +81,7 @@ public class GrappleHook : MonoBehaviour
                         isAttached = true;
                         StopGrappling(); // Optional auto-stop when enemy reaches you 
                     }
-                }
+                }   
                 else
                 {
                     Vector3 direction = (grapplePoint - transform.position);
@@ -106,7 +105,7 @@ public class GrappleHook : MonoBehaviour
                 controller.Move(holdPosition);
             }
 
-            if(Input.GetButtonUp("Grapple"))
+            if (Input.GetButtonUp("Grapple"))
             {
                 StopGrappling();
             }
@@ -120,7 +119,7 @@ public class GrappleHook : MonoBehaviour
     void StopGrappling()
     {
         isGrappling = false;
-        isAttached = false; 
+        isAttached = false;
         player.isGrappling = false;
         grappledEnemy = null;
     }
@@ -137,7 +136,7 @@ public class GrappleHook : MonoBehaviour
 
 
             //Check if we hit an enemy
-            if(hit.collider.CompareTag("Enemy"))
+             if (hit.collider.CompareTag("Enemy"))
             {
                 grappledEnemy = hit.collider.transform;
                 enemyGrapplePoint = hit.point;

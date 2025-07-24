@@ -1812,7 +1812,7 @@ GameObject:
   - component: {fileID: 262309413306454914}
   m_Layer: 7
   m_Name: Homing Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1874,7 +1874,9 @@ MonoBehaviour:
   headPos: {fileID: 7495806193606243700}
   anim: {fileID: 35921773932713461}
   enemySounds: {fileID: 0}
-  enemydeathClip: []
+  enemydeathClip:
+  - {fileID: 8300000, guid: e93bb802125035f41b6b823af7151f91, type: 3}
+  - {fileID: 8300000, guid: 626ae2f1d7b8bf34181d9837315934fb, type: 3}
   deathVol: 0
   deathAnim: {fileID: 0}
   goldDropped: 40
@@ -2234,15 +2236,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8658341976030928643}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.535968, y: -0.034345776, z: 0.0033491233, w: -0.8435328}
-  m_LocalPosition: {x: -0.02, y: 0.153, z: -0.033}
+  m_LocalRotation: {x: -0.42725137, y: -0.5407591, z: -0.32361865, w: -0.6483108}
+  m_LocalPosition: {x: -0.053, y: 0.034, z: 0.024}
   m_LocalScale: {x: 0.666667, y: 0.6666669, z: 0.666667}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1412729183712153261}
   - {fileID: 5982974372941365492}
   m_Father: {fileID: 8839592385503989996}
-  m_LocalEulerAnglesHint: {x: 115.252, y: -172.68, z: -175.81}
+  m_LocalEulerAnglesHint: {x: 168.23, y: -92.93201, z: -115.759}
 --- !u!33 &3078116225415986548
 MeshFilter:
   m_ObjectHideFlags: 0

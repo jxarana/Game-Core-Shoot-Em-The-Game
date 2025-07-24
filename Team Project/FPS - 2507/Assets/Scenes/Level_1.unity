@@ -1392,9 +1392,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &31979492
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4727,6 +4727,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -4841,9 +4857,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &125060246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4857,9 +4873,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 125060242}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!4 &125629890 stripped
@@ -8788,6 +8804,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: damageRate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -9137,9 +9173,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &232573845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11566,6 +11602,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -12178,6 +12230,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -12497,6 +12565,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -13611,9 +13695,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &335474484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13627,9 +13711,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 335474480}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!1001 &335775461
@@ -22708,61 +22792,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 324391558}
   m_SourcePrefab: {fileID: 100100000, guid: 7cc215e5593f24ee1ba1cadef422b74e, type: 3}
---- !u!1 &552393566 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-  m_PrefabInstance: {fileID: 1638010238}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &552393567 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
   m_PrefabInstance: {fileID: 1638010238}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &552393571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 552393566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a791a1f3849a1941bb6597e8da0c820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  rb: {fileID: 552393572}
-  damageAmount: 25
-  damageRate: 0.25
-  speed: 0
-  destroyTime: 0
---- !u!54 &552393572
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 552393566}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!1001 &552528588
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23218,6 +23252,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -27379,9 +27429,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &688418837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27395,9 +27445,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 688418833}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!4 &691192239 stripped
@@ -27813,6 +27863,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: damageRate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -28617,6 +28687,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -33792,6 +33878,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -34989,9 +35091,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &886996306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35005,9 +35107,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 886996302}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!1001 &887720365
@@ -38557,6 +38659,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: damageRate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -40540,6 +40662,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -43061,9 +43199,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 1125492633}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!54 &1125492633
@@ -43090,9 +43228,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1125904668
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47109,6 +47247,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -50445,21 +50599,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
-    - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_Convex
+    - target: {fileID: 3200046346897856647, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200046346897856647, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: damageRate
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -50505,20 +50659,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lava Corner - 3
       objectReference: {fileID: 0}
-    - target: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_Layer
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 1364519877}
-    - targetCorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1364519878}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
 --- !u!4 &1303487125 stripped
 Transform:
@@ -52769,61 +52913,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7000771898717334763, guid: e61f0fc8f08f92046a0a55581e12ec8e, type: 3}
   m_PrefabInstance: {fileID: 1364324913}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1364519872 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-  m_PrefabInstance: {fileID: 1303296740}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1364519873 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
   m_PrefabInstance: {fileID: 1303296740}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1364519877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364519872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a791a1f3849a1941bb6597e8da0c820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  rb: {fileID: 1364519878}
-  damageAmount: 25
-  damageRate: 0.25
-  speed: 0
-  destroyTime: 0
---- !u!54 &1364519878
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364519872}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!1001 &1366739252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54468,9 +54562,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &1403910129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54484,9 +54578,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 1403910125}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!1001 &1404995126
@@ -55358,9 +55452,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 1424448556}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!54 &1424448556
@@ -55387,9 +55481,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1425396432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60476,9 +60570,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &1555022789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63006,6 +63100,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -63419,21 +63529,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
-    - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_Convex
+    - target: {fileID: 3200046346897856647, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200046346897856647, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: speed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: damageRate
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -63479,20 +63593,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lava Corner - 4
       objectReference: {fileID: 0}
-    - target: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_Layer
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      insertIndex: 2
-      addedObject: {fileID: 552393571}
-    - targetCorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 552393572}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
 --- !u!4 &1638932241 stripped
 Transform:
@@ -63705,6 +63809,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -68130,61 +68250,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2656263105470971509, guid: 61da39bf7367e8f41941c960ed0e3356, type: 3}
   m_PrefabInstance: {fileID: 1327478497619964598}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1771373204 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-  m_PrefabInstance: {fileID: 1937595816}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1771373205 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
   m_PrefabInstance: {fileID: 1937595816}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1771373209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1771373204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a791a1f3849a1941bb6597e8da0c820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  rb: {fileID: 1771373210}
-  damageAmount: 25
-  damageRate: 0.25
-  speed: 0
-  destroyTime: 0
---- !u!54 &1771373210
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1771373204}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!4 &1773495135 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7000771898717334763, guid: e61f0fc8f08f92046a0a55581e12ec8e, type: 3}
@@ -68879,6 +68949,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -69698,9 +69784,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &1818137095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72745,61 +72831,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7000771898717334763, guid: e61f0fc8f08f92046a0a55581e12ec8e, type: 3}
   m_PrefabInstance: {fileID: 1887904672}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1889309203 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-  m_PrefabInstance: {fileID: 5285035925849048638}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1889309204 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
   m_PrefabInstance: {fileID: 5285035925849048638}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1889309208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889309203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a791a1f3849a1941bb6597e8da0c820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  rb: {fileID: 1889309209}
-  damageAmount: 25
-  damageRate: 0.25
-  speed: 0
-  destroyTime: 0
---- !u!54 &1889309209
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889309203}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!1001 &1889676287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74188,9 +74224,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &1920192466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74204,9 +74240,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 1920192462}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!1 &1922366956 stripped
@@ -75014,21 +75050,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
-    - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_Convex
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200046346897856647, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200046346897856647, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: damageRate
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -75074,20 +75118,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lava Corner - 2
       objectReference: {fileID: 0}
-    - target: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_Layer
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 1771373209}
-    - targetCorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1771373210}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
 --- !u!4 &1938669712 stripped
 Transform:
@@ -76877,9 +76911,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 1990401630}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!54 &1990401630
@@ -76906,9 +76940,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1992267234
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77936,9 +77970,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &2011626015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77952,9 +77986,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 2011626011}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!4 &2015162174 stripped
@@ -79472,9 +79506,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &2061321146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79488,9 +79522,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 2061321142}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!1001 &2062324010
@@ -80762,6 +80796,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: damageRate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_Convex
       value: 1
@@ -81633,9 +81687,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &2132980049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81649,9 +81703,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  rb: {fileID: 2132980045}
+  rb: {fileID: 0}
   damageAmount: 25
-  damageRate: 0.25
+  damageRate: 1
   speed: 0
   destroyTime: 0
 --- !u!1001 &2133975449
@@ -84776,6 +84830,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1941626795096591272, guid: aee070cf938bd6248ba92367f6062327, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7102540583846776825, guid: aee070cf938bd6248ba92367f6062327, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.25
@@ -84819,6 +84877,10 @@ PrefabInstance:
     - target: {fileID: 7780580222386726909, guid: aee070cf938bd6248ba92367f6062327, type: 3}
       propertyPath: m_Name
       value: Ambush Spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780580222386726909, guid: aee070cf938bd6248ba92367f6062327, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -86098,21 +86160,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187948787}
     m_Modifications:
-    - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_Convex
+    - target: {fileID: 3035289652477594513, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200046346897856647, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200046346897856647, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435280299414899454, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999797634907358235, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447908590907249890, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
+      propertyPath: damageRate
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6758810414664152662, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8476463831864059829, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -86158,20 +86232,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lava Corner - 1
       objectReference: {fileID: 0}
-    - target: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      propertyPath: m_Layer
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 1889309208}
-    - targetCorrespondingSourceObject: {fileID: 9145019040732052751, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1889309209}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dbb1ec674b585e4b812561e05b3c99b, type: 3}
 --- !u!4 &5300597192075183392 stripped
 Transform:
