@@ -56,6 +56,21 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] float mantleDuration = 0.3f;
     [SerializeField] LayerMask mantleLayer;
 
+    [Header("Audio Settings:")]
+    [SerializeField] AudioSource playerSounds;
+    [SerializeField] AudioClip[] playerSoundsClip;
+    [SerializeField] float audJumpVol;
+    [SerializeField] AudioClip[] deathClip;
+    [SerializeField] float deathVolume;
+    [SerializeField] AudioClip[] playerHurtClip;
+    [SerializeField] float hurtVol;
+    [SerializeField] AudioClip[] playerReloadClip;
+    [SerializeField] float reloadVol;
+    [SerializeField] AudioClip[] audStep;
+    [SerializeField] float audStepVol;
+    [SerializeField] AudioClip[] audArena;
+    [SerializeField] float audArenaVol;
+
     bool isMantling = false;
     Vector3 mantleStartPos;
     Vector3 mantleEndPos;
@@ -106,7 +121,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         jumpMax = jumpMax + upgradeableStats.maxJumps;
         stamina = staminaOrig;
 
-
+        playerSounds.PlayOneShot(audArena[Random.Range(0, audArena.Length)], audArenaVol);
 
         updatePlayerUI();
     }

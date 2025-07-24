@@ -17,9 +17,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuUnlocks;
     [SerializeField] GameObject menuTutorial;
     [SerializeField] TMP_Text gameGoalCountText;
-    [SerializeField] AudioClip arenaClip;
+    //[SerializeField] AudioClip arenaClip;
 
-    public AudioSource audioSource;
+    //public AudioSource audioSource;
 
     public TMP_Text goldCount;
     public TMP_Text unlockCount;
@@ -126,10 +126,9 @@ public class gameManager : MonoBehaviour
         Time.timeScale = 1f;
         gameGoalCount += numberOfEnemiesToSpawn;
         gameGoalCountOrig = gameGoalCount;
-        if (!menuActive)
-        {
-            playAudio(arenaClip, transform, 0.1f, false);
-        }
+
+        //playAudio(arenaClip, transform, 0.1f/*, false*/);
+
     }
 
     // Update is called once per frame
@@ -299,42 +298,45 @@ public class gameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    public void playAudio(AudioClip clipAudio, Transform transform, float volume, bool loops)
-    {
-        
-        if (!menuActive)
-        {
-            if (loops == true)
-            {
-                audioSource.clip = clipAudio;
+    //public void playAudio(AudioClip clipAudio, Transform transform, float volume/*, bool loops*/)
+    //{
 
-                // assigning the volume
-                audioSource.volume = volume;
+    //    if (!menuActive)
+    //    {
+    //        //if (loops == true)
+    //        //{
+    //        audioSource.clip = clipAudio;
 
-                audioSource.loop = loops;
+    //        // assigning the volume
+    //        audioSource.volume = volume;
 
-                // plays sound
-                audioSource.Play();
+    //        //audioSource.loop = true;
 
-                //assigns length of audio
-                float clipDuration = audioSource.clip.length;
-            }
+    //        // plays sound
+    //        audioSource.Play();
 
-            else if (loops == false)
-            {
-                audioSource.clip = clipAudio;
+    //        //assigns length of audio
+    //        float clipDuration = audioSource.clip.length;
 
-                // assigning the volume
-                audioSource.volume = volume;
+    //        Destroy(gameObject, clipDuration);
+    //        //}
 
-                audioSource.loop = loops;
+    //        //else if (loops == false)
+    //        //{
+    //        //    audioSource.clip = clipAudio;
 
-                // plays sound
-                audioSource.Play();
+    //        //    // assigning the volume
+    //        //    audioSource.volume = volume;
 
-                // assigns length of audio
-                float clipDuration = audioSource.clip.length;
-            }
-        }
-    }
+    //        //    audioSource.loop = loops;
+
+    //        //    // plays sound
+    //        //    audioSource.Play();
+
+    //        //    // assigns length of audio
+    //        //    float clipDuration = audioSource.clip.length;
+    //        //}
+    //    }
+    //}
+
 }
