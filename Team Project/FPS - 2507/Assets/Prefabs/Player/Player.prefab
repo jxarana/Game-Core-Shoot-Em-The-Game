@@ -1829,7 +1829,6 @@ GameObject:
   - component: {fileID: 5278123141200158817}
   - component: {fileID: 1893535028386509548}
   - component: {fileID: 4935701214054846684}
-  - component: {fileID: -2202670824039544119}
   - component: {fileID: 7710232984674774740}
   m_Layer: 3
   m_Name: Player
@@ -1877,7 +1876,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   animator: {fileID: 5278123141200158817}
-  HPOrig: 10
+  HPOrig: 100
   speed: 5
   sprintMod: 2
   jumpVel: 12
@@ -1888,6 +1887,8 @@ MonoBehaviour:
   dashCd: 0
   mouseSensitivity: 4
   upgradeableStats: {fileID: 11400000, guid: 50c4bb82d555603478421d056b435c29, type: 2}
+  gunModel: {fileID: 960342191524212316}
+  keyModel: {fileID: 7557450296544878243}
   climbSpeed: 5
   maxClimbTime: 10
   detectLength: 15
@@ -1900,7 +1901,8 @@ MonoBehaviour:
   shootDist: 0
   magMax: 5
   maxAmmo: 50
-  gunInventory: []
+  gunList: []
+  itemList: []
   minSlamHeight: 3
   slamForce: 30
   slamRadius: 5
@@ -1924,8 +1926,38 @@ MonoBehaviour:
   mantleLayer:
     serializedVersion: 2
     m_Bits: 512
-  gunClip: {fileID: 0}
-  deathClip: {fileID: 0}
+  playerSounds: {fileID: 7710232984674774740}
+  playerSoundsClip:
+  - {fileID: 8300000, guid: b72d8cb652bb5f949a6980361c9198d4, type: 3}
+  - {fileID: 8300000, guid: 3d9e99e51814ec04eb2c8a1a13c2a63f, type: 3}
+  - {fileID: 8300000, guid: 043719f7c0b70f145b4cc6ef79ff4a77, type: 3}
+  audJumpVol: 0.5
+  deathClip:
+  - {fileID: 8300000, guid: e93bb802125035f41b6b823af7151f91, type: 3}
+  - {fileID: 8300000, guid: 626ae2f1d7b8bf34181d9837315934fb, type: 3}
+  deathVolume: 0.5
+  playerHurtClip:
+  - {fileID: 8300000, guid: 386036fddef892644978c7a77b301995, type: 3}
+  - {fileID: 8300000, guid: df3b297dd7c669f429f81c1c5c6a3ffc, type: 3}
+  - {fileID: 8300000, guid: c1cf7ce4885bfdd4ea3bac50387236b4, type: 3}
+  - {fileID: 8300000, guid: adb3ba6a3d3782a40b0f3055056ddf55, type: 3}
+  - {fileID: 8300000, guid: 084c46ce56cf0dc45b8c8a93379b04fb, type: 3}
+  - {fileID: 8300000, guid: 484f4550a25a32c4b86c0821553b1477, type: 3}
+  hurtVol: 0.5
+  playerReloadClip:
+  - {fileID: 8300000, guid: f505a312f1f8e714883d0c361309faa5, type: 3}
+  reloadVol: 0.5
+  audStep:
+  - {fileID: 8300000, guid: a39743042f2ae49438e7aec778110eaa, type: 3}
+  - {fileID: 8300000, guid: 8ab9021fb73dbb34ba8809069495d755, type: 3}
+  - {fileID: 8300000, guid: f06ffd7dc4f199246b35af15e7d16ef0, type: 3}
+  - {fileID: 8300000, guid: 11f3d6a1c34aaf54f9f00f85e049dc0a, type: 3}
+  - {fileID: 8300000, guid: af7478fd310b51947843395779f0afba, type: 3}
+  - {fileID: 8300000, guid: b17bdb294e6b4494ba418dc6754a9ffe, type: 3}
+  - {fileID: 8300000, guid: 1081bfacd4227794bb823f860df896f1, type: 3}
+  - {fileID: 8300000, guid: 8c31767935494a94393604a87fe15ce0, type: 3}
+  - {fileID: 8300000, guid: b67d6dbd29dd454478e6cce4f493cd65, type: 3}
+  audStepVol: 0.5
   dashSpeed: 0
   dashDuration: 0
   dashCooldown: 0
@@ -2107,33 +2139,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!54 &-2202670824039544119
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5912554715197378585}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!82 &7710232984674774740
 AudioSource:
   m_ObjectHideFlags: 0

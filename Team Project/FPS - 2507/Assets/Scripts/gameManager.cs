@@ -42,7 +42,7 @@ public class gameManager : MonoBehaviour
     public bool isPaused;
     public GameObject player;
     public playerController playerScript;
-   
+
 
     float timeScaleOrig;
     float timeScaleNew;
@@ -52,12 +52,12 @@ public class gameManager : MonoBehaviour
     int levelCount;
 
     [Header("Follower")]
-  
+
     public GameObject followerPrefab;
     public GameObject follower;
     Transform followerSpawn;
 
-    [Header("Player")] 
+    [Header("Player")]
     public GameObject playerPrefab;
     Transform playerSpawnPoint;
 
@@ -104,15 +104,13 @@ public class gameManager : MonoBehaviour
             playerScript.enabled = true;
             timeScaleOrig = Time.timeScale;
         }
-       
+
         if (!isShopScene)
         {
             gameGoalCount = numberOfEnemiesToSpawn;
             gameGoalCountOrig = gameGoalCount;
             SpawnEnemies();
         }
-
-       
     }
 
     private void Start()
@@ -234,15 +232,9 @@ public class gameManager : MonoBehaviour
             menuActive.SetActive(true);
         }
 
-        /*
-         *  statePause();   
-            menuActive = menuUlocks;
-            menuActive.setActive(true);
-
-
-
-
-         */
+        //statePause();
+        //menuActive = menuUlocks;
+        //menuActive.setActive(true);
 
 
 
@@ -280,7 +272,7 @@ public class gameManager : MonoBehaviour
 
     public void playAudio(AudioClip clipAudio, Transform transform, float volume, bool loops)
     {
-        
+
         if (!menuActive)
         {
             if (loops == true)
