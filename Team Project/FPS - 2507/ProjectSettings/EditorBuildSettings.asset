@@ -17,9 +17,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Shop.unity
     guid: a03694c28b0bd3049bcf33d80ea48c32
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/King Of The Ring.unity
     guid: 882995284ee27644ab0a991c3c8c3e11
+  - enabled: 0
+    path: Assets/Scenes/The Tower.unity
+    guid: 18534a9d3cf8fec439fc67c6d8b505c0
+  - enabled: 1
+    path: Assets/Scenes/Tower2.unity
+    guid: 4b520f986a3c411479532c38bb2b9f3a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

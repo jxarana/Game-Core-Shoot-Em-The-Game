@@ -497,4 +497,26 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             changeGun();
         }
     }
+
+    public void savePlayerData(out int gold, out int upgrades, out int hp, out int ammo, out int mag, out List<gunStats> guns)
+    {
+        gold = goldCount;
+        upgrades = upgradePoints;
+        hp = HP;
+        ammo = currentAmmo;
+        mag = magCurrent;
+        guns = new List<gunStats>(gunList);
+    }
+
+    public void loadPlayerData(int gold, int upgrades, int hp, int ammo, int mag, List<gunStats> guns)
+    {
+        goldCount = gold;
+        upgradePoints = upgrades;
+        HP = hp;
+        currentAmmo = ammo;
+        magCurrent = mag;
+        gunList = new List<gunStats>(guns);
+
+        updatePlayerUI();
+    }
 }

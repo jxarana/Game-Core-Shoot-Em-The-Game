@@ -51,12 +51,15 @@ public class gameManager : MonoBehaviour
     int gameGoalCountOrig;
     int levelCount;
 
-   /* [Header("Follower")]
-  
-    public GameObject followerPrefab;
-    public GameObject follower;
-    Transform followerSpawn;
-   */
+    private int savedGold, savedUpgrades, savedHP, savedAmmo, savedMag;
+    private List<gunStats> savedGuns = new();
+
+    /* [Header("Follower")]
+
+     public GameObject followerPrefab;
+     public GameObject follower;
+     Transform followerSpawn;
+    */
 
     [Header("Player")] 
     public GameObject playerPrefab;
@@ -105,6 +108,8 @@ public class gameManager : MonoBehaviour
             playerScript.enabled = true;
             timeScaleOrig = Time.timeScale;
         }
+
+        loadPlayerState();
        
         if (!isShopScene)
         {
@@ -216,6 +221,8 @@ public class gameManager : MonoBehaviour
 
         if (gameGoalCount <= 0 && !isShopScene)
         {
+            savePlayerState();
+
             // you win!
             statePause();
             int currentIndex = SceneManager.GetActiveScene().buildIndex;
@@ -248,6 +255,19 @@ public class gameManager : MonoBehaviour
 
 
     }
+
+    public void savePlayerState()
+    {
+        if (playerScript == null) return;
+        playerScript.savePlayerData(out savedGold, out savedUpgrades, out savedHP, out savedAmmo, out savedMag, out savedGuns);
+    }
+
+    public void loadPlayerState()
+    {
+        if (playerScript == null) return;
+        playerScript.loadPlayerData(savedGold, savedUpgrades, savedHP, savedAmmo, savedMag, savedGuns);
+    }
+
 
     public void tutorial()
     {
