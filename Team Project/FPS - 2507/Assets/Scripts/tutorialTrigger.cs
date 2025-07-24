@@ -42,6 +42,7 @@ public class tutorialTrigger : MonoBehaviour
         // Activate the panel only if it isn't already active and the player enters the trigger
         if (!panelActive && other.CompareTag("Player"))
         {
+            gameManager.instance.menuActive = tutorialPanel;
             tutorialPanel.SetActive(true);
             gameManager.instance.statePause();
             panelActive = true;

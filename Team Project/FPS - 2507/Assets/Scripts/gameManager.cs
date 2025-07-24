@@ -10,7 +10,7 @@ using System.Linq;
 public class gameManager : MonoBehaviour
 {
     public static gameManager instance;
-    [SerializeField] GameObject menuActive;
+    [SerializeField] public GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuLevelComplete;
     [SerializeField] GameObject menuWin;
