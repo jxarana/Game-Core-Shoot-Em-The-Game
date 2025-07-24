@@ -1987,7 +1987,7 @@ MonoBehaviour:
   grappleOrigin: {fileID: 6189849192364366802}
   grappleLayer:
     serializedVersion: 2
-    m_Bits: 4736
+    m_Bits: 640
 --- !u!95 &5278123141200158817
 Animator:
   serializedVersion: 7
