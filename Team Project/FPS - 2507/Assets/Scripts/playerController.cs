@@ -86,6 +86,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] float reloadVol;
     [SerializeField] AudioClip[] audStep;
     [SerializeField] float audStepVol;
+    [SerializeField] AudioClip[] audArena;
+    [SerializeField] float audArenaVol;
 
     bool isMantling = false;
     Vector3 mantleStartPos;
@@ -145,7 +147,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         jumpMax = jumpMax + upgradeableStats.maxJumps;
         stamina = staminaOrig;
 
-
+        playerSounds.PlayOneShot(audArena[Random.Range(0, audArena.Length)], audArenaVol);
 
         updatePlayerUI();
     }
@@ -346,7 +348,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
                 StopSprinting();
             }
         }
-        else if(Input.GetButtonUp("Sprint"))
+        else if (Input.GetButtonUp("Sprint"))
         {
             StopSprinting();
         }
