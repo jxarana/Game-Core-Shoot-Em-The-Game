@@ -2000,7 +2000,7 @@ GameObject:
   - component: {fileID: 2097330958657384162}
   - component: {fileID: 2499525177352028859}
   m_Layer: 5
-  m_Name: Mantle
+  m_Name: Climb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2054,7 +2054,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hold Space to mantle
+  m_text: Hold C to climb
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3029,7 +3029,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press Shift to sprint
+  m_text: Hold Shift to sprint
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3112,7 +3112,7 @@ GameObject:
   - component: {fileID: 4773971176789078436}
   - component: {fileID: 8345959029670161764}
   m_Layer: 5
-  m_Name: panelMantle
+  m_Name: panelClimb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4674,8 +4674,6 @@ MonoBehaviour:
   menuUnlocks: {fileID: 246626298913885470}
   menuTutorial: {fileID: 1685843538939733864}
   gameGoalCountText: {fileID: 3795354046611514332}
-  arenaClip: {fileID: 8300000, guid: 1477e51e048525f4681ff66dac72263c, type: 3}
-  audioSource: {fileID: 3842269201780360718, guid: 3918938c1559e154e86beb5e2a2e983b, type: 3}
   goldCount: {fileID: 8505161384034060245}
   unlockCount: {fileID: 4291284252688001157}
   inMagCount: {fileID: 7520348113948273144}
@@ -4689,8 +4687,6 @@ MonoBehaviour:
   isPaused: 0
   player: {fileID: 0}
   playerScript: {fileID: 0}
-  followerPrefab: {fileID: 0}
-  follower: {fileID: 0}
   playerPrefab: {fileID: 5912554715197378585, guid: 3733b857c0a63304bb508b93293c2e8f, type: 3}
   keySpawnPoint: {fileID: 0}
   keyPrefab: {fileID: 0}
@@ -9548,9 +9544,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 6d66b648a0ac5d946bedd499f2a42ad0, type: 3}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: 
+      - m_Target: {fileID: 2002727072361076403}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
+        m_MethodName: loadNextLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12857,7 +12853,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press Space to jump
+  m_text: 'Press Space to jump
+
+
+    Hold Space to Mantle'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
