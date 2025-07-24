@@ -4,7 +4,7 @@ using UnityEngine;
 public class ambushSpawner : MonoBehaviour
 {
     [SerializeField] GameObject objectToSpawn;
-    [SerializeField] int spawnAmount;
+    [SerializeField] public int spawnAmount;
     [SerializeField] int spawnRate;
     [SerializeField] Transform[] spawnPos;
 

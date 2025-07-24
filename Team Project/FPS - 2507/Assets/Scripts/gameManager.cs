@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Unity.VisualScripting;
+using System.Linq;
 
 public class gameManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuUnlocks;
     [SerializeField] GameObject menuTutorial;
     [SerializeField] TMP_Text gameGoalCountText;
+    [SerializeField] GameObject[] toughEnemies;
     //[SerializeField] AudioClip arenaClip;
 
     //public AudioSource audioSource;
@@ -113,7 +115,7 @@ public class gameManager : MonoBehaviour
        
         if (!isShopScene)
         {
-            gameGoalCount = numberOfEnemiesToSpawn;
+            gameGoalCount = numberOfEnemiesToSpawn + toughEnemies.Count();
             gameGoalCountOrig = gameGoalCount;
             SpawnEnemies();
         }
@@ -124,8 +126,6 @@ public class gameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1f;
-        gameGoalCount += numberOfEnemiesToSpawn;
-        gameGoalCountOrig = gameGoalCount;
 
         //playAudio(arenaClip, transform, 0.1f/*, false*/);
 
