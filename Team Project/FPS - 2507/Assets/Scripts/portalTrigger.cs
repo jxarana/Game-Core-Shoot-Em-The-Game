@@ -18,6 +18,7 @@ public class portalTrigger : MonoBehaviour
             if (nextIndex < SceneManager.sceneCountInBuildSettings)
             {
                 SceneManager.LoadScene(nextIndex);
+                gameManager.instance.stateUnpause();
             }
             else
             {

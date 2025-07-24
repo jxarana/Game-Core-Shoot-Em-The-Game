@@ -18,6 +18,7 @@ public class buttonFunctions : MonoBehaviour
     {
         int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextIndex);
+        gameManager.instance.stateUnpause();
     }
 
     public void quit()

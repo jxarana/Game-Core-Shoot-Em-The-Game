@@ -1878,7 +1878,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e93bb802125035f41b6b823af7151f91, type: 3}
   - {fileID: 8300000, guid: 626ae2f1d7b8bf34181d9837315934fb, type: 3}
   deathVol: 0
-  deathAnim: {fileID: 0}
+  deathAnim: {fileID: 417761080263594739, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4, type: 3}
   goldDropped: 40
   HP: 20
   fov: 90
