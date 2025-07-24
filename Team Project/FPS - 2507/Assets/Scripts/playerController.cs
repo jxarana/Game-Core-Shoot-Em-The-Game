@@ -464,7 +464,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         gameManager.instance.ammoBar.fillAmount = (float)magCurrent / magMax;
         gameManager.instance.inMagCount.text = magCurrent.ToString();
         gameManager.instance.currAmmoCount.text = currentAmmo.ToString();
-
+        gameManager.instance.goldCountUI.text = goldCount.ToString();
 
     }
 

@@ -24,6 +24,7 @@ public class gameManager : MonoBehaviour
     //public AudioSource audioSource;
 
     public TMP_Text goldCount;
+    public TMP_Text goldCountUI;
     public TMP_Text unlockCount;
 
     public TMP_Text inMagCount;
