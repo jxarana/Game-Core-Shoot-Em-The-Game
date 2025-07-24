@@ -100,7 +100,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void jumpUp()
     {
-        if (gameManager.instance.playerScript.goldCount >= 45)
+        if (gameManager.instance.playerScript.goldCount >= 45 && gameManager.instance.playerScript.upgradeableStats.maxJumps < 5)
         {
             gameManager.instance.playerScript.upgradeableStats.maxJumps++;
             gameManager.instance.playerScript.goldCount -= 45;
