@@ -1,23 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class openShop : MonoBehaviour
-{
-    //[SerializeField] AudioClip audioClip;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            gameManager.instance.openShop();
-            //gameManager.instance.playAudio(audioClip, transform, 1f, false);
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:726f34c9ab520994842cf7c67105b5ee90af7c8ac546914044bff6fa685f335f
+size 550
