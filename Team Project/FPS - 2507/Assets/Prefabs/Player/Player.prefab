@@ -1218,6 +1218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fddd937acaefa7f48938c083d770f61a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalCam: {fileID: 0}
+  aimCam: {fileID: 0}
   controller: {fileID: 1893535028386509548}
   ignoreLayer:
     serializedVersion: 2
