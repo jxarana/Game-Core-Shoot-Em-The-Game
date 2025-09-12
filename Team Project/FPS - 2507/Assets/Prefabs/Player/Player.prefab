@@ -1236,6 +1236,7 @@ MonoBehaviour:
   dashMax: 0
   deathDepth: 0
   dashCd: 0
+  followTarget: {fileID: 0}
   mouseSensitivity: 4
   upgradeableStats: {fileID: 11400000, guid: 50c4bb82d555603478421d056b435c29, type: 2}
   gunModel: {fileID: 0}
