@@ -350,37 +350,6 @@ Transform:
   - {fileID: 3543606100715810040}
   m_Father: {fileID: 7020239632395073295}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1549704037486458986
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 676699194001176315}
-  m_Layer: 0
-  m_Name: Follow Target
-  m_TagString: followTarget
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &676699194001176315
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1549704037486458986}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7382621467077303140}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1579038396391091562
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,9 +525,9 @@ GameObject:
   - component: {fileID: 245888907750734903}
   - component: {fileID: 5326411333724364576}
   - component: {fileID: 9039418324803157455}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Heraklios By A. Dizon 1
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -577,7 +546,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1505566604748340623}
-  - {fileID: 676699194001176315}
   - {fileID: 3014946090067512245}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -657,40 +625,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   playerSounds: {fileID: 9039418324803157455}
-  playerSoundsClip:
-  - {fileID: 8300000, guid: b72d8cb652bb5f949a6980361c9198d4, type: 3}
-  - {fileID: 8300000, guid: 3d9e99e51814ec04eb2c8a1a13c2a63f, type: 3}
-  - {fileID: 8300000, guid: 043719f7c0b70f145b4cc6ef79ff4a77, type: 3}
-  audJumpVol: 0.5
-  deathClip:
-  - {fileID: 8300000, guid: e93bb802125035f41b6b823af7151f91, type: 3}
-  - {fileID: 8300000, guid: 626ae2f1d7b8bf34181d9837315934fb, type: 3}
-  deathVolume: 0.5
-  playerHurtClip:
-  - {fileID: 8300000, guid: 386036fddef892644978c7a77b301995, type: 3}
-  - {fileID: 8300000, guid: df3b297dd7c669f429f81c1c5c6a3ffc, type: 3}
-  - {fileID: 8300000, guid: c1cf7ce4885bfdd4ea3bac50387236b4, type: 3}
-  - {fileID: 8300000, guid: adb3ba6a3d3782a40b0f3055056ddf55, type: 3}
-  - {fileID: 8300000, guid: 084c46ce56cf0dc45b8c8a93379b04fb, type: 3}
-  - {fileID: 8300000, guid: 484f4550a25a32c4b86c0821553b1477, type: 3}
-  hurtVol: 0.5
-  playerReloadClip:
-  - {fileID: 8300000, guid: f505a312f1f8e714883d0c361309faa5, type: 3}
-  reloadVol: 0.5
-  audStep:
-  - {fileID: 8300000, guid: a39743042f2ae49438e7aec778110eaa, type: 3}
-  - {fileID: 8300000, guid: 8ab9021fb73dbb34ba8809069495d755, type: 3}
-  - {fileID: 8300000, guid: f06ffd7dc4f199246b35af15e7d16ef0, type: 3}
-  - {fileID: 8300000, guid: 11f3d6a1c34aaf54f9f00f85e049dc0a, type: 3}
-  - {fileID: 8300000, guid: af7478fd310b51947843395779f0afba, type: 3}
-  - {fileID: 8300000, guid: b17bdb294e6b4494ba418dc6754a9ffe, type: 3}
-  - {fileID: 8300000, guid: 1081bfacd4227794bb823f860df896f1, type: 3}
-  - {fileID: 8300000, guid: 8c31767935494a94393604a87fe15ce0, type: 3}
-  - {fileID: 8300000, guid: b67d6dbd29dd454478e6cce4f493cd65, type: 3}
-  audStepVol: 0.5
-  audArena:
-  - {fileID: 8300000, guid: 1477e51e048525f4681ff66dac72263c, type: 3}
-  audArenaVol: 0.5
+  playerSoundsClip: []
+  audJumpVol: 0
+  deathClip: []
+  deathVolume: 0
+  playerHurtClip: []
+  hurtVol: 0
+  playerReloadClip: []
+  reloadVol: 0
+  audStep: []
+  audStepVol: 0
+  audArena: []
+  audArenaVol: 0
   dashSpeed: 0
   dashDuration: 0
   dashCooldown: 0
@@ -768,14 +714,14 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937163909716993120}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 870cca0af6db9d24fad7b12488826219, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 2faa610713d3b3c439473daa55e8c60a, type: 3}
   m_Controller: {fileID: 9100000, guid: 7a3d187b6b2495044ba1797b51c5a06c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
+  m_AnimatePhysics: 1
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
