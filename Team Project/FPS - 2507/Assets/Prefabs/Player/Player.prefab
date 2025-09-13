@@ -1181,9 +1181,9 @@ GameObject:
   - component: {fileID: 1893535028386509548}
   - component: {fileID: 4935701214054846684}
   - component: {fileID: 7710232984674774740}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2160,7 +2160,7 @@ GameObject:
   - component: {fileID: 4947049772307681826}
   m_Layer: 3
   m_Name: Follow Target
-  m_TagString: Untagged
+  m_TagString: followTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
