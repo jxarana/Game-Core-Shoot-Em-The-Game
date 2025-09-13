@@ -18,7 +18,16 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuTutorial;
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] AudioClip arenaClip;
+    [SerializeField] GameObject MainMenu;
+    [SerializeField] GameObject CreditsMenu;
+    [SerializeField] GameObject settingsMenu;
+    [SerializeField] public settings gameSettings;
+    [SerializeField] public AudioSource buttonSource;
+    [SerializeField] public AudioSource menuMusicSource;
 
+    public AudioClip bought;
+    public AudioClip menuMusic;
+    public AudioClip buttonClip;
     public AudioSource audioSource;
 
     public TMP_Text goldCount;
@@ -26,6 +35,14 @@ public class gameManager : MonoBehaviour
 
     public TMP_Text inMagCount;
     public TMP_Text currAmmoCount;
+
+
+    [SerializeField] TMP_Text musicVal;
+    [SerializeField] TMP_Text menueffectVal;
+    [SerializeField] TMP_Text soundEffectVal;
+    [SerializeField] public Slider music;
+    [SerializeField] public Slider menuEffects;
+    [SerializeField] public Slider soundEffects;
 
 
 
@@ -50,6 +67,11 @@ public class gameManager : MonoBehaviour
     int gameGoalCount;
     int gameGoalCountOrig;
     int levelCount;
+
+    [Header("Menu Scenes")]
+    bool isMenuScene;
+    string[] menuScenes = { "MainMenu", "Settings", "Credits" };
+    
 
    /* [Header("Follower")]
   
@@ -118,7 +140,44 @@ public class gameManager : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 1f;
+        string currentScene = SceneManager.GetActiveScene().name;
+        bool isMenuScene = System.Array.Exists(menuScenes, scene => scene == currentScene);
+
+        if (isMenuScene)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            ammoBar.enabled = false;
+            playerHPBar.enabled = false;
+            playerStaminaBar.enabled = false;
+            
+            keyPrefab = null;
+            keySpawnPoint = null;
+            playerPrefab = null;
+            gameGoalCountText.enabled = false;
+
+            if(currentScene == "MainMenu")
+            {
+                menuActive = MainMenu;
+                menuActive.SetActive(true);
+            }
+            
+        }
+        else
+        {
+            menuActive = null;
+            menuActive.SetActive(false);
+            ammoBar.enabled = true;
+            playerHPBar.enabled = true;
+            playerStaminaBar.enabled = true;
+        }
+
+        menuMusicSource.volume = gameSettings.musicAudio;
+        buttonSource.volume = gameSettings.menuAudio;
+
+
+            Time.timeScale = 1f;
         gameGoalCount += numberOfEnemiesToSpawn;
         gameGoalCountOrig = gameGoalCount;
         if (!menuActive)
@@ -143,6 +202,19 @@ public class gameManager : MonoBehaviour
                 stateUnpause();
             }
         }
+
+        menueffectVal.text = menuEffects.value.ToString();
+        musicVal.text = music.value.ToString();
+        soundEffectVal.text = soundEffects.value.ToString();
+
+        if (menuActive != null)
+        {
+            
+            menuMusicSource.clip = menuMusic;
+            menuMusicSource.Play();
+        }
+
+
 
     }
 
@@ -197,6 +269,41 @@ public class gameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;
+    }
+
+    public void displayMainMenu()
+    {
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            menuActive = MainMenu;
+            menuActive.SetActive(true);
+        }
+        else
+            SceneManager.LoadScene("MainMenu");
+    }
+
+    public void creditsDisplay()
+    {
+        menuActive = CreditsMenu;
+        menuActive.SetActive(true);
+    }
+
+    public void settingsDisplay()
+    {
+        music.value = gameSettings.musicAudio;
+        menuEffects.value = gameSettings.menuAudio;
+        soundEffects.value = gameSettings.effectsAudio;
+        menuActive = settingsMenu;
+        menuActive.SetActive(true);
+    }
+
+    public void save()
+    {
+        gameSettings.effectsAudio = (int)soundEffects.value;
+        gameSettings.menuAudio = (int)menuEffects.value;
+        gameSettings.musicAudio = (int)music.value;
+        menuMusicSource.volume = music.value;
+        buttonSource.volume = menuEffects.value;
     }
 
     public void updateGameGoal(int amount)

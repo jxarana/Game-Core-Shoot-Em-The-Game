@@ -22,6 +22,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] public playerStats upgradeableStats;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject keyModel;
+    List<powerUps> activePowerUps = new List<powerUps>();
 
     public int goldCount;
     public int upgradePoints;
@@ -496,5 +497,36 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             gunListPos--;
             changeGun();
         }
+    }
+
+
+
+    public void getPowerUp(powerUps power)
+    {
+        if (power != null)
+        {
+            // Apply the power-up effect
+            power.ApplyEffect(gameObject);
+
+            // Add to active power-ups list if it has duration
+            if (power.duration > 0)
+            {
+                activePowerUps.Add(power);
+                StartCoroutine(RemovePowerUpAfterDuration(power, power.duration));
+            }
+
+
+
+        }
+    private IEnumerator RemovePowerUpAfterDuration(powerUps powerUp, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        // Remove effect and clean up
+        powerUp.RemoveEffect(gameObject);
+        activePowerUps.Remove(powerUp);
+
+        // Show expiration notification
+        Debug.Log(powerUp.powerUpName + " has expired!");
     }
 }

@@ -4,7 +4,7 @@ using System.Collections;
 public class damage : MonoBehaviour
 {
 
-    enum damagetype { moving, stationary, DOT, homing }
+    enum damagetype { moving, stationary, DOT, homing, junk }
     [SerializeField] damagetype type;
     [SerializeField] Rigidbody rb;
 
@@ -22,7 +22,7 @@ public class damage : MonoBehaviour
         {
             Destroy(gameObject, destroyTime);
 
-            if (type == damagetype.moving)
+            if (type == damagetype.moving || type == damagetype.junk)
             {
                 rb.linearVelocity = transform.forward * speed;
             }
@@ -53,6 +53,11 @@ public class damage : MonoBehaviour
         if (type == damagetype.moving || type == damagetype.homing)
         {
             Destroy(gameObject);
+        }
+
+        if(type == damagetype.junk)
+        {
+
         }
     }
 

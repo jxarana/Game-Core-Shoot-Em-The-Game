@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class inventorySystem : MonoBehaviour
 {
-    enum itemtype { shotgun, pistol, rifle, useableItem, statusEffect }
+    enum itemtype { shotgun, pistol, rifle, useableItem, statusEffect, powerUp }
     [SerializeField] itemtype type;
     [SerializeField] gunStats gun;
     [SerializeField] itemPickUp item;
+    [SerializeField] powerUps powerUp;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -36,5 +37,13 @@ public class inventorySystem : MonoBehaviour
             pickUppable.getItemPickUp(item);
             Destroy(gameObject);
         }
+
+        else if(pickUppable != null && type == itemtype.powerUp)
+            if (powerUp != null)
+        {
+            pickUppable.getPowerUp(powerUp);
+            Destroy(gameObject);
+        }
+
     }
 }
