@@ -1220,6 +1220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalCam: {fileID: 0}
   aimCam: {fileID: 0}
+  reticle: {fileID: 0}
   controller: {fileID: 1893535028386509548}
   ignoreLayer:
     serializedVersion: 2
