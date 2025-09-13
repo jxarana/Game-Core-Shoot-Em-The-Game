@@ -1231,8 +1231,8 @@ MonoBehaviour:
     m_Bits: 512
   animator: {fileID: 5278123141200158817}
   HPOrig: 10000
-  speed: 5
-  sprintMod: 2
+  speed: 2
+  sprintMod: 5
   jumpVel: 12
   jumpMax: 1
   gravity: 30
