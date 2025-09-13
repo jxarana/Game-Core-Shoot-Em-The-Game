@@ -1148,7 +1148,7 @@ MonoBehaviour:
   mantleDuration: 0.3
   mantleLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 640
   playerSounds: {fileID: 9039418324803157455}
   playerSoundsClip:
   - {fileID: 8300000, guid: b72d8cb652bb5f949a6980361c9198d4, type: 3}
@@ -1207,10 +1207,10 @@ MonoBehaviour:
   maxGrappleDistance: 40
   player: {fileID: 233046342528062986}
   lr: {fileID: 5326411333724364576}
-  grappleOrigin: {fileID: 0}
+  grappleOrigin: {fileID: 7707877735051597545}
   grappleLayer:
     serializedVersion: 2
-    m_Bits: 640
+    m_Bits: 512
 --- !u!114 &8678370509635812478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1298,7 +1298,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: d9ce142dffd15e04288cfea86bc4b963, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1324,7 +1324,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -2073,6 +2073,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7707877735051597545}
   - {fileID: 1954532516895906837}
   - {fileID: 4176166603974261810}
   - {fileID: 6121194685019466993}
@@ -2590,6 +2591,37 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00095796585, y: -0.08340442, z: 0.009245694}
     m_Extent: {x: 0.8527266, y: 0.9672258, z: 0.2500424}
   m_DirtyAABB: 0
+--- !u!1 &4854338831683796114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7707877735051597545}
+  m_Layer: 0
+  m_Name: GrappleOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7707877735051597545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4854338831683796114}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5000668, y: -0.5000672, z: 0.49993226, w: -0.4999339}
+  m_LocalPosition: {x: -0.041, y: 0.052, z: -0.11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5191214530992937930}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4932628815931566336
 GameObject:
   m_ObjectHideFlags: 0
