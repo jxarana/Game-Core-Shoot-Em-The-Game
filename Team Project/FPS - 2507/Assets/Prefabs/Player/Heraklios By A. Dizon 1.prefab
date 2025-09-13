@@ -1184,6 +1184,7 @@ MonoBehaviour:
   audArena:
   - {fileID: 8300000, guid: 1477e51e048525f4681ff66dac72263c, type: 3}
   audArenaVol: 0.5
+  centerOfMass: {fileID: 1267093447170283302}
   dashSpeed: 0
   dashDuration: 0
   dashCooldown: 0
