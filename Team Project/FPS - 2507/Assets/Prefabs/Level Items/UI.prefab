@@ -4695,7 +4695,7 @@ MonoBehaviour:
   isPaused: 0
   player: {fileID: 0}
   playerScript: {fileID: 0}
-  playerPrefab: {fileID: 5912554715197378585, guid: 3733b857c0a63304bb508b93293c2e8f, type: 3}
+  playerPrefab: {fileID: 1937163909716993120, guid: 038b591d09a690d4ebbac3ff207f1abf, type: 3}
   keySpawnPoint: {fileID: 0}
   keyPrefab: {fileID: 0}
   enemyPrefab: {fileID: 8724715533652853607, guid: 78138165b57f2ab4a9c071d70836f978, type: 3}
@@ -5411,7 +5411,7 @@ GameObject:
   - component: {fileID: 6738392628778884040}
   m_Layer: 5
   m_Name: Reticle
-  m_TagString: Untagged
+  m_TagString: Reticle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
