@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1925341705704cbf35a848d45af7de060f43b8f5957aa2a7d366b1f33e6d9eb3
-size 591
+using Unity.Cinemachine;
+using UnityEngine;
+
+public class AutoAddPlayerToVcamTargets : MonoBehaviour
+{
+    public string Tag = string.Empty;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        var vcam = GetComponent<CinemachineVirtualCameraBase>();
+        if (vcam != null && Tag.Length >0)
+        {
+            var target = GameObject.FindGameObjectWithTag(Tag);
+            if(target != null)
+            {
+                vcam.Follow = target.transform;
+            }
+        }
+    }
+}
