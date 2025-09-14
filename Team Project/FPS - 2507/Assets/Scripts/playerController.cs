@@ -1,16 +1,25 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
+//using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGrappleNow
 {
+    public static playerController instance;
+
+    [Header("Cameras")]
+    [SerializeField] CinemachineCamera normalCam;
+    [SerializeField] CinemachineCamera aimCam;
+
+    [SerializeField] GameObject reticle;
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] Transform orientation;
     [SerializeField] LayerMask wallLayer;
-    [SerializeField] Animator animator;
+    [SerializeField] public Animator animator;
     [Header("General Stats")]
     [SerializeField] int HPOrig;
     [SerializeField] int speed;
@@ -21,6 +30,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] int dashMax;
     [SerializeField] int deathDepth; // Set the height that the player can fall to before dieing
     [SerializeField] int dashCd;
+    [SerializeField] Transform followTarget;
     //[SerializeField] Transform camPivot;
     [SerializeField] float mouseSensitivity = 3f;
     [SerializeField] public playerStats upgradeableStats;
@@ -89,6 +99,18 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] AudioClip[] audArena;
     [SerializeField] float audArenaVol;
 
+    [Header("Crouch")]
+    [SerializeField] private float crouchHeight;
+    [SerializeField] private Vector3 crouchPosition = new(0, 0.595f, 0);
+    [SerializeField] private float crouchingSpeed = 7f;
+    private float height;
+    private Vector3 center;
+    private bool crouched;
+
+    public float crouchSpeed = 1.0f;
+
+    public Rigidbody centerOfMass;
+
     bool isMantling = false;
     Vector3 mantleStartPos;
     Vector3 mantleEndPos;
@@ -110,6 +132,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     int HP;
     int speedOrig;
     int gunListPos;
+    bool IsDead;
 
     float shootTimer;
     float xRotation = 0f;
@@ -130,6 +153,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
     bool isPlayingStep;
 
+    private Rigidbody[] ragdollRigidBodies;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -146,10 +170,24 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         dashCount = dashMax + upgradeableStats.maxDashes;
         jumpMax = jumpMax + upgradeableStats.maxJumps;
         stamina = staminaOrig;
-
+        followTarget = GameObject.FindGameObjectWithTag("followTarget").transform;
         playerSounds.PlayOneShot(audArena[Random.Range(0, audArena.Length)], audArenaVol);
+        normalCam = GameObject.FindGameObjectWithTag("NormalCam").GetComponent<CinemachineCamera>();
+        aimCam = GameObject.FindGameObjectWithTag("AimCam").GetComponent<CinemachineCamera>();
+        reticle = GameObject.FindGameObjectWithTag("Reticle");
+        reticle.SetActive(false);
+        normalCam.Priority = 10;
+        aimCam.Priority = 5;
+        center = controller.center;
+        height = controller.height;
 
         updatePlayerUI();
+    }
+
+    void Awake()
+    {
+        ragdollRigidBodies = GetComponentsInChildren<Rigidbody>();
+        disableRagdoll();
     }
 
     // Update is called once per frame
@@ -174,10 +212,11 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             return;
         }
 
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+        //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
 
         sprint();
         movement();
+        Aim();
         if (!controller.isGrounded && Input.GetKey(KeyCode.Space))
         {
             TryMantle();
@@ -186,7 +225,18 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
         wallCheck();
         stateMachine();
+        updateColliders();
 
+        if (Input.GetKey(KeyCode.V))
+        {
+            crouched = true;
+            animator.SetBool("IsCrouched", true);
+        }
+        if(Input.GetKeyUp(KeyCode.V))
+        {
+            crouched = false;
+            animator.SetBool("IsCrouched", false);
+        }
     }
 
     private void stateMachine()
@@ -219,15 +269,30 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
     void movement()
     {
-        // Player instantly dies if he falls to a certain depth on the map
-        if (gameObject.transform.position.y <= deathDepth)
+        if (IsDead)
         {
-            gameManager.instance.youLose();
+            return;
         }
+
+        if(!controller.enabled)
+        {
+                       return;
+        }
+
+        // Player instantly dies if he falls to a certain depth on the map
+        //if (gameObject.transform.position.y <= deathDepth)
+        //{
+        //    gameManager.instance.youLose();
+        //}
 
         if (isMantling)
         {
             return;
+        }
+
+        if (isSprinting)
+        {
+            crouched = false;
         }
 
         shootTimer += Time.deltaTime;
@@ -253,14 +318,60 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             dashCount = 0;
 
         }
+        // Get Input
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-        moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
-        controller.Move(moveDir * speed * Time.deltaTime);
+        // Camera yaw (from FollowTarget)
+        Vector3 camForward = followTarget.forward;
+        Vector3 camRight = followTarget.right;
 
-        float horizontalMovement = Input.GetAxis("Horizontal");
-        float verticalMovement = Input.GetAxis("Vertical");
-        animator.SetFloat("Horizontal", horizontalMovement);
-        animator.SetFloat("Vertical", verticalMovement);
+        // Flatten to XZ plane
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        // Combine movement relative to camera
+        moveDir = camForward * vertical + camRight * horizontal;
+
+        // If there is input, rotate the player to face camera forward
+        if (moveDir.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(camForward, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * 10f);
+        }
+
+        // Apply movement
+        if (moveDir.magnitude > 0.1f)
+        {
+            controller.Move(moveDir * speed * Time.deltaTime);
+        }
+
+        if (moveDir != Vector3.zero)
+        {
+            animator.SetBool("IsMoving", true);
+        }
+        else
+        {
+            animator.SetBool("IsMoving", false);
+        }
+
+            Vector3 localMove = transform.InverseTransformDirection(moveDir);
+
+        localMove.Normalize();
+
+        float animVertical = localMove.z;
+        float animHorizontal = localMove.x;
+
+        if (isSprinting && vertical > 0f)
+        {
+            animVertical = 2f;
+        }
+
+        // Set animation
+        animator.SetFloat("Horizontal", animHorizontal);
+        animator.SetFloat("Vertical", animVertical);
 
 
         jump();
@@ -310,20 +421,74 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         {
             climbingMovement();
         }
+
+        //if (Input.GetKey(KeyCode.V))
+        //{
+        //    animator.SetBool("IsCrouched", crouched);
+        //}
+    }
+
+    private void updateColliders()
+    {
+        Vector3 tCenter = center;
+        float tHeight = height;
+
+        if (crouched)
+        {
+            tCenter = crouchPosition;
+            tHeight = crouchHeight;
+        }
+
+        controller.height = Mathf.Lerp(controller.height, tHeight, crouchingSpeed * Time.deltaTime);
+        controller.center = Vector3.Lerp(controller.center, tCenter, crouchingSpeed * Time.deltaTime);
     }
 
     void jump()
     {
-        if (!isMantling && Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+        if (!isMantling && Input.GetButtonDown("Jump") && jumpCount < jumpMax && !animator.IsInTransition(0))
         {
-            playerVel += transform.up * jumpVel;
-            jumpCount++;
-            playerSounds.PlayOneShot(playerSoundsClip[Random.Range(0, playerSoundsClip.Length)], audJumpVol);
+            if (!crouched)
+            {
+                playerVel += transform.up * jumpVel;
+                jumpCount++;
+                playerSounds.PlayOneShot(playerSoundsClip[Random.Range(0, playerSoundsClip.Length)], audJumpVol);
+                animator.SetTrigger("Jump");
+
+                if (isSprinting == true)
+                {
+                    animator.SetBool("IsRunning", true);
+                }
+                else
+                {
+                    animator.SetBool("IsRunning", false);
+                }
+            }
+
+            else if(crouched)
+            {
+                crouched = false;
+            }
         }
 
         if (isClimbing)
         {
             climbingMovement();
+        }
+    }
+
+    private void Aim()
+    {
+        if (Input.GetButton("Aim"))
+        {
+            normalCam.gameObject.SetActive(false);
+            aimCam.gameObject.SetActive(true);
+            reticle.SetActive(true);
+        }
+        if (Input.GetButtonUp("Aim"))
+        {
+            normalCam.gameObject.SetActive(true);
+            aimCam.gameObject.SetActive(false);
+            reticle.SetActive(false);
         }
     }
 
@@ -452,7 +617,9 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         if (HP <= 0)
         {
             //you dead!
-            gameManager.instance.youLose();
+            IsDead = true;
+            enableRagdoll();
+            StartCoroutine(activateLoseMenuAfterDelay(3f));
             playerSounds.PlayOneShot(deathClip[Random.Range(0, deathClip.Length)], deathVolume);
         }
     }
@@ -735,5 +902,45 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         gunList = new List<gunStats>(guns);
 
         updatePlayerUI();
+    }
+
+    private void disableRagdoll()
+    {
+        foreach (var rigidbody in ragdollRigidBodies)
+        {
+            rigidbody.isKinematic = true;
+        }
+
+        animator.enabled = true;
+        controller.enabled = true;
+    }
+
+    private void enableRagdoll()
+    {
+        Vector3 oppositeDir = -centerOfMass.transform.forward + centerOfMass.transform.up;
+        foreach (var rigidbody in ragdollRigidBodies)
+        {
+            rigidbody.isKinematic = false;
+            rigidbody.AddForce(oppositeDir * 30f, ForceMode.Impulse);
+        }
+
+        animator.enabled = false;
+        controller.enabled = false;
+    }
+
+    IEnumerator activateLoseMenuAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (gameManager.instance.menuLose != null)
+        {
+            gameManager.instance.statePause();
+            gameManager.instance.menuActive = gameManager.instance.menuLose;
+            gameManager.instance.menuLose.SetActive(true);
+        }
+    }
+
+    void crouchedMovement()
+    {
+
     }
 }
