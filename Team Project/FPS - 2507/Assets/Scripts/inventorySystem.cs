@@ -8,6 +8,15 @@ public class inventorySystem : MonoBehaviour
     [SerializeField] itemtype type;
     [SerializeField] gunStats gun;
     [SerializeField] itemPickUp item;
+    [SerializeField] public Transform shootpos;
+
+    private void Start()
+    {
+        if(type != itemtype.pistol || type  != itemtype.shotgun || type != itemtype.rifle )
+        {
+            shootpos = null;
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

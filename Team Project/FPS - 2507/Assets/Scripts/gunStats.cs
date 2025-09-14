@@ -5,11 +5,15 @@ using UnityEngine;
 public class gunStats : ScriptableObject
 {
     public GameObject model;
+    [SerializeField] damage bullet;
+    [SerializeField] Transform shootpos;
+
     [Range(1, 10)] public int shootDamage;
     [Range(5, 1000)] public int shootDist;
     [Range(0.1f, 3)] public float shootRate;
     public int ammoCurr;
     [Range(5, 50)] public int ammoMax;
+
    
 
     public ParticleSystem hitEffect;
