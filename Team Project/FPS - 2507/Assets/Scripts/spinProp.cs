@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1c26d9340942dafb446f1f6aab3247b7f2141270cfb12b91ac8be755598bb04c
-size 283
+using UnityEngine;
+
+public class spinProp : MonoBehaviour
+{
+    [Range(10f, 100f)]
+    [SerializeField] float rotateSpeed;
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.Rotate(0f, rotateSpeed * Time.deltaTime, 0f,Space.Self);
+    }
+}
