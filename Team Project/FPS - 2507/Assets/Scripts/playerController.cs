@@ -13,6 +13,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [Header("Cameras")]
     [SerializeField] CinemachineCamera normalCam;
     [SerializeField] CinemachineCamera aimCam;
+    Transform shootPos;
 
     [SerializeField] GameObject reticle;
     [SerializeField] CharacterController controller;
@@ -54,6 +55,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] int shootDist;
     [SerializeField] int magMax;
     [SerializeField] int maxAmmo;
+
+
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
     [SerializeField] List<itemPickUp> itemList = new List<itemPickUp>();
 
