@@ -1,3 +1,40 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:eccb4d9a76a03893f6f9f4cc55f28eeacfb4755667580af402f7e59e7e044a6b
-size 1213
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class inventorySystem : MonoBehaviour
+{
+    enum itemtype { shotgun, pistol, rifle, useableItem, statusEffect }
+    [SerializeField] itemtype type;
+    [SerializeField] gunStats gun;
+    [SerializeField] itemPickUp item;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        IInventorySystem pickUppable = other.GetComponent<IInventorySystem>();
+
+        if (pickUppable != null && type == itemtype.shotgun)
+        {
+            pickUppable.getGunStats(gun);
+            gun.ammoCurr = gun.ammoMax;
+            Destroy(gameObject);
+        }
+        else if (pickUppable != null && type == itemtype.pistol)
+        {
+            pickUppable.getGunStats(gun);
+            gun.ammoCurr = gun.ammoMax;
+            Destroy(gameObject);
+        }
+        else if (pickUppable != null && type == itemtype.rifle)
+        {
+            pickUppable.getGunStats(gun);
+            gun.ammoCurr = gun.ammoMax;
+            Destroy(gameObject);
+        }
+        else if (pickUppable != null && type == itemtype.useableItem)
+        {
+            pickUppable.getItemPickUp(item);
+            Destroy(gameObject);
+        }
+    }
+}
