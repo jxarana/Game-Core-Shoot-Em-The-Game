@@ -1243,7 +1243,7 @@ MonoBehaviour:
   mouseSensitivity: 4
   upgradeableStats: {fileID: 11400000, guid: 50c4bb82d555603478421d056b435c29, type: 2}
   gunModel: {fileID: 0}
-  keyModel: {fileID: 0}
+  keyModel: {fileID: 374289202576707483, guid: 78df1db2fbc8ec64f949fac0c05bf693, type: 3}
   climbSpeed: 5
   maxClimbTime: 10
   detectLength: 15
@@ -1316,6 +1316,11 @@ MonoBehaviour:
   audArena:
   - {fileID: 8300000, guid: 1477e51e048525f4681ff66dac72263c, type: 3}
   audArenaVol: 0.1
+  crouchHeight: 0
+  crouchPosition: {x: 0, y: 0.595, z: 0}
+  crouchingSpeed: 7
+  crouchSpeed: 1
+  centerOfMass: {fileID: 0}
   dashSpeed: 0
   dashDuration: 0
   dashCooldown: 0
