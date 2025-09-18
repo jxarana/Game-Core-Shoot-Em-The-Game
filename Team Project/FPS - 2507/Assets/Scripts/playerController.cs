@@ -13,6 +13,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [Header("Cameras")]
     [SerializeField] CinemachineCamera normalCam;
     [SerializeField] CinemachineCamera aimCam;
+    Transform shootPos;
 
     [SerializeField] GameObject reticle;
     [SerializeField] CharacterController controller;
@@ -54,6 +55,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] int shootDist;
     [SerializeField] int magMax;
     [SerializeField] int maxAmmo;
+
+
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
     [SerializeField] List<itemPickUp> itemList = new List<itemPickUp>();
 
@@ -483,12 +486,14 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             normalCam.gameObject.SetActive(false);
             aimCam.gameObject.SetActive(true);
             reticle.SetActive(true);
+            animator.SetBool("IsAiming", true);
         }
         if (Input.GetButtonUp("Aim"))
         {
             normalCam.gameObject.SetActive(true);
             aimCam.gameObject.SetActive(false);
             reticle.SetActive(false);
+            animator.SetBool("IsAiming", false);
         }
     }
 
@@ -845,8 +850,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         itemList.Add(item);
         gameManager.instance.keyPrefab = item.keyItem;
 
-        keyModel.GetComponent<MeshFilter>().sharedMesh = item.keyItem.GetComponent<MeshFilter>().sharedMesh;
-        keyModel.GetComponent<MeshRenderer>().sharedMaterial = item.keyItem.GetComponent<MeshRenderer>().sharedMaterial;
+        //keyModel.GetComponent<MeshFilter>().sharedMesh = item.keyItem.GetComponent<MeshFilter>().sharedMesh;
+       // keyModel.GetComponent<MeshRenderer>().sharedMaterial = item.keyItem.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     public void getGunStats(gunStats gun)
