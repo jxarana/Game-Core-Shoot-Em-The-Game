@@ -12,12 +12,16 @@ public class damage : MonoBehaviour
     [SerializeField] float damageRate;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
+    [SerializeField] bool heal;
 
     bool isDamaging;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (heal)
+            damageAmount *= -1;
+
         if (type == damagetype.moving || type == damagetype.homing)
         {
             Destroy(gameObject, destroyTime);
@@ -27,6 +31,9 @@ public class damage : MonoBehaviour
                 rb.linearVelocity = transform.forward * speed;
             }
         }
+
+        
+
     }
 
     // Update is called once per frame
@@ -50,10 +57,14 @@ public class damage : MonoBehaviour
             dmg.takeDamage(damageAmount);
         }
 
+       
+
         if (type == damagetype.moving || type == damagetype.homing)
         {
             Destroy(gameObject);
         }
+
+       
     }
 
     private void OnTriggerStay(Collider other)
