@@ -1,12 +1,20 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu]
 
 public class gunStats : ScriptableObject
 {
     public GameObject model;
-    [SerializeField] damage bullet;
-    [SerializeField] Transform shootpos;
+
+
+
+    [SerializeField] List<damage> bullet = new List<damage>();
+
+
+
+
+   
 
     [Range(1, 10)] public int shootDamage;
     [Range(5, 1000)] public int shootDist;
