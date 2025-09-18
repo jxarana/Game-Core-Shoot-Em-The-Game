@@ -16,7 +16,16 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] public GameObject menuLose;
     [SerializeField] GameObject menuUnlocks;
-    [SerializeField] GameObject menuTutorial;
+    [SerializeField] public GameObject menuMain;
+    [SerializeField] public GameObject menuTutorial;
+    [SerializeField] public GameObject menuCredits;
+    [SerializeField] public GameObject menuSettings;
+    public Stack<GameObject> menuLists;
+
+
+
+
+
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] GameObject[] toughEnemies;
     //[SerializeField] AudioClip arenaClip;
@@ -29,6 +38,35 @@ public class gameManager : MonoBehaviour
 
     public TMP_Text inMagCount;
     public TMP_Text currAmmoCount;
+
+    [Header("Audio")]
+    [SerializeField] public AudioSource menuFeedBack;
+    [SerializeField] public AudioSource music;
+    [SerializeField] public AudioClip buttonClick;
+    [SerializeField] public AudioClip itemBought;
+    [SerializeField] public AudioClip menuMusic;
+    [SerializeField] public AudioClip gameMusic;
+
+
+    public void menufeedback(AudioClip audio, float volume)
+    {
+        menuFeedBack.PlayOneShot(audio, volume);
+    }
+
+    [Header("Settings")]
+    [SerializeField] public Slider masterVol;
+    [SerializeField] public Slider musicVol;
+    [SerializeField] public Slider menuVol;
+    [SerializeField] public Slider effectsVol;
+    [SerializeField] public TMP_Text masterVolVal;
+    [SerializeField] public TMP_Text musicVolVal;
+    [SerializeField] public TMP_Text menuVolVal;
+    [SerializeField] public TMP_Text effectsVolVal;
+
+
+
+
+    public gameSettings audioLevels;
 
 
 
@@ -83,6 +121,8 @@ public class gameManager : MonoBehaviour
     {
         instance = this;
 
+        music.loop = true;
+
         // Detect whether we're in the shop scene
         isShopScene = SceneManager.GetActiveScene().name.Contains("Shop");
 
@@ -121,7 +161,29 @@ public class gameManager : MonoBehaviour
             SpawnEnemies();
         }
 
-       
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            music.clip = menuMusic;
+            ammoBar.enabled = false;
+            playerHPBar.enabled = false;
+            gameGoalCountText.enabled = false;
+            playerStaminaBar.enabled = false;
+            goldCount.enabled = false;
+
+        }
+        else
+        {
+            music.clip = gameMusic;
+            ammoBar.enabled = true;
+            playerHPBar.enabled = true;
+            gameGoalCountText.enabled = true;
+            playerStaminaBar.enabled = true;
+            goldCount.enabled = true;
+        }
+
+
+
+
     }
 
     private void Start()
@@ -130,24 +192,46 @@ public class gameManager : MonoBehaviour
 
         //playAudio(arenaClip, transform, 0.1f/*, false*/);
 
+        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") || SceneManager.GetActiveScene().name == "MainMenu")
         {
-            if (menuActive == null)
-            {
-                statePause();
-                menuActive = menuPause;
-                menuActive.SetActive(true);
-            }
-            else if (menuActive == menuPause || menuActive == menuShop)
-            {
-                stateUnpause();
-            }
+            if (menuLists.Peek() == menuMain)
+                return;
+           
+                if (menuActive == null)
+                {
+                    music.clip = menuMusic;
+                    statePause();
+                    menuLists.Push(menuPause);
+                    menuActive = menuLists.Peek();
+                    menuActive.SetActive(true);
+                }
+                else if (menuLists.Count > 0)
+                {
+                    menuLists.Pop();
+                    if (menuLists.Count == 0)
+                    {
+                        stateUnpause();
+                        music.clip = gameMusic;
+                    }
+                }
+            
         }
+
+        if(menuActive == menuSettings)
+        {
+            musicVolVal.text = musicVol.ToString();
+            masterVolVal.text = masterVol.ToString();
+            effectsVolVal.text = effectsVol.ToString();
+            menuVolVal.text = menuVol.ToString();
+        }
+       
 
     }
 
@@ -199,6 +283,7 @@ public class gameManager : MonoBehaviour
         isPaused = !isPaused;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
+        music.clip = gameMusic;
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;

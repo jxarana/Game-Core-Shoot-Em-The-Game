@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class inventorySystem : MonoBehaviour
 {
-    enum itemtype { shotgun, pistol, rifle, useableItem, statusEffect }
+    enum itemtype { shotgun, pistol, rifle, useableItem, statusEffect, powerUps }
     [SerializeField] itemtype type;
     [SerializeField] gunStats gun;
     [SerializeField] itemPickUp item;
+    [SerializeField] powerUps power;
     [SerializeField] public Transform shootpos;
 
     private void Start()
@@ -44,6 +45,31 @@ public class inventorySystem : MonoBehaviour
         {
             pickUppable.getItemPickUp(item);
             Destroy(gameObject);
+        }
+        else if(pickUppable != null && type == itemtype.powerUps)
+        {
+            pickUppable.getPowerUp(power);
+            if (power.powerUp == powerUps.types.immortality)
+            {
+                gameManager.instance.playerScript.applyImmortality(power.duration);
+            }
+            else if (power.powerUp == powerUps.types.damageMult)
+            {
+                gameManager.instance.playerScript.applyDamageMult(power.damageMult, power.duration);
+            }
+            else if (power.powerUp == powerUps.types.speedUp)
+            {
+                gameManager.instance.playerScript.applySpeedUp(power.speedup, power.duration);
+            }
+            else if (power.powerUp == powerUps.types.unlimitedAmmo)
+            {
+                gameManager.instance.playerScript.applyUnlimitedAmmo(power.duration);
+            }
+            else if(power.powerUp == powerUps.types.healthRegen)
+            {
+                gameManager.instance.playerScript.applyHealthRegen(power.healthRegen, power.duration);
+            }
+
         }
     }
 }
