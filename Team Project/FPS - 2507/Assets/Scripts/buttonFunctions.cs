@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class buttonFunctions : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class buttonFunctions : MonoBehaviour
             gameManager.instance.playerScript.upgradeableStats.dmgIncreased++;
             gameManager.instance.playerScript.goldCount -= 80;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
+            gameManager.instance.menufeedback(gameManager.instance.itemBought,gameManager.instance.audioLevels.menuFeedBackVol);
         }
     }
 
@@ -49,6 +51,7 @@ public class buttonFunctions : MonoBehaviour
             gameManager.instance.playerScript.replenishAmmo();
             gameManager.instance.playerScript.goldCount -= 50;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
+            gameManager.instance.menufeedback(gameManager.instance.itemBought, gameManager.instance.audioLevels.menuFeedBackVol);
         }
     }//done
 
@@ -59,6 +62,7 @@ public class buttonFunctions : MonoBehaviour
             gameManager.instance.playerScript.healhp(25);
             gameManager.instance.playerScript.goldCount -= 20;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
+            gameManager.instance.menufeedback(gameManager.instance.itemBought, gameManager.instance.audioLevels.menuFeedBackVol);
         }
     } // done
     public void heal50()
@@ -68,6 +72,7 @@ public class buttonFunctions : MonoBehaviour
             gameManager.instance.playerScript.healhp(50);
             gameManager.instance.playerScript.goldCount -= 45;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
+            gameManager.instance.menufeedback(gameManager.instance.itemBought, gameManager.instance.audioLevels.menuFeedBackVol);
         }
     } // done
     public void heal75()
@@ -77,6 +82,7 @@ public class buttonFunctions : MonoBehaviour
             gameManager.instance.playerScript.healhp(75);
             gameManager.instance.playerScript.goldCount -= 70;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
+            gameManager.instance.menufeedback(gameManager.instance.itemBought, gameManager.instance.audioLevels.menuFeedBackVol);
         }
     } //done
 
@@ -96,6 +102,7 @@ public class buttonFunctions : MonoBehaviour
             gameManager.instance.playerScript.upgradeableStats.maxDashes++;
             gameManager.instance.playerScript.goldCount -= 30;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
+            gameManager.instance.menufeedback(gameManager.instance.itemBought, gameManager.instance.audioLevels.menuFeedBackVol);
         }
     }
 
@@ -106,6 +113,7 @@ public class buttonFunctions : MonoBehaviour
             gameManager.instance.playerScript.upgradeableStats.maxJumps++;
             gameManager.instance.playerScript.goldCount -= 45;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
+            gameManager.instance.menufeedback(gameManager.instance.itemBought, gameManager.instance.audioLevels.menuFeedBackVol);
         }
     }
 
@@ -116,10 +124,66 @@ public class buttonFunctions : MonoBehaviour
             gameManager.instance.playerScript.upgradeableStats.speed++;
             gameManager.instance.playerScript.goldCount -= 20;
             gameManager.instance.goldCount.text = gameManager.instance.playerScript.goldCount.ToString();
-            
+            gameManager.instance.menufeedback(gameManager.instance.itemBought, gameManager.instance.audioLevels.menuFeedBackVol);
+
         }
     }
 
+    public void save()
+    {
+        gameManager.instance.audioLevels.saveSettings();
+        gameManager.instance.menufeedback(gameManager.instance.buttonClick,gameManager.instance.audioLevels.menuFeedBackVol);
+    }
+    public void Credits()
+    {
+        gameManager.instance.menuLists.Push(gameManager.instance.menuCredits);
+        gameManager.instance.menuActive = gameManager.instance.menuLists.Peek();
+        gameManager.instance.menufeedback(gameManager.instance.buttonClick, gameManager.instance.audioLevels.menuFeedBackVol);
+
+    }
+
+    public void Settings()
+    {
+        gameManager.instance.menuLists.Push(gameManager.instance.menuSettings);
+        gameManager.instance.menuActive = gameManager.instance.menuLists.Peek();
+
+        gameManager.instance.musicVol.value = gameManager.instance.audioLevels.musicVol * 100;
+        gameManager.instance.effectsVol.value = gameManager.instance.audioLevels.effectVol * 100;
+        gameManager.instance.masterVol.value = gameManager.instance.audioLevels.masterVol * 100;
+        gameManager.instance.menuVol.value = gameManager.instance.audioLevels.menuFeedBackVol * 100;
+
+        gameManager.instance.menufeedback(gameManager.instance.buttonClick, gameManager.instance.audioLevels.menuFeedBackVol);
+
+    }
+
+    public void Back()
+    {
+        gameManager.instance.menufeedback(gameManager.instance.buttonClick, gameManager.instance.audioLevels.menuFeedBackVol);
+
+        gameManager.instance.menuLists.Pop();
+        gameManager.instance.menuActive = gameManager.instance.menuLists.Peek();
+        if(gameManager.instance.menuLists.Count == 0)
+        {
+            gameManager.instance.music.clip = gameManager.instance.gameMusic;
+            gameManager.instance.music.Play();
+        }
+    }
+
+    public void Play()
+    {
+        gameManager.instance.menufeedback(gameManager.instance.buttonClick, gameManager.instance.audioLevels.menuFeedBackVol);
+
+        loadNextLevel();
+    }
    
+    public void mainMenu()
+    {
+        gameManager.instance.QuitToMainMenu();
+    }
+
+    public void closeGame()
+    {
+        Application.Quit();
+    }
 
 }

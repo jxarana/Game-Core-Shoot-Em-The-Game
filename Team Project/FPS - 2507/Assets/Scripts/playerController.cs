@@ -21,6 +21,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] Transform orientation;
     [SerializeField] LayerMask wallLayer;
     [SerializeField] public Animator animator;
+
     [Header("General Stats")]
     [SerializeField] int HPOrig;
     [SerializeField] int speed;
@@ -37,9 +38,10 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] public playerStats upgradeableStats;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject keyModel;
-
+    [SerializeField] float parryRadius;
     [SerializeField] float climbSpeed;
     [SerializeField] float maxClimbTime;
+    [SerializeField] int parryForce;
     private float climbTimer;
 
     [SerializeField] float detectLength;
@@ -101,6 +103,12 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] float audStepVol;
     [SerializeField] AudioClip[] audArena;
     [SerializeField] float audArenaVol;
+
+    [Header("Buffs")]
+    bool immortality = false;
+    bool unlimitedAmmo = false;
+    int damageMult = 1;
+    int extraSpeed = 0;
 
     [Header("Crouch")]
     [SerializeField] private float crouchHeight;
@@ -348,7 +356,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         // Apply movement
         if (moveDir.magnitude > 0.1f)
         {
-            controller.Move(moveDir * speed * Time.deltaTime);
+            controller.Move(moveDir * (speed + extraSpeed) * Time.deltaTime);
         }
 
         if (moveDir != Vector3.zero)
@@ -392,9 +400,9 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             StartCoroutine(Dash());
         }
 
-        if (Input.GetButtonDown("Crouch / Slam") && !isMantling && !canSlam)
+        if (Input.GetButtonDown("Crouch / Slam") && !isMantling && canSlam)
         {
-
+            slamImpact();
 
         }
         if (Input.GetButtonDown("Fire1"))
@@ -423,6 +431,11 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         if (isClimbing)
         {
             climbingMovement();
+        }
+
+        if(Input.GetButtonDown("Parry"))
+        {
+            parry();
         }
 
         //if (Input.GetKey(KeyCode.V))
@@ -542,7 +555,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     {
         if (isSprinting)
         {
-            speed = speedOrig;
+            speed = speedOrig + extraSpeed;
             isSprinting = false;
         }
     }
@@ -589,9 +602,10 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     void shoot()
     {
         shootTimer = 0;
-        magCurrent--;
-        gunList[gunListPos].ammoCurr--;
-
+        if (!unlimitedAmmo)
+        {
+            gunList[gunListPos].ammoCurr--;
+        }
         playerSounds.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootVol);
 
         RaycastHit hit;
@@ -604,28 +618,31 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
             if (dmg != null)
             {
-                dmg.takeDamage(shootDamage + dmgUp);
+                dmg.takeDamage(shootDamage + dmgUp * damageMult);
             }
         }
     }
 
     public void takeDamage(int amount)
     {
-        HP -= amount;
-
-        updatePlayerUI();
-
-        StartCoroutine(damageFlashScreen());
-
-        playerSounds.PlayOneShot(playerHurtClip[Random.Range(0, playerHurtClip.Length)], hurtVol);
-
-        if (HP <= 0)
+        if (!immortality)
         {
-            //you dead!
-            IsDead = true;
-            enableRagdoll();
-            StartCoroutine(activateLoseMenuAfterDelay(3f));
-            playerSounds.PlayOneShot(deathClip[Random.Range(0, deathClip.Length)], deathVolume);
+            HP -= amount;
+
+            updatePlayerUI();
+
+            StartCoroutine(damageFlashScreen());
+
+            playerSounds.PlayOneShot(playerHurtClip[Random.Range(0, playerHurtClip.Length)], hurtVol);
+
+            if (HP <= 0)
+            {
+                //you dead!
+                IsDead = true;
+                enableRagdoll();
+                StartCoroutine(activateLoseMenuAfterDelay(3f));
+                playerSounds.PlayOneShot(deathClip[Random.Range(0, deathClip.Length)], deathVolume);
+            }
         }
     }
 
@@ -714,6 +731,40 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         return hasSlamunlocked;
     }
 
+    void parry()
+    {
+        int enemyBulletLayer = LayerMask.NameToLayer("Enemy Bullet");
+        int playerBulletLayer = LayerMask.NameToLayer("Player Bullet");
+
+        // Get all enemy bullets in range
+        GameObject[] enemyBullets = GameObject.FindGameObjectsWithTag("Bullet");
+
+        foreach (GameObject bullet in enemyBullets)
+        {
+            // Check if it's an enemy bullet by layer
+            if (bullet.layer == enemyBulletLayer &&
+                Vector3.Distance(transform.position, bullet.transform.position) <= parryRadius)
+            {
+                ParrySingleBullet(bullet, playerBulletLayer);
+            }
+        }
+    }
+
+    void ParrySingleBullet(GameObject bullet, int newLayer)
+    {
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            // Reflect back toward where it came from
+            Vector3 reflectDirection = -rb.linearVelocity.normalized;
+            rb.linearVelocity = reflectDirection * parryForce;
+
+            // Change layer to player bullet
+            bullet.layer = newLayer;
+
+            Debug.Log("Bullet parried!");
+        }
+    }
 
     //void handleCamera()
     //{
@@ -948,4 +999,57 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     {
 
     }
+
+    public IEnumerator applyImmortality(float duration)
+    {
+        immortality = true;
+
+       yield return new WaitForSeconds(duration);
+
+        immortality = false;
+    }
+
+    public IEnumerator applyUnlimitedAmmo(float duration) { 
+        
+        unlimitedAmmo = true;
+
+        yield return new WaitForSeconds(duration);
+
+        unlimitedAmmo = false;
+    
+    
+    }
+
+    public IEnumerator applyDamageMult(int mult, float duration)
+    {
+        damageMult = mult;
+        yield return new WaitForSeconds(duration);
+        damageMult = 1;
+    }
+
+    public IEnumerator applyHealthRegen(int amount, float duration)
+    {
+        float endTime = Time.deltaTime + duration;
+        float timer = Time.deltaTime;
+        float perTick = amount / duration;
+
+        while (timer < endTime)
+        {
+            timer += Time.deltaTime;
+            healhp((int)perTick);
+            yield return new WaitForSeconds(1);
+        }
+
+      
+    }
+
+    public IEnumerator applySpeedUp(int speed,float duration)
+    {
+        extraSpeed = speed;
+        yield return new WaitForSeconds(duration);
+        extraSpeed = 0;
+    }
+
+
+
 }
