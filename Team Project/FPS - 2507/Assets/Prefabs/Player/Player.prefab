@@ -1181,9 +1181,9 @@ GameObject:
   - component: {fileID: 1893535028386509548}
   - component: {fileID: 4935701214054846684}
   - component: {fileID: 7710232984674774740}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1244,8 +1244,10 @@ MonoBehaviour:
   upgradeableStats: {fileID: 11400000, guid: 50c4bb82d555603478421d056b435c29, type: 2}
   gunModel: {fileID: 0}
   keyModel: {fileID: 374289202576707483, guid: 78df1db2fbc8ec64f949fac0c05bf693, type: 3}
+  parryRadius: 0
   climbSpeed: 5
   maxClimbTime: 10
+  parryForce: 0
   detectLength: 15
   sphereCastRadius: 0.25
   maxWallLookAngle: 30
