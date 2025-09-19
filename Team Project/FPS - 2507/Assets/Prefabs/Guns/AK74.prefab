@@ -171,6 +171,7 @@ MonoBehaviour:
   type: 1
   gun: {fileID: 11400000, guid: 800260571c1619f4589d897e8126573f, type: 2}
   item: {fileID: 0}
+  power: {fileID: 0}
   shootpos: {fileID: 7323212362564905301}
 --- !u!33 &2964151140067308694
 MeshFilter:
