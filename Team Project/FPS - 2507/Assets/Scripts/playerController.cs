@@ -2,6 +2,8 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
+
 //using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
@@ -500,6 +502,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             aimCam.gameObject.SetActive(true);
             reticle.SetActive(true);
             animator.SetBool("IsAiming", true);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, aimCam.transform.eulerAngles.y + 45f, 0f), Time.deltaTime * 15f);
         }
         if (Input.GetButtonUp("Aim"))
         {
