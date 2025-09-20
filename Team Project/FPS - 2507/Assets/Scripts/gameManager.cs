@@ -170,6 +170,12 @@ public class gameManager : MonoBehaviour
             playerStaminaBar.enabled = false;
             goldCount.enabled = false;
 
+            menuLists.Push(menuMain);
+            menuActive = menuLists.Peek();
+
+            menuActive.SetActive(true);
+
+
         }
         else
         {
@@ -199,10 +205,9 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel") || SceneManager.GetActiveScene().name == "MainMenu")
+        if (Input.GetButtonDown("Cancel") && menuLists.Peek() != menuMain)
         {
-            if (menuLists.Peek() == menuMain)
-                return;
+            
            
                 if (menuActive == null)
                 {
@@ -344,13 +349,13 @@ public class gameManager : MonoBehaviour
     public void savePlayerState()
     {
         if (playerScript == null) return;
-        playerScript.savePlayerData(out savedGold, out savedUpgrades, out savedHP, out savedAmmo, out savedMag, out savedGuns);
+        playerScript.savePlayerData(out savedGold, out savedUpgrades, out savedHP, out savedAmmo, out savedMag);
     }
 
     public void loadPlayerState()
     {
         if (playerScript == null) return;
-        playerScript.loadPlayerData(savedGold, savedUpgrades, savedHP, savedAmmo, savedMag, savedGuns);
+        playerScript.loadPlayerData(savedGold, savedUpgrades, savedHP, savedAmmo, savedMag);
     }
 
 
