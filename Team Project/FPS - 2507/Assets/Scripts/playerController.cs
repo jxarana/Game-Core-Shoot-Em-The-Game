@@ -42,6 +42,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] float climbSpeed;
     [SerializeField] float maxClimbTime;
     [SerializeField] int parryForce;
+    [SerializeField] JunkGun myGun;
     private float climbTimer;
 
     [SerializeField] float detectLength;
@@ -59,7 +60,6 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] int maxAmmo;
 
 
-    [SerializeField] List<gunStats> gunList = new List<gunStats>();
     [SerializeField] List<itemPickUp> itemList = new List<itemPickUp>();
 
     [Header("Slam")]
@@ -107,7 +107,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [Header("Buffs")]
     bool immortality = false;
     bool unlimitedAmmo = false;
-    int damageMult = 1;
+    public int damageMult = 1;
     int extraSpeed = 0;
 
     [Header("Crouch")]
@@ -407,12 +407,12 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         }
         if (Input.GetButtonDown("Fire1"))
         {
-            if (!isGrappling && gunList.Count > 0 && gunList[gunListPos].ammoCurr > 0 && magCurrent > 0 && shootTimer > shootRate)
+            if (!isGrappling && myGun.inMag > 0 && shootTimer > myGun.fireRate)
             {
                 shoot();
                 updatePlayerUI();
             }
-            else if (!isGrappling && shootTimer > shootRate && magCurrent == 0)
+            else if (!isGrappling && shootTimer > myGun.fireRate && myGun.inMag == 0)
             {
                 reload();
                 updatePlayerUI();
@@ -421,13 +421,13 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
         if (Input.GetButtonDown("Reload"))
         {
-            if (magCurrent != magMax)
+            if (myGun.inMag != myGun.magMax)
             {
                 reload();
                 updatePlayerUI();
             }
         }
-        selectGun();
+       
         if (isClimbing)
         {
             climbingMovement();
@@ -604,16 +604,17 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         shootTimer = 0;
         if (!unlimitedAmmo)
         {
-            gunList[gunListPos].ammoCurr--;
+            myGun.inMag--;
         }
-        playerSounds.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootVol);
+        myGun.gunSound.PlayOneShot(myGun.soundEffect, gameManager.instance.audioLevels.effectVol);
 
         RaycastHit hit;
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
         {
             //Debug.Log(hit.collider.name);
-            Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
+            Instantiate(myGun.randomBullet(),myGun.shootPos.position, Quaternion.identity);
+            
             IDamage dmg = hit.collider.GetComponent<IDamage>();
 
             if (dmg != null)
@@ -650,9 +651,9 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
         gameManager.instance.playerStaminaBar.fillAmount = (float)stamina / staminaOrig;
-        gameManager.instance.ammoBar.fillAmount = (float)magCurrent / magMax;
-        gameManager.instance.inMagCount.text = magCurrent.ToString();
-        gameManager.instance.currAmmoCount.text = currentAmmo.ToString();
+        gameManager.instance.ammoBar.fillAmount = (float)myGun.inMag / myGun.magMax;
+        gameManager.instance.inMagCount.text = myGun.magMax.ToString();
+        gameManager.instance.currAmmoCount.text = myGun.inMag.ToString();
         gameManager.instance.goldCountUI.text = goldCount.ToString();
 
     }
@@ -667,13 +668,9 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
     void reload()
     {
-        if (Input.GetButtonDown("Reload"))
-        {
-            gunList[gunListPos].ammoCurr = gunList[gunListPos].ammoMax;
-            magCurrent = magMax;
-            currentAmmo -= magMax;
-            playerSounds.PlayOneShot(playerReloadClip[Random.Range(0, playerReloadClip.Length)], reloadVol);
-        }
+      myGun.inMag = myGun.magMax; 
+      playerSounds.PlayOneShot(playerReloadClip[Random.Range(0, playerReloadClip.Length)], reloadVol);
+       
     }
 
     public void replenishAmmo()
@@ -905,57 +902,28 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
        // keyModel.GetComponent<MeshRenderer>().sharedMaterial = item.keyItem.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
-    public void getGunStats(gunStats gun)
-    {
-        gunList.Add(gun);
-        gunListPos = gunList.Count - 1;
+   
 
-        changeGun();
-    }
-
-    void changeGun()
-    {
-
-        shootDamage = gunList[gunListPos].shootDamage;
-        shootDist = gunList[gunListPos].shootDist;
-        shootRate = gunList[gunListPos].shootRate;
-
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].model.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].model.GetComponent<MeshRenderer>().sharedMaterial;
-    }
-
-    void selectGun()
-    {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
-        {
-            gunListPos++;
-            changeGun();
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
-        {
-            gunListPos--;
-            changeGun();
-        }
-    }
-
-    public void savePlayerData(out int gold, out int upgrades, out int hp, out int ammo, out int mag, out List<gunStats> guns)
+   
+   
+    public void savePlayerData(out int gold, out int upgrades, out int hp, out int ammo, out int mag )
     {
         gold = goldCount;
         upgrades = upgradePoints;
         hp = HP;
         ammo = currentAmmo;
         mag = magCurrent;
-        guns = new List<gunStats>(gunList);
+      
     }
 
-    public void loadPlayerData(int gold, int upgrades, int hp, int ammo, int mag, List<gunStats> guns)
+    public void loadPlayerData(int gold, int upgrades, int hp, int ammo, int mag)
     {
         goldCount = gold;
         upgradePoints = upgrades;
         HP = hp;
         currentAmmo = ammo;
         magCurrent = mag;
-        gunList = new List<gunStats>(guns);
+        
 
         updatePlayerUI();
     }
