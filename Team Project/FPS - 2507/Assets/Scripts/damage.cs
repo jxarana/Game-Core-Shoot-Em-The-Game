@@ -7,6 +7,7 @@ public class damage : MonoBehaviour
     enum damagetype { moving, stationary, DOT, homing }
     [SerializeField] damagetype type;
     [SerializeField] Rigidbody rb;
+    [SerializeField] GameObject shooter;
 
     [SerializeField] int damageAmount;
     [SerializeField] float damageRate;
@@ -19,6 +20,13 @@ public class damage : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if(shooter != null &&  shooter.CompareTag("Player"))
+        {
+            damageAmount = damageAmount + gameManager.instance.playerScript.upgradeableStats.dmgIncreased * gameManager.instance.playerScript.damageMult;
+        }
+
+
+
         if (heal)
             damageAmount *= -1;
 
