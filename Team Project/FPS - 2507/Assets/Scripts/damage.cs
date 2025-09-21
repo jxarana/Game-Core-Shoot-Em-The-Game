@@ -20,7 +20,7 @@ public class damage : MonoBehaviour
     [SerializeField] float splitAngle;
     [SerializeField] int splitBullets;
     bool hasSplit = false;
-    float flightTime;
+    public float flightTime;
 
     bool isDamaging;
 
@@ -66,6 +66,7 @@ public class damage : MonoBehaviour
 
         if (!hasSplit && shouldsplit && flightTime >= destroyTime / 2)
         {
+            Debug.Log("entered the if");
             Split();           
         }
 
@@ -87,10 +88,14 @@ public class damage : MonoBehaviour
             GameObject newBullet = Instantiate(gameObject, transform.position, rotation);
             damage newBulletDamage = newBullet.GetComponent<damage>();
 
+
+
             if (newBulletDamage != null)
             {
                 newBulletDamage.shouldsplit = false;
             }
+            else
+                Debug.Log("was not assigned");
         }
         Destroy(gameObject);
 
