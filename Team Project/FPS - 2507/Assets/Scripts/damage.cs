@@ -1,10 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Rendering.Universal;
 
 public class damage : MonoBehaviour
 {
 
-    enum damagetype { moving, stationary, DOT, homing }
+    enum damagetype { moving, stationary, DOT, homing}
     [SerializeField] damagetype type;
     [SerializeField] Rigidbody rb;
     [SerializeField] GameObject model;
@@ -13,8 +14,14 @@ public class damage : MonoBehaviour
     [SerializeField] int damageAmount;
     [SerializeField] float damageRate;
     [SerializeField] int speed;
+    [SerializeField] int horizontalSpeed;
     [SerializeField] int destroyTime;
     [SerializeField] bool heal;
+    [SerializeField] bool shouldsplit = false;
+    [SerializeField] float splitAngle;
+    [SerializeField] int splitBullets;
+    bool hasSplit = false;
+    float flightTime;
 
     bool isDamaging;
 
@@ -43,7 +50,11 @@ public class damage : MonoBehaviour
 
         
 
+        
+
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -52,6 +63,44 @@ public class damage : MonoBehaviour
         {
             rb.linearVelocity = (gameManager.instance.player.transform.position - transform.position).normalized * speed * Time.deltaTime;
         }
+
+        if (!hasSplit && shouldsplit)
+        {
+            flightTime += Time.deltaTime;
+            if (flightTime >= destroyTime / 2)
+            {
+                Split();
+
+            }
+        }
+
+    }
+
+    void Split()
+    {
+        Vector3 baseDirection = transform.forward;
+
+        float angleStep = (splitBullets > 1) ? splitAngle / (splitBullets - 1) : 0f;
+        float startAngle = -splitAngle / 2f;
+
+        for (int i = 0; i < splitBullets; i++)
+        {
+            
+            float currentAngle = startAngle + (angleStep * i);
+            Quaternion rotation = Quaternion.AngleAxis(currentAngle, Vector3.up) * transform.rotation;
+
+            GameObject newBullet = Instantiate(gameObject, transform.position, rotation);
+            damage newBulletDamage = newBullet.GetComponent<damage>();
+
+            if (newBulletDamage != null)
+            {
+                newBulletDamage.shouldsplit = false;
+            }
+        }
+        Destroy(gameObject);
+
+
+
     }
 
     private void OnTriggerEnter(Collider other)
