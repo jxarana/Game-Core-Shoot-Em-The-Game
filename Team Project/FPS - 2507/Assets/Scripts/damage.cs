@@ -20,7 +20,7 @@ public class damage : MonoBehaviour
     [SerializeField] float splitAngle;
     [SerializeField] int splitBullets;
     bool hasSplit = false;
-    float flightTime;
+    public float flightTime;
 
     bool isDamaging;
 
@@ -58,19 +58,16 @@ public class damage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        flightTime += Time.deltaTime;
         if (type == damagetype.homing)
         {
             rb.linearVelocity = (gameManager.instance.player.transform.position - transform.position).normalized * speed * Time.deltaTime;
         }
 
-        if (!hasSplit && shouldsplit)
+        if (!hasSplit && shouldsplit && flightTime >= destroyTime / 2)
         {
-            flightTime += Time.deltaTime;
-            if (flightTime >= destroyTime / 2)
-            {
-                Split();
-
-            }
+            Debug.Log("entered the if");
+            Split();           
         }
 
     }
@@ -91,10 +88,14 @@ public class damage : MonoBehaviour
             GameObject newBullet = Instantiate(gameObject, transform.position, rotation);
             damage newBulletDamage = newBullet.GetComponent<damage>();
 
+
+
             if (newBulletDamage != null)
             {
                 newBulletDamage.shouldsplit = false;
             }
+            else
+                Debug.Log("was not assigned");
         }
         Destroy(gameObject);
 
