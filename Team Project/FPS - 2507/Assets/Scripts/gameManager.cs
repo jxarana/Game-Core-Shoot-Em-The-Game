@@ -118,6 +118,8 @@ public class gameManager : MonoBehaviour
     {
         instance = this;
 
+        menuLists = new Stack<GameObject>();
+
         music.loop = true;
 
         // Detect whether we're in the shop scene
