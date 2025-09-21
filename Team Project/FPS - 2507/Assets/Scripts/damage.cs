@@ -7,6 +7,7 @@ public class damage : MonoBehaviour
     enum damagetype { moving, stationary, DOT, homing }
     [SerializeField] damagetype type;
     [SerializeField] Rigidbody rb;
+    [SerializeField] GameObject model;
     [SerializeField] GameObject shooter;
 
     [SerializeField] int damageAmount;
