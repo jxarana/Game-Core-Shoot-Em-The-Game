@@ -30,7 +30,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] int jumpMax;
     [SerializeField] int gravity;
     [SerializeField] int dashMax;
-    [SerializeField] int deathDepth; // Set the height that the player can fall to before dieing
+    /*[SerializeField] int deathDepth;*/ // Set the height that the player can fall to before dieing
     [SerializeField] int dashCd;
     [SerializeField] Transform followTarget;
     //[SerializeField] Transform camPivot;
