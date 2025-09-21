@@ -7,7 +7,6 @@ public class damage : MonoBehaviour
     enum damagetype { moving, stationary, DOT, homing }
     [SerializeField] damagetype type;
     [SerializeField] Rigidbody rb;
-    [SerializeField] GameObject model;
     [SerializeField] GameObject shooter;
 
     [SerializeField] int damageAmount;
@@ -68,7 +67,7 @@ public class damage : MonoBehaviour
 
        
 
-        if (type == damagetype.moving || type == damagetype.homing)
+        if (type == damagetype.moving || type == damagetype.homing && shooter.CompareTag("Player") != other.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
