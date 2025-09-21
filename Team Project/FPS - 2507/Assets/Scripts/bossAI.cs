@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class bossAI : MonoBehaviour, IDamage
 {
-    public enum BossState { idle, roam, chase, attack, dead, orbit }
+    public enum BossState { idle, roam, chase, attack, dead, orbit, search }
     public BossState state = BossState.idle;
 
     [SerializeField] Renderer model;
@@ -21,9 +21,11 @@ public class bossAI : MonoBehaviour, IDamage
     [SerializeField] int goldDropped;
     [SerializeField] int HP;
     [SerializeField] int fov;
+    [SerializeField] int viewDistance;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int roamDist;
     [SerializeField] int roamPauseTime;
+    [SerializeField] Transform[] patrolArea;
 
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
@@ -32,12 +34,14 @@ public class bossAI : MonoBehaviour, IDamage
 
     float shootTimer;
     float roamTimer;
+    float searchingTimer;
     float angleToPlayer;
     float stoppingDistOrig;
     Vector3 lastKnownPos;
 
     bool playerInTrigger;
     bool hasLastPos;
+    int currPatrolArea = 0;
 
     Vector3 playerDir;
     Vector3 startingPos;
@@ -49,6 +53,9 @@ public class bossAI : MonoBehaviour, IDamage
         gameManager.instance.updateGameGoal(0);
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
+
+        pickPatrolArea();
+        changeState(BossState.roam);
     }
 
     // Update is called once per frame
@@ -75,16 +82,11 @@ public class bossAI : MonoBehaviour, IDamage
             case BossState.orbit:
                 orbit();
                 break;
+            case BossState.search:
+                searching(); 
+                break;
         }
 
-        if (playerInTrigger && !canSeePlayer())
-        {
-            roamCheck();
-        }
-        else if (!playerInTrigger)
-        {
-            roamCheck();
-        }
     }
 
     private void orbit()
@@ -112,6 +114,7 @@ public class bossAI : MonoBehaviour, IDamage
         if (canSeePlayer())
         {
             agent.SetDestination(gameManager.instance.player.transform.position);
+            orbit();
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
                 changeState(BossState.attack);
@@ -119,13 +122,11 @@ public class bossAI : MonoBehaviour, IDamage
         }
         else
         {
-            if(hasLastPos)
+            if (hasLastPos)
             {
+                searchingTimer = 0;
                 agent.SetDestination(lastKnownPos);
-                if(Vector3.Distance(transform.position, lastKnownPos) < 1f)
-                {
-                    changeState(BossState.idle);
-                }
+                changeState(BossState.search);
             }
             else
             {
@@ -140,47 +141,69 @@ public class bossAI : MonoBehaviour, IDamage
         if (canSeePlayer())
         {
             changeState(BossState.chase);
+            return;
         }
-        else if(roamTimer >= roamPauseTime)
+        if (roamTimer >= roamPauseTime)
         {
+            roamTimer = 0;
+            pickPatrolArea();
+            changeState(BossState.roam);
+        }
+    }
+
+    private void searching()
+    {
+        if (canSeePlayer())
+        {
+            searchingTimer = 0;
+            changeState(BossState.chase);
+            return;
+        }
+
+        if (agent.remainingDistance < 0.5f)
+        {
+            transform.Rotate(Vector3.up * 45f * Time.deltaTime);
+        }
+
+        searchingTimer += Time.deltaTime;
+       
+        if (searchingTimer >= 5f)
+        {
+            searchingTimer = 0;
+            hasLastPos = false;
             changeState(BossState.roam);
         }
     }
 
     private void changeState(BossState curr)
     {
+        if (curr != BossState.roam)
+        {
+            roamTimer = 0f;
+        }
+
         state = curr;
     }
 
-    void roamCheck()
-    {
-        if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
-        {
-            roam();
-        }
-    }
+    //void roamCheck()
+    //{
+    //    if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
+    //    {
+    //        roam();
+    //    }
+    //}
 
     void roam()
     {
-        if (agent.remainingDistance < 0.01f)
+        if (!agent.pathPending && agent.remainingDistance < 0.2f)
         {
-            roamTimer += Time.deltaTime;
-            if (roamTimer >= roamPauseTime)
-            {
-                roamTimer = 0;
-                agent.stoppingDistance = 0;
-
-                Vector3 ranPos = Random.insideUnitSphere * roamDist;
-                ranPos += startingPos;
-
-                NavMeshHit hit;
-                NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
-                agent.SetDestination(hit.position);
-            }
+            changeState(BossState.idle);
+            return;
         }
         if (canSeePlayer())
         {
             changeState(BossState.chase);
+            return;
         }
     }
 
@@ -194,24 +217,27 @@ public class bossAI : MonoBehaviour, IDamage
         //Debug.DrawRay(headPos.position, playerDir);
 
         RaycastHit hit;
-        if (Physics.Raycast(headPos.position, playerDir, out hit))
+        if (playerDir.magnitude <= viewDistance && angleToPlayer <= fov)
         {
-            if (hit.collider.CompareTag("Player") && angleToPlayer <= fov)
+            if (Physics.Raycast(headPos.position, playerDir, out hit, viewDistance))
             {
-                //shootTimer += Time.deltaTime;
+                if (hit.collider.CompareTag("Player"))
+                {
+                    //shootTimer += Time.deltaTime;
 
-                //if (shootTimer >= shootRate)
-                //{
-                //    shoot();
-                //}
+                    //if (shootTimer >= shootRate)
+                    //{
+                    //    shoot();
+                    //}
 
-                //agent.SetDestination(gameManager.instance.player.transform.position);
+                    //agent.SetDestination(gameManager.instance.player.transform.position);
 
-                //if (agent.remainingDistance <= agent.stoppingDistance)
-                //    faceTarget();
-                lastKnownPos = gameManager.instance.player.transform.position;
-                hasLastPos = true;
-                return true;
+                    //if (agent.remainingDistance <= agent.stoppingDistance)
+                    //    faceTarget();
+                    lastKnownPos = gameManager.instance.player.transform.position;
+                    hasLastPos = true;
+                    return true;
+                }
             }
         }
         agent.stoppingDistance = stoppingDistOrig;
@@ -304,6 +330,30 @@ public class bossAI : MonoBehaviour, IDamage
         else
         {
             changeState(BossState.chase);
+        }
+    }
+
+    void pickPatrolArea()
+    {
+        agent.stoppingDistance = 0;
+        if (patrolArea != null && patrolArea.Length > 0)
+        {
+            int newIndx;
+            do
+            {
+                newIndx = Random.Range(0, patrolArea.Length);
+            } while (newIndx == currPatrolArea && patrolArea.Length > 1);
+            currPatrolArea = newIndx;
+            agent.SetDestination(patrolArea[currPatrolArea].position);
+        }
+        else
+        {
+            Vector3 rand = Random.insideUnitSphere * roamDist + startingPos;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(rand, out hit, roamDist, NavMesh.AllAreas))
+            {
+                agent.SetDestination(hit.position);
+            }
         }
     }
 }
