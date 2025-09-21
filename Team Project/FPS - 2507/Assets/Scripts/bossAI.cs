@@ -30,6 +30,8 @@ public class bossAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
+    public Rigidbody centerOfMass;
+
     Color colorOrg;
 
     float shootTimer;
@@ -45,6 +47,14 @@ public class bossAI : MonoBehaviour, IDamage
 
     Vector3 playerDir;
     Vector3 startingPos;
+
+    private Rigidbody[] ragdollRigidBodies;
+
+    void Awake()
+    {
+        ragdollRigidBodies = GetComponentsInChildren<Rigidbody>();
+        disableRagdoll();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -105,8 +115,8 @@ public class bossAI : MonoBehaviour, IDamage
         gameManager.instance.playerScript.goldCount += goldDropped;
         gameManager.instance.updateGameGoal(-1);
         //enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], deathVol);
-        Instantiate(deathAnim, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        enableRagdoll();
+        Destroy(gameObject, 3);
     }
 
     private void chase()
@@ -355,5 +365,28 @@ public class bossAI : MonoBehaviour, IDamage
                 agent.SetDestination(hit.position);
             }
         }
+    }
+
+
+    private void disableRagdoll()
+    {
+        foreach (var rigidbody in ragdollRigidBodies)
+        {
+            rigidbody.isKinematic = true;
+        }
+
+        anim.enabled = true;
+    }
+
+    private void enableRagdoll()
+    {
+        Vector3 oppositeDir = -centerOfMass.transform.forward + centerOfMass.transform.up;
+        foreach (var rigidbody in ragdollRigidBodies)
+        {
+            rigidbody.isKinematic = false;
+            rigidbody.AddForce(oppositeDir * 30f, ForceMode.Impulse);
+        }
+
+        anim.enabled = false;
     }
 }
