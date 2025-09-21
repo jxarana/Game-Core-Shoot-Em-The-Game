@@ -165,7 +165,7 @@ public class buttonFunctions : MonoBehaviour
 
 
         gameManager.instance.menufeedback(gameManager.instance.buttonClick, gameManager.instance.audioLevels.menuFeedBackVol);
-        gameManager.instance.LogMenuStack();
+        gameManager.instance.LogMenuStack();  
 
     }
 

@@ -449,5 +449,27 @@ public class gameManager : MonoBehaviour
     //        //}
     //    }
     //}
+    public void LogMenuStack()    
+    {
+        Debug.Log("=== MENU STACK CONTENTS ===");
+        int count = 0;
+        foreach (var menu in menuLists)
+        {
+            Debug.Log($"[{count}] {menu.name}");
+            count++;
+        }
+        Debug.Log("=== END ===");
+    }
 
+    public void newmenu(GameObject newMenu)
+    {
+        if (menuActive != null)
+            menuActive.SetActive(false);  
+
+        menuLists.Push(newMenu);
+        menuActive = newMenu;
+        menuActive.SetActive(true);  
+
+        LogMenuStack();
+    }
 }
