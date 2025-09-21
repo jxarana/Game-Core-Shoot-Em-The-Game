@@ -195,8 +195,6 @@ public class gameManager : MonoBehaviour
 
         //playAudio(arenaClip, transform, 0.1f/*, false*/);
 
-        
-
     }
 
     // Update is called once per frame
