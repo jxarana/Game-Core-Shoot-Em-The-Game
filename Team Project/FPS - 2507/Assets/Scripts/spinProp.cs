@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class spinProp : MonoBehaviour
 {
-    [Range(10f, 100f)]
+    [Range(10f, 1000f)]
     [SerializeField] float rotateSpeed;
 
     // Update is called once per frame

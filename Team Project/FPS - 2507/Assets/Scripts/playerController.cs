@@ -611,7 +611,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
 
       
-         Instantiate(myGun.randomBullet(),myGun.shootPos.position, aimCam.transform.localRotation);      
+         Instantiate(myGun.randomBullet(),myGun.shootPos.position, aimCam.transform.rotation);      
     }
 
     public void takeDamage(int amount)

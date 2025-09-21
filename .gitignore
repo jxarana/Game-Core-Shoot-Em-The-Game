@@ -83,14 +83,7 @@ StyleCopReport.xml
 *_p.c
 *_h.h
 *.ilk
-
-# Ignore VS/C++ object files but not Unity .obj models
-[Bb]uild/**.obj
-[Oo]bj/**
-
-# Allow Unity .obj assets
-!Assets/**/*.obj*.iobj
-
+*.obj
 *.pch
 *.pdb
 *.ipdb
