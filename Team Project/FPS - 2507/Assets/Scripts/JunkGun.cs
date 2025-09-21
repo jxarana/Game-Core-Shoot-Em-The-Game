@@ -10,6 +10,7 @@ public class JunkGun : MonoBehaviour
     public AudioSource gunSound;
     public AudioClip soundEffect;
     public Transform shootPos;
+    private int lastindex = -1;
 
 
 
@@ -21,7 +22,14 @@ public class JunkGun : MonoBehaviour
     // Update is called once per frame
   public GameObject randomBullet()
     {
-        int randombullet = Random.Range(0, bullets.Length);
+        int randombullet; 
+
+        do
+        {
+            randombullet = Random.Range(0, bullets.Length);
+        } while (randombullet == lastindex);
+
+        lastindex = randombullet;
 
         return bullets[randombullet];
     }
