@@ -20,8 +20,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject menuTutorial;
     [SerializeField] public GameObject menuCredits;
     [SerializeField] public GameObject menuSettings;
-    [SerializeField] GameObject mainBackGround;
-    [SerializeField] public Stack<GameObject> menuLists = new Stack<GameObject>();
+    public Stack<GameObject> menuLists;
 
 
 
@@ -159,24 +158,9 @@ public class gameManager : MonoBehaviour
             SpawnEnemies();
         }
 
-      
-
-
-
-
-    }
-
-    private void Start()
-    {
-        Time.timeScale = 1f;
-
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            
-            mainBackGround.SetActive(true);
-
             music.clip = menuMusic;
-
             ammoBar.enabled = false;
             playerHPBar.enabled = false;
             gameGoalCountText.enabled = false;
@@ -192,7 +176,6 @@ public class gameManager : MonoBehaviour
         }
         else
         {
-            mainBackGround.SetActive(false);
             music.clip = gameMusic;
             ammoBar.enabled = true;
             playerHPBar.enabled = true;
@@ -201,13 +184,16 @@ public class gameManager : MonoBehaviour
             goldCount.enabled = true;
         }
 
+
+
+
+    }
+
+    private void Start()
+    {
+        Time.timeScale = 1f;
+
         //playAudio(arenaClip, transform, 0.1f/*, false*/);
-        musicVolVal.text = Mathf.RoundToInt(musicVol.value).ToString();
-        masterVolVal.text = Mathf.RoundToInt(masterVol.value).ToString();
-        effectsVolVal.text = Mathf.RoundToInt(effectsVol.value).ToString();
-        menuVolVal.text = Mathf.RoundToInt(menuVol.value).ToString();
-
-
 
     }
 
@@ -245,11 +231,7 @@ public class gameManager : MonoBehaviour
             effectsVolVal.text = effectsVol.ToString();
             menuVolVal.text = menuVol.ToString();
         }
-
-        gameManager.instance.musicVol.onValueChanged.AddListener(val => gameManager.instance.musicVolVal.text = Mathf.RoundToInt(val).ToString());
-        gameManager.instance.masterVol.onValueChanged.AddListener(val => gameManager.instance.masterVolVal.text = Mathf.RoundToInt(val).ToString());
-        gameManager.instance.effectsVol.onValueChanged.AddListener(val => gameManager.instance.effectsVolVal.text = Mathf.RoundToInt(val).ToString());
-        gameManager.instance.menuVol.onValueChanged.AddListener(val => gameManager.instance.menuVolVal.text = Mathf.RoundToInt(val).ToString());
+       
 
     }
 
@@ -467,42 +449,5 @@ public class gameManager : MonoBehaviour
     //        //}
     //    }
     //}
-
-    public void LogMenuStack()
-    {
-        Debug.Log("=== MENU STACK CONTENTS ===");
-        int count = 0;
-        foreach (var menu in menuLists)
-        {
-            Debug.Log($"[{count}] {menu.name}");
-            count++;
-        }
-        Debug.Log("=== END ===");
-    }
-
-    public void newmenu(GameObject newMenu)
-    {
-        if (menuActive != null)
-            menuActive.SetActive(false);  // Hide current menu
-
-        menuLists.Push(newMenu);
-        menuActive = newMenu;
-        menuActive.SetActive(true);  // Show new menu
-
-        LogMenuStack();
-    }
-
-    public void PopMenu()
-    {
-        if (menuLists.Count <= 1) return; // Don't pop the last menu
-
-        menuActive.SetActive(false);  // Hide current menu
-        menuLists.Pop();              // Remove from stack
-        menuActive = menuLists.Peek(); // Get previous menu
-        menuActive.SetActive(true);   // Show previous menu
-
-        LogMenuStack();
-    }
-
 
 }
