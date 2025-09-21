@@ -610,7 +610,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         {
             myGun.inMag--;
         }
-        myGun.gunSound.PlayOneShot(myGun.soundEffect, gameManager.instance.audioLevels.effectVol);
+         myGun.gunSound.PlayOneShot(myGun.soundEffect, gameManager.instance.audioLevels.effectVol);
 
 
       
