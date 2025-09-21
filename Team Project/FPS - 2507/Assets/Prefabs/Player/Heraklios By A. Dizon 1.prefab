@@ -1151,7 +1151,7 @@ Transform:
   m_GameObject: {fileID: 1937163909716993120}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 46.504116, y: 0.00000023841858, z: 21.606415}
+  m_LocalPosition: {x: -0.65188146, y: 0, z: 4.9960794}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1198,8 +1198,11 @@ MonoBehaviour:
   upgradeableStats: {fileID: 11400000, guid: 50c4bb82d555603478421d056b435c29, type: 2}
   gunModel: {fileID: 5567090729969422794, guid: d45342c746ebfe44093235fbc6cccd65, type: 3}
   keyModel: {fileID: 0}
+  parryRadius: 0
   climbSpeed: 5
   maxClimbTime: 10
+  parryForce: 0
+  myGun: {fileID: 1939628018697805050}
   detectLength: 15
   sphereCastRadius: 0.25
   maxWallLookAngle: 30
@@ -1210,7 +1213,6 @@ MonoBehaviour:
   shootDist: 0
   magMax: 5
   maxAmmo: 50
-  gunList: []
   itemList: []
   minSlamHeight: 3
   slamForce: 30
@@ -1270,6 +1272,7 @@ MonoBehaviour:
   audArena:
   - {fileID: 8300000, guid: 1477e51e048525f4681ff66dac72263c, type: 3}
   audArenaVol: 0.5
+  damageMult: 1
   crouchHeight: 0
   crouchPosition: {x: 0, y: 0.595, z: 0}
   crouchingSpeed: 7
@@ -2028,7 +2031,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1525307653830637959}
-  - component: {fileID: 4236195596840144530}
+  - component: {fileID: 1939628018697805050}
   - component: {fileID: 4892171918195280844}
   - component: {fileID: 1482311253306935715}
   - component: {fileID: 2766846480324491931}
@@ -2047,8 +2050,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2847678167632490128}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.50000036, z: 0.49999976, w: 0.49999994}
-  m_LocalPosition: {x: -0.09199965, y: 0.2449986, z: 0.01899998}
+  m_LocalRotation: {x: 0.47398487, y: -0.5519969, z: 0.42921075, w: 0.5351785}
+  m_LocalPosition: {x: -0.075, y: 0.196, z: 0.037}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2057,8 +2060,8 @@ Transform:
   - {fileID: 3005829659955684331}
   - {fileID: 1110134450869638671}
   m_Father: {fileID: 3529411605242866513}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
---- !u!114 &4236195596840144530
+  m_LocalEulerAnglesHint: {x: 78.866, y: -107.705, z: -19.314}
+--- !u!114 &1939628018697805050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2067,13 +2070,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2847678167632490128}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4dbf1d947fe9dc4693ed19955cb13c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 5630f722086378d49bdbcfee6ef70ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
-  gun: {fileID: 11400000, guid: 01aeebfb4a781464a9e3c737fe42db8f, type: 2}
-  item: {fileID: 0}
-  shootpos: {fileID: 1110134450869638671}
+  bullets: []
+  fireRate: 1
+  magMax: 50
+  inMag: 50
+  gunSound: {fileID: 9039418324803157455}
+  soundEffect: {fileID: 8300000, guid: 3cf7f885d89678c418b214b3042be57b, type: 3}
+  shootPos: {fileID: 1110134450869638671}
 --- !u!33 &4892171918195280844
 MeshFilter:
   m_ObjectHideFlags: 0
