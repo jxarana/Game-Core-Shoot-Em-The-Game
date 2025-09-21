@@ -4162,9 +4162,17 @@ MonoBehaviour:
   goldDropped: 0
   HP: 100
   fov: 90
-  faceTargetSpeed: 30
-  roamDist: 15
-  roamPauseTime: 3
+  viewDistance: 15
+  faceTargetSpeed: 20
+  roamDist: 50
+  roamPauseTime: 2
+  patrolArea:
+  - {fileID: 2882195025180439447, guid: 33c03f27b9c8e7348828062ada47e526, type: 3}
+  - {fileID: 8854337088515803015, guid: e1eddabeafb738f4883bd68241b3b21d, type: 3}
+  - {fileID: 1418300256555779120, guid: 7eb1acd3e6a727e47b44b293ebfbd916, type: 3}
+  - {fileID: 1104556828438491017, guid: 50d15fd3faac0804b9dcf99544094f5b, type: 3}
+  - {fileID: 6751034820982651151, guid: 77b5a34a03e6e5f458aefbf3dc0f6fa7, type: 3}
+  - {fileID: 149986829378825842, guid: 32dcb016dd8370640b9d3cfb229da9b2, type: 3}
   bullet: {fileID: 332599942535682412, guid: 5999f875ee801ef44ac5ece67382422d, type: 3}
   shootRate: 1
 --- !u!95 &3104164425129671240
