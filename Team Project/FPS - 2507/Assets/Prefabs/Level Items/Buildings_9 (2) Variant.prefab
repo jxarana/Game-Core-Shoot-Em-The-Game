@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8182172209807944783
+--- !u!1001 &3039654919803792491
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3179774190902981637, guid: 0e39c921e7d750340a1975fdad0c152a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 51.85404
+      value: 72.854034
       objectReference: {fileID: 0}
     - target: {fileID: 3179774190902981637, guid: 0e39c921e7d750340a1975fdad0c152a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 783951638729905325, guid: 1e8a649ccc8e27f4b9bbea6646f2a96e, type: 3}
     - target: {fileID: 6072436813967010860, guid: 0e39c921e7d750340a1975fdad0c152a, type: 3}
       propertyPath: m_Name
-      value: Buildings_9 (1)
+      value: Buildings_9 (2) Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8326611659238776865, guid: 0e39c921e7d750340a1975fdad0c152a, type: 3}
       propertyPath: m_Mesh
