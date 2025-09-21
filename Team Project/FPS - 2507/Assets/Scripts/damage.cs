@@ -58,19 +58,15 @@ public class damage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        flightTime += Time.deltaTime;
         if (type == damagetype.homing)
         {
             rb.linearVelocity = (gameManager.instance.player.transform.position - transform.position).normalized * speed * Time.deltaTime;
         }
 
-        if (!hasSplit && shouldsplit)
+        if (!hasSplit && shouldsplit && flightTime >= destroyTime / 2)
         {
-            flightTime += Time.deltaTime;
-            if (flightTime >= destroyTime / 2)
-            {
-                Split();
-
-            }
+            Split();           
         }
 
     }
