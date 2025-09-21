@@ -193,6 +193,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         aimCam.Priority = 5;
         center = controller.center;
         height = controller.height;
+        myGun = GameObject.FindWithTag("MyGun").GetComponent<JunkGun>();
 
         updatePlayerUI();
     }
