@@ -16,6 +16,9 @@ public class damage : MonoBehaviour
     [SerializeField] int horizontalSpeed;
     [SerializeField] int destroyTime;
     [SerializeField] bool heal;
+
+    [Header("Splitting")]
+    [SerializeField] bool destroyOrig;
     [SerializeField] bool shouldsplit = false;
     [SerializeField] float splitAfter;
     [SerializeField] float splitAngle;
@@ -97,6 +100,7 @@ public class damage : MonoBehaviour
             }
             
         }
+        if(destroyOrig)
         Destroy(gameObject);
 
 
