@@ -103,8 +103,6 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] float reloadVol;
     [SerializeField] AudioClip[] audStep;
     [SerializeField] float audStepVol;
-    [SerializeField] AudioClip[] audArena;
-    [SerializeField] float audArenaVol;
 
     [Header("Buffs")]
     bool immortality = false;
@@ -184,7 +182,6 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         jumpMax = jumpMax + upgradeableStats.maxJumps;
         stamina = staminaOrig;
         followTarget = GameObject.FindGameObjectWithTag("followTarget").transform;
-        playerSounds.PlayOneShot(audArena[Random.Range(0, audArena.Length)], audArenaVol);
         normalCam = GameObject.FindGameObjectWithTag("NormalCam").GetComponent<CinemachineCamera>();
         aimCam = GameObject.FindGameObjectWithTag("AimCam").GetComponent<CinemachineCamera>();
         reticle = GameObject.FindGameObjectWithTag("Reticle");
@@ -614,11 +611,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
 
       
-         Instantiate(myGun.randomBullet(),myGun.shootPos.position, Quaternion.identity);
-            
-          
-
-          
+         Instantiate(myGun.randomBullet(),myGun.shootPos.position, aimCam.transform.rotation);      
     }
 
     public void takeDamage(int amount)

@@ -186,12 +186,14 @@ public class buttonFunctions : MonoBehaviour
     public void Play()
     {
         gameManager.instance.menufeedback(gameManager.instance.buttonClick, gameManager.instance.audioLevels.menuFeedBackVol);
-
-        loadNextLevel();
+        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        SceneManager.LoadScene(nextIndex);
     }
    
     public void mainMenu()
     {
+        gameManager.instance.menuLists.Clear();
+        gameManager.instance.menuActive.SetActive(false);
         gameManager.instance.QuitToMainMenu();
     }
 

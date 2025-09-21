@@ -20,11 +20,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject menuTutorial;
     [SerializeField] public GameObject menuCredits;
     [SerializeField] public GameObject menuSettings;
+    [SerializeField] public GameObject menuBackground;
+
     public Stack<GameObject> menuLists;
-
-
-
-
 
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] GameObject[] toughEnemies;
@@ -159,6 +157,11 @@ public class gameManager : MonoBehaviour
             gameGoalCountOrig = gameGoalCount;
             SpawnEnemies();
         }
+    }
+
+    private void Start()
+    {
+        Time.timeScale = 1f;
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
@@ -173,8 +176,7 @@ public class gameManager : MonoBehaviour
             menuActive = menuLists.Peek();
 
             menuActive.SetActive(true);
-
-
+            menuBackground.SetActive(true);
         }
         else
         {
@@ -184,19 +186,10 @@ public class gameManager : MonoBehaviour
             gameGoalCountText.enabled = true;
             playerStaminaBar.enabled = true;
             goldCount.enabled = true;
+            menuBackground.SetActive(false);
         }
 
-
-
-
-    }
-
-    private void Start()
-    {
-        Time.timeScale = 1f;
-
         //playAudio(arenaClip, transform, 0.1f/*, false*/);
-
     }
 
     // Update is called once per frame
