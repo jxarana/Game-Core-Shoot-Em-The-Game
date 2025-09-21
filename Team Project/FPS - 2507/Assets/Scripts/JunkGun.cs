@@ -3,7 +3,7 @@ using UnityEngine;
 public class JunkGun : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] public damage[] bullets;
+    [SerializeField] public GameObject[] bullets;
     [SerializeField] public float fireRate;
     [SerializeField] public int magMax;
     public int inMag;
@@ -19,7 +19,7 @@ public class JunkGun : MonoBehaviour
     }
 
     // Update is called once per frame
-  public damage randomBullet()
+  public GameObject randomBullet()
     {
         int randombullet = Random.Range(0, bullets.Length);
 
