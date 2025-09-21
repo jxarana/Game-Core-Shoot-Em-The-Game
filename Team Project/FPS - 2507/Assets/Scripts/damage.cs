@@ -16,7 +16,11 @@ public class damage : MonoBehaviour
     [SerializeField] int horizontalSpeed;
     [SerializeField] int destroyTime;
     [SerializeField] bool heal;
+
+    [Header("Splitting")]
+    [SerializeField] bool destroyOrig;
     [SerializeField] bool shouldsplit = false;
+    [SerializeField] float splitAfter;
     [SerializeField] float splitAngle;
     [SerializeField] int splitBullets;
     bool hasSplit = false;
@@ -64,9 +68,9 @@ public class damage : MonoBehaviour
             rb.linearVelocity = (gameManager.instance.player.transform.position - transform.position).normalized * speed * Time.deltaTime;
         }
 
-        if (!hasSplit && shouldsplit && flightTime >= destroyTime / 2)
+        if (!hasSplit && shouldsplit && flightTime >= splitAfter)
         {
-            Debug.Log("entered the if");
+            
             Split();           
         }
 
@@ -94,9 +98,9 @@ public class damage : MonoBehaviour
             {
                 newBulletDamage.shouldsplit = false;
             }
-            else
-                Debug.Log("was not assigned");
+            
         }
+        if(destroyOrig)
         Destroy(gameObject);
 
 

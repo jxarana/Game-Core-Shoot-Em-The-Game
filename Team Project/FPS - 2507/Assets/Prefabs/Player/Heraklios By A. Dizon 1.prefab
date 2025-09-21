@@ -2088,6 +2088,8 @@ MonoBehaviour:
   - {fileID: 2633603574523364061, guid: f14ae834757a6ad40be077d4a184e939, type: 3}
   - {fileID: 5997509384835294484, guid: 98feac3efc0823a43b28399ef8dc28b2, type: 3}
   - {fileID: 8576939760725667405, guid: a91f49c43d8582748b6db127f5d26ad1, type: 3}
+  - {fileID: 6997263227330243964, guid: acbd64350e5f4894a8a75a225e784333, type: 3}
+  - {fileID: 8109179099511542409, guid: d07539f0385532445846575ca8e39edc, type: 3}
   fireRate: 0.5
   magMax: 50
   inMag: 50
