@@ -48,10 +48,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] public AudioClip gameMusic;
 
 
-    public void menufeedback(AudioClip audio, float volume)
-    {
-        menuFeedBack.PlayOneShot(audio, volume);
-    }
+   
 
     [Header("Settings")]
     [SerializeField] public Slider masterVol;
@@ -407,6 +404,11 @@ public class gameManager : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void menufeedback(AudioClip audio, float volume)
+    {
+        menuFeedBack.PlayOneShot(audio, volume);
     }
 
     //public void playAudio(AudioClip clipAudio, Transform transform, float volume/*, bool loops*/)
