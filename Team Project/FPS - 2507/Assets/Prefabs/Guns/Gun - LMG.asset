@@ -1,3 +1,24 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:233aa345a4108cc22c6123bab6021b9bb86c5bb72f6d080729aa1812b1d06386
-size 755
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead4c1fd12a566846a64db4dc50a4d65, type: 3}
+  m_Name: Gun - LMG
+  m_EditorClassIdentifier: 
+  model: {fileID: 1095254202041702, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
+  shootDamage: 1
+  shootDist: 90
+  shootRate: 0.1
+  ammoCurr: 30
+  ammoMax: 30
+  hitEffect: {fileID: 5024009746357069192, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
+  shootSound:
+  - {fileID: 8300000, guid: 3cf7f885d89678c418b214b3042be57b, type: 3}
+  shootVol: 0.5

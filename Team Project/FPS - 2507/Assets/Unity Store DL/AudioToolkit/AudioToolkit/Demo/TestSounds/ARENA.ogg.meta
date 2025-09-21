@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9b05b5c1dd793480e3831aef260ae4809fc29f4f2813c36c56ea5ad3ab33db2f
-size 401
+fileFormatVersion: 1
+guid: 1477e51e048525f4681ff66dac72263c
+AudioImporter:
+  importerVersion: 4
+  format: 0
+  quality: -1
+  3d: 1
+  forceToMono: 0
+  stream: 1
+  useHardware: 0
+AssetOrigin:
+  serializedVersion: 1
+  productId: 2679
+  packageName: Audio Toolkit Free Version
+  packageVersion: 12.0
+  assetPath: Assets/Unity Store DL/AudioToolkit/AudioToolkit/Demo/TestSounds/ARENA.ogg
+  uploadId: 761856
