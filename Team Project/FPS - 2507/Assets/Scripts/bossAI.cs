@@ -5,6 +5,9 @@ using UnityEngine.UIElements;
 
 public class bossAI : MonoBehaviour, IDamage
 {
+    public enum BossState { idle, roam, chase, attack, dead, orbit }
+    public BossState state = BossState.idle;
+
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform shootPos;
@@ -31,9 +34,10 @@ public class bossAI : MonoBehaviour, IDamage
     float roamTimer;
     float angleToPlayer;
     float stoppingDistOrig;
-
+    Vector3 lastKnownPos;
 
     bool playerInTrigger;
+    bool hasLastPos;
 
     Vector3 playerDir;
     Vector3 startingPos;
@@ -51,10 +55,26 @@ public class bossAI : MonoBehaviour, IDamage
     void Update()
     {
         anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
-
-        if (agent.remainingDistance < 0.01f)
+        switch (state)
         {
-            roamTimer += Time.deltaTime;
+            case BossState.idle:
+                idle();
+                break;
+            case BossState.roam:
+                roam();
+                break;
+            case BossState.chase:
+                chase();
+                break;
+            case BossState.attack:
+                attack();
+                break;
+            case BossState.dead:
+                death();
+                break;
+            case BossState.orbit:
+                orbit();
+                break;
         }
 
         if (playerInTrigger && !canSeePlayer())
@@ -67,6 +87,71 @@ public class bossAI : MonoBehaviour, IDamage
         }
     }
 
+    private void orbit()
+    {
+        if (canSeePlayer() && state != BossState.attack || state != BossState.chase)
+        {
+            Vector3 playerDir = (gameManager.instance.player.transform.position - transform.position).normalized;
+            Vector3 orbitPlayer = gameManager.instance.player.transform.position + Quaternion.Euler(0, 90, 0) * playerDir * 5f;
+            agent.SetDestination(orbitPlayer);
+        }
+    }
+
+    private void death()
+    {
+        state = BossState.dead;
+        gameManager.instance.playerScript.goldCount += goldDropped;
+        gameManager.instance.updateGameGoal(-1);
+        //enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], deathVol);
+        Instantiate(deathAnim, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
+
+    private void chase()
+    {
+        if (canSeePlayer())
+        {
+            agent.SetDestination(gameManager.instance.player.transform.position);
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                changeState(BossState.attack);
+            }
+        }
+        else
+        {
+            if(hasLastPos)
+            {
+                agent.SetDestination(lastKnownPos);
+                if(Vector3.Distance(transform.position, lastKnownPos) < 1f)
+                {
+                    changeState(BossState.idle);
+                }
+            }
+            else
+            {
+                changeState(BossState.idle);
+            }
+        }
+    }
+
+    private void idle()
+    {
+        roamTimer += Time.deltaTime;
+        if (canSeePlayer())
+        {
+            changeState(BossState.chase);
+        }
+        else if(roamTimer >= roamPauseTime)
+        {
+            changeState(BossState.roam);
+        }
+    }
+
+    private void changeState(BossState curr)
+    {
+        state = curr;
+    }
+
     void roamCheck()
     {
         if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
@@ -77,15 +162,26 @@ public class bossAI : MonoBehaviour, IDamage
 
     void roam()
     {
-        roamTimer = 0;
-        agent.stoppingDistance = 0;
+        if (agent.remainingDistance < 0.01f)
+        {
+            roamTimer += Time.deltaTime;
+            if (roamTimer >= roamPauseTime)
+            {
+                roamTimer = 0;
+                agent.stoppingDistance = 0;
 
-        Vector3 ranPos = Random.insideUnitSphere * roamDist;
-        ranPos += startingPos;
+                Vector3 ranPos = Random.insideUnitSphere * roamDist;
+                ranPos += startingPos;
 
-        NavMeshHit hit;
-        NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
-        agent.SetDestination(hit.position);
+                NavMeshHit hit;
+                NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
+                agent.SetDestination(hit.position);
+            }
+        }
+        if (canSeePlayer())
+        {
+            changeState(BossState.chase);
+        }
     }
 
     bool canSeePlayer()
@@ -95,25 +191,26 @@ public class bossAI : MonoBehaviour, IDamage
         playerDir = targetPos - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
-        Debug.DrawRay(headPos.position, playerDir);
+        //Debug.DrawRay(headPos.position, playerDir);
 
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer <= fov)
             {
-                shootTimer += Time.deltaTime;
+                //shootTimer += Time.deltaTime;
 
-                if (shootTimer >= shootRate)
-                {
-                    shoot();
-                }
+                //if (shootTimer >= shootRate)
+                //{
+                //    shoot();
+                //}
 
-                agent.SetDestination(gameManager.instance.player.transform.position);
+                //agent.SetDestination(gameManager.instance.player.transform.position);
 
-                if (agent.remainingDistance <= agent.stoppingDistance)
-                    faceTarget();
-
+                //if (agent.remainingDistance <= agent.stoppingDistance)
+                //    faceTarget();
+                lastKnownPos = gameManager.instance.player.transform.position;
+                hasLastPos = true;
                 return true;
             }
         }
@@ -121,15 +218,15 @@ public class bossAI : MonoBehaviour, IDamage
         return false;
     }
 
-    void faceTarget()
-    {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, faceTargetSpeed * Time.deltaTime);
-    }
+    //void faceTarget()
+    //{
+    //    Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
+    //    transform.rotation = Quaternion.Lerp(transform.rotation, rot, faceTargetSpeed * Time.deltaTime);
+    //}
 
-    public void FacePlayerInstantly(Transform player)
+    public void FacePlayerInstantly()
     {
-        Vector3 direction = (player.position - transform.position).normalized;
+        Vector3 direction = (gameManager.instance.player.transform.position - transform.position).normalized;
         direction.y = 0; //Keep upright
 
         //Rotate to face target
@@ -160,15 +257,15 @@ public class bossAI : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            gameManager.instance.playerScript.goldCount += goldDropped;
-            gameManager.instance.updateGameGoal(-1);
-            //enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], deathVol);
-            Instantiate(deathAnim, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            death();
         }
         else
         {
             StartCoroutine(flashRed());
+            if (state != BossState.chase && state != BossState.attack)
+            {
+                changeState(BossState.chase);
+            }
         }
     }
 
@@ -190,5 +287,23 @@ public class bossAI : MonoBehaviour, IDamage
         Quaternion lookRotation = Quaternion.LookRotation(direction);
 
         Instantiate(bullet, shootPos.position, lookRotation);
+    }
+
+    void attack()
+    {
+        if (canSeePlayer())
+        {
+            agent.stoppingDistance = stoppingDistOrig;
+            FacePlayerInstantly();
+            shootTimer += Time.deltaTime;
+            if (shootTimer >= shootRate)
+            {
+                shoot();
+            }
+        }
+        else
+        {
+            changeState(BossState.chase);
+        }
     }
 }
