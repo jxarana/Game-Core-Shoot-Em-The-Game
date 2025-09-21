@@ -136,32 +136,46 @@ public class buttonFunctions : MonoBehaviour
     }
     public void Credits()
     {
-        gameManager.instance.menuLists.Push(gameManager.instance.menuCredits);
-        gameManager.instance.menuActive = gameManager.instance.menuLists.Peek();
+        gameManager.instance.newmenu(gameManager.instance.menuCredits);
         gameManager.instance.menufeedback(gameManager.instance.buttonClick, gameManager.instance.audioLevels.menuFeedBackVol);
 
     }
 
     public void Settings()
     {
-        gameManager.instance.menuLists.Push(gameManager.instance.menuSettings);
-        gameManager.instance.menuActive = gameManager.instance.menuLists.Peek();
+        gameManager.instance.newmenu(gameManager.instance.menuSettings);
+
+
+
+        
 
         gameManager.instance.musicVol.value = gameManager.instance.audioLevels.musicVol * 100;
         gameManager.instance.effectsVol.value = gameManager.instance.audioLevels.effectVol * 100;
         gameManager.instance.masterVol.value = gameManager.instance.audioLevels.masterVol * 100;
         gameManager.instance.menuVol.value = gameManager.instance.audioLevels.menuFeedBackVol * 100;
 
+        /*  
+          gameManager.instance.masterVolVal.text = gameManager.instance.masterVol.value.ToString();
+          gameManager.instance.musicVolVal.text = gameManager.instance.musicVol.value.ToString();
+          gameManager.instance.effectsVolVal.text = gameManager.instance.effectsVol.value.ToString();
+          gameManager.instance.menuVolVal.text = gameManager.instance.menuVol.value.ToString();
+
+
+        */
+
+
         gameManager.instance.menufeedback(gameManager.instance.buttonClick, gameManager.instance.audioLevels.menuFeedBackVol);
+        gameManager.instance.LogMenuStack();  
 
     }
 
     public void Back()
     {
         gameManager.instance.menufeedback(gameManager.instance.buttonClick, gameManager.instance.audioLevels.menuFeedBackVol);
-
+        gameManager.instance.menuActive.SetActive(false);
         gameManager.instance.menuLists.Pop();
         gameManager.instance.menuActive = gameManager.instance.menuLists.Peek();
+        gameManager.instance .menuActive.SetActive(true);
         if(gameManager.instance.menuLists.Count == 0)
         {
             gameManager.instance.music.clip = gameManager.instance.gameMusic;
@@ -172,12 +186,14 @@ public class buttonFunctions : MonoBehaviour
     public void Play()
     {
         gameManager.instance.menufeedback(gameManager.instance.buttonClick, gameManager.instance.audioLevels.menuFeedBackVol);
-
-        loadNextLevel();
+        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        SceneManager.LoadScene(nextIndex);
     }
    
     public void mainMenu()
     {
+        gameManager.instance.menuLists.Clear();
+        gameManager.instance.menuActive.SetActive(false);
         gameManager.instance.QuitToMainMenu();
     }
 

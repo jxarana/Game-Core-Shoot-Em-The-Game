@@ -4107,7 +4107,7 @@ GameObject:
   - component: {fileID: 4699759754259145854}
   - component: {fileID: 1188236525807116014}
   - component: {fileID: 2011622411442653243}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Alien_Boss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -4149,6 +4149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a42bd3fe5073ab4080602dfdba1b47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   model: {fileID: 1071579281294880221}
   agent: {fileID: 4699759754259145854}
   shootPos: {fileID: 3331114178331573455}

@@ -849,7 +849,7 @@ GameObject:
   - component: {fileID: 3928836819072900906}
   - component: {fileID: 8657912074914823973}
   - component: {fileID: 7669837006778103794}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1191,7 +1191,6 @@ MonoBehaviour:
   jumpMax: 1
   gravity: 30
   dashMax: 0
-  deathDepth: 0
   dashCd: 0
   followTarget: {fileID: 0}
   mouseSensitivity: 4
@@ -1269,8 +1268,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8c31767935494a94393604a87fe15ce0, type: 3}
   - {fileID: 8300000, guid: b67d6dbd29dd454478e6cce4f493cd65, type: 3}
   audStepVol: 0.5
-  audArena:
-  - {fileID: 8300000, guid: 1477e51e048525f4681ff66dac72263c, type: 3}
+  audArena: []
   audArenaVol: 0.5
   damageMult: 1
   crouchHeight: 0
@@ -2034,10 +2032,9 @@ GameObject:
   - component: {fileID: 1939628018697805050}
   - component: {fileID: 4892171918195280844}
   - component: {fileID: 1482311253306935715}
-  - component: {fileID: 2766846480324491931}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AK74
-  m_TagString: Untagged
+  m_TagString: MyGun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2073,8 +2070,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5630f722086378d49bdbcfee6ef70ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullets: []
-  fireRate: 1
+  bullets:
+  - {fileID: 6944317940834493817, guid: 451b0d9237987594da21c5972708e129, type: 3}
+  fireRate: 0.5
   magMax: 50
   inMag: 50
   gunSound: {fileID: 9039418324803157455}
@@ -2133,27 +2131,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2766846480324491931
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2847678167632490128}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.3853628
-  m_Center: {x: -0.0017576693, y: -0.036212504, z: -0.06259711}
 --- !u!1 &2909671420703682939
 GameObject:
   m_ObjectHideFlags: 0
@@ -2448,7 +2425,7 @@ GameObject:
   - component: {fileID: 6363705937352255692}
   - component: {fileID: 1157411239303639490}
   - component: {fileID: 9205284522852442165}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3550,7 +3527,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1110134450869638671}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: shootpos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3583,7 +3560,7 @@ GameObject:
   - component: {fileID: 3005829659955684331}
   - component: {fileID: 7152281451631333678}
   - component: {fileID: 1157398464773966994}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

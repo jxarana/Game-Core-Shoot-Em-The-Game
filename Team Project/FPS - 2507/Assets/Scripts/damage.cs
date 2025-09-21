@@ -67,7 +67,7 @@ public class damage : MonoBehaviour
 
        
 
-        if (type == damagetype.moving || type == damagetype.homing)
+        if (type == damagetype.moving || type == damagetype.homing && shooter.CompareTag("Player") != other.CompareTag("Player"))
         {
             Destroy(gameObject);
         }

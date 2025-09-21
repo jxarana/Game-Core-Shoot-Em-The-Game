@@ -103,8 +103,6 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] float reloadVol;
     [SerializeField] AudioClip[] audStep;
     [SerializeField] float audStepVol;
-    [SerializeField] AudioClip[] audArena;
-    [SerializeField] float audArenaVol;
 
     [Header("Buffs")]
     bool immortality = false;
@@ -184,7 +182,6 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         jumpMax = jumpMax + upgradeableStats.maxJumps;
         stamina = staminaOrig;
         followTarget = GameObject.FindGameObjectWithTag("followTarget").transform;
-        playerSounds.PlayOneShot(audArena[Random.Range(0, audArena.Length)], audArenaVol);
         normalCam = GameObject.FindGameObjectWithTag("NormalCam").GetComponent<CinemachineCamera>();
         aimCam = GameObject.FindGameObjectWithTag("AimCam").GetComponent<CinemachineCamera>();
         reticle = GameObject.FindGameObjectWithTag("Reticle");
@@ -193,6 +190,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         aimCam.Priority = 5;
         center = controller.center;
         height = controller.height;
+        myGun = GameObject.FindWithTag("MyGun").GetComponent<JunkGun>();
 
         updatePlayerUI();
     }
@@ -609,22 +607,11 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         {
             myGun.inMag--;
         }
-        myGun.gunSound.PlayOneShot(myGun.soundEffect, gameManager.instance.audioLevels.effectVol);
+         myGun.gunSound.PlayOneShot(myGun.soundEffect, gameManager.instance.audioLevels.effectVol);
 
-        RaycastHit hit;
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
-        {
-            //Debug.Log(hit.collider.name);
-            Instantiate(myGun.randomBullet(),myGun.shootPos.position, Quaternion.identity);
-            
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-            if (dmg != null)
-            {
-                dmg.takeDamage(shootDamage + dmgUp * damageMult);
-            }
-        }
+      
+         Instantiate(myGun.randomBullet(),myGun.shootPos.position, aimCam.transform.localRotation);      
     }
 
     public void takeDamage(int amount)

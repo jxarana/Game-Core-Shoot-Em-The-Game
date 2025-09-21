@@ -20,11 +20,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject menuTutorial;
     [SerializeField] public GameObject menuCredits;
     [SerializeField] public GameObject menuSettings;
+    [SerializeField] public GameObject menuBackground;
+
     public Stack<GameObject> menuLists;
-
-
-
-
 
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] GameObject[] toughEnemies;
@@ -118,6 +116,8 @@ public class gameManager : MonoBehaviour
     {
         instance = this;
 
+        menuLists = new Stack<GameObject>();
+
         music.loop = true;
 
         // Detect whether we're in the shop scene
@@ -157,6 +157,11 @@ public class gameManager : MonoBehaviour
             gameGoalCountOrig = gameGoalCount;
             SpawnEnemies();
         }
+    }
+
+    private void Start()
+    {
+        Time.timeScale = 1f;
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
@@ -171,8 +176,7 @@ public class gameManager : MonoBehaviour
             menuActive = menuLists.Peek();
 
             menuActive.SetActive(true);
-
-
+            menuBackground.SetActive(true);
         }
         else
         {
@@ -182,19 +186,10 @@ public class gameManager : MonoBehaviour
             gameGoalCountText.enabled = true;
             playerStaminaBar.enabled = true;
             goldCount.enabled = true;
+            menuBackground.SetActive(false);
         }
 
-
-
-
-    }
-
-    private void Start()
-    {
-        Time.timeScale = 1f;
-
         //playAudio(arenaClip, transform, 0.1f/*, false*/);
-
     }
 
     // Update is called once per frame
@@ -449,5 +444,27 @@ public class gameManager : MonoBehaviour
     //        //}
     //    }
     //}
+    public void LogMenuStack()    
+    {
+        Debug.Log("=== MENU STACK CONTENTS ===");
+        int count = 0;
+        foreach (var menu in menuLists)
+        {
+            Debug.Log($"[{count}] {menu.name}");
+            count++;
+        }
+        Debug.Log("=== END ===");
+    }
 
+    public void newmenu(GameObject newMenu)
+    {
+        if (menuActive != null)
+            menuActive.SetActive(false);  
+
+        menuLists.Push(newMenu);
+        menuActive = newMenu;
+        menuActive.SetActive(true);  
+
+        LogMenuStack();
+    }
 }
