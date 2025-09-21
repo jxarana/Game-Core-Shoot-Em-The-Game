@@ -612,20 +612,13 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         }
         myGun.gunSound.PlayOneShot(myGun.soundEffect, gameManager.instance.audioLevels.effectVol);
 
-        RaycastHit hit;
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
-        {
-            //Debug.Log(hit.collider.name);
-            Instantiate(myGun.randomBullet(),myGun.shootPos.position, Quaternion.identity);
+      
+         Instantiate(myGun.randomBullet(),myGun.shootPos.position, Quaternion.identity);
             
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
+          
 
-            if (dmg != null)
-            {
-                dmg.takeDamage(shootDamage + dmgUp * damageMult);
-            }
-        }
+          
     }
 
     public void takeDamage(int amount)
