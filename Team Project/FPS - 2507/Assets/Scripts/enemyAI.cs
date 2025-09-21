@@ -14,6 +14,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] AudioClip[] enemydeathClip;
     [SerializeField] float deathVol;
     [SerializeField] ParticleSystem deathAnim;
+    [SerializeField] ParticleSystem healAnim;
 
     [SerializeField] int goldDropped;
     [SerializeField] int HP;
@@ -153,6 +154,8 @@ public class enemyAI : MonoBehaviour, IDamage
     }
     public void takeDamage(int amount)
     {
+        int previousHp = HP;
+
         HP -= amount;
         agent.SetDestination(gameManager.instance.player.transform.position);
 
@@ -163,6 +166,11 @@ public class enemyAI : MonoBehaviour, IDamage
             //enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], deathVol);
             Instantiate(deathAnim, transform.position, Quaternion.identity);
             Destroy(gameObject);
+        }
+        else if (HP > previousHp)
+        {
+           ParticleSystem heal = Instantiate(healAnim, transform.position, Quaternion.identity);
+           heal.transform.SetParent(transform);
         }
         else
         {
