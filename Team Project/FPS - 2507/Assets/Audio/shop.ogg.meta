@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:19db5fe898474259a1c5c57408a09c764c79eee724e7f8e2d1fedbd8ae1662dd
-size 393
+fileFormatVersion: 1
+guid: b122a1f6f7f5c5e4a8fcd85d6c0f5b47
+AudioImporter:
+  importerVersion: 4
+  format: 0
+  quality: -1
+  3d: 1
+  forceToMono: 0
+  stream: 1
+  useHardware: 0
+AssetOrigin:
+  serializedVersion: 1
+  productId: 2679
+  packageName: Audio Toolkit Free Version
+  packageVersion: 12.0
+  assetPath: Assets/Unity Store DL/AudioToolkit/Demo/TestSounds/wind_bells.ogg
+  uploadId: 761856
