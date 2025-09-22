@@ -199,7 +199,9 @@ public class buttonFunctions : MonoBehaviour
 
     public void closeGame()
     {
-        Application.Quit();
+#if !UNITY_WEBGL
+            Application.Quit();
+#endif
     }
 
 }
