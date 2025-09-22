@@ -322,7 +322,15 @@ public class bossAI : MonoBehaviour, IDamage
 
         Quaternion lookRotation = Quaternion.LookRotation(direction);
 
-        Instantiate(bullet, shootPos.position, lookRotation);
+        GameObject newBullet = Instantiate(bullet, shootPos.position, lookRotation);
+
+        Collider[] bossColliders = GetComponentsInChildren<Collider>();
+        Collider bulletCollider = newBullet.GetComponent<Collider>();
+
+        foreach (Collider col in bossColliders)
+        {
+            Physics.IgnoreCollision(bulletCollider, col);
+        }
     }
 
     void attack()
