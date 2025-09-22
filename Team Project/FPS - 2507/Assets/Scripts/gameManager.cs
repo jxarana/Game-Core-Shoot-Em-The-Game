@@ -87,7 +87,8 @@ public class gameManager : MonoBehaviour
     int gameGoalCountOrig;
     int levelCount;
 
-    private int savedGold, savedUpgrades, savedHP, savedAmmo, savedMag;
+    private int savedGold, savedUpgrades, savedAmmo, savedMag;
+    private float savedHP;
     private List<gunStats> savedGuns = new();
 
     /* [Header("Follower")]

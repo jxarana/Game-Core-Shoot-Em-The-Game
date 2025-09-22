@@ -595,11 +595,14 @@ MonoBehaviour:
   damageRate: 0
   speed: 50
   horizontalSpeed: 0
-  destroyTime: 1
+  destroyTime: 3
   heal: 0
+  destroyOrig: 1
   shouldsplit: 1
+  splitAfter: 1
   splitAngle: 60
   splitBullets: 3
+  flightTime: 1
 --- !u!135 &1181413195528896940
 SphereCollider:
   m_ObjectHideFlags: 0

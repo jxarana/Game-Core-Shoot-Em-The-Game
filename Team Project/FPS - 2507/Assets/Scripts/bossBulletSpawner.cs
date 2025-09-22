@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class bossBulletSpawner : MonoBehaviour, IDamage
 {
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
         throw new System.NotImplementedException();
     }

@@ -17,7 +17,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] ParticleSystem healAnim;
 
     [SerializeField] int goldDropped;
-    [SerializeField] int HP;
+    [SerializeField] float HP;
     [SerializeField] int fov;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int roamDist;
@@ -162,9 +162,9 @@ public class enemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = 0;
         }
     }
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
-        int previousHp = HP;
+        float previousHp = HP;
 
         HP -= amount;
         agent.SetDestination(gameManager.instance.player.transform.position);
@@ -205,7 +205,15 @@ public class enemyAI : MonoBehaviour, IDamage
 
         Quaternion lookRotation = Quaternion.LookRotation(direction);
 
-        Instantiate(bullet, shootPos.position, lookRotation);
+        GameObject newBullet = Instantiate(bullet, shootPos.position, lookRotation);
+
+        Collider[] enemyColliders = GetComponentsInChildren<Collider>();
+        Collider bulletCollider = newBullet.GetComponent<Collider>();
+
+        foreach(Collider col in enemyColliders)
+        {
+            Physics.IgnoreCollision(bulletCollider, col);
+        }
     }
 
     private void disableRagdoll()
