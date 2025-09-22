@@ -13,6 +13,15 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# Unity auto-generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+
 # Mono auto generated files
 mono_crash.*
 
@@ -74,9 +83,7 @@ StyleCopReport.xml
 *_p.c
 *_h.h
 *.ilk
-*.meta
 *.obj
-*.iobj
 *.pch
 *.pdb
 *.ipdb

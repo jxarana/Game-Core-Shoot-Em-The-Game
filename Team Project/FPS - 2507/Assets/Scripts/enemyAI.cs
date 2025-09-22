@@ -14,9 +14,10 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] AudioClip[] enemydeathClip;
     [SerializeField] float deathVol;
     [SerializeField] ParticleSystem deathAnim;
+    [SerializeField] ParticleSystem healAnim;
 
     [SerializeField] int goldDropped;
-    [SerializeField] int HP;
+    [SerializeField] float HP;
     [SerializeField] int fov;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int roamDist;
@@ -24,6 +25,8 @@ public class enemyAI : MonoBehaviour, IDamage
 
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
+
+    public Rigidbody centerOfMass;
 
     Color colorOrg;
 
@@ -37,6 +40,14 @@ public class enemyAI : MonoBehaviour, IDamage
 
     Vector3 playerDir;
     Vector3 startingPos;
+
+    private Rigidbody[] ragdollRigidBodies;
+
+    void Awake()
+    {
+        ragdollRigidBodies = GetComponentsInChildren<Rigidbody>();
+        disableRagdoll();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -95,8 +106,6 @@ public class enemyAI : MonoBehaviour, IDamage
         playerDir = targetPos - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
-        Debug.DrawRay(headPos.position, playerDir);
-
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
@@ -153,8 +162,10 @@ public class enemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = 0;
         }
     }
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
+        float previousHp = HP;
+
         HP -= amount;
         agent.SetDestination(gameManager.instance.player.transform.position);
 
@@ -163,8 +174,13 @@ public class enemyAI : MonoBehaviour, IDamage
             gameManager.instance.playerScript.goldCount += goldDropped;
             gameManager.instance.updateGameGoal(-1);
             //enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], deathVol);
-            Instantiate(deathAnim, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            enableRagdoll();
+            Destroy(gameObject, 3);
+        }
+        else if (HP > previousHp)
+        {
+           ParticleSystem heal = Instantiate(healAnim, transform.position, Quaternion.identity);
+           heal.transform.SetParent(transform);
         }
         else
         {
@@ -189,6 +205,36 @@ public class enemyAI : MonoBehaviour, IDamage
 
         Quaternion lookRotation = Quaternion.LookRotation(direction);
 
-        Instantiate(bullet, shootPos.position, lookRotation);
+        GameObject newBullet = Instantiate(bullet, shootPos.position, lookRotation);
+
+        Collider[] enemyColliders = GetComponentsInChildren<Collider>();
+        Collider bulletCollider = newBullet.GetComponent<Collider>();
+
+        foreach(Collider col in enemyColliders)
+        {
+            Physics.IgnoreCollision(bulletCollider, col);
+        }
+    }
+
+    private void disableRagdoll()
+    {
+        foreach (var rigidbody in ragdollRigidBodies)
+        {
+            rigidbody.isKinematic = true;
+        }
+
+        anim.enabled = true;
+    }
+
+    private void enableRagdoll()
+    {
+        Vector3 oppositeDir = -centerOfMass.transform.forward + centerOfMass.transform.up;
+        foreach (var rigidbody in ragdollRigidBodies)
+        {
+            rigidbody.isKinematic = false;
+            rigidbody.AddForce(oppositeDir * 30f, ForceMode.Impulse);
+        }
+
+        anim.enabled = false;
     }
 }

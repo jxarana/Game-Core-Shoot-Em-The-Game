@@ -20,11 +20,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject menuTutorial;
     [SerializeField] public GameObject menuCredits;
     [SerializeField] public GameObject menuSettings;
+    [SerializeField] public GameObject menuBackground;
+
     public Stack<GameObject> menuLists;
-
-
-
-
 
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] GameObject[] toughEnemies;
@@ -48,10 +46,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] public AudioClip gameMusic;
 
 
-    public void menufeedback(AudioClip audio, float volume)
-    {
-        menuFeedBack.PlayOneShot(audio, volume);
-    }
+   
 
     [Header("Settings")]
     [SerializeField] public Slider masterVol;
@@ -92,7 +87,8 @@ public class gameManager : MonoBehaviour
     int gameGoalCountOrig;
     int levelCount;
 
-    private int savedGold, savedUpgrades, savedHP, savedAmmo, savedMag;
+    private int savedGold, savedUpgrades, savedAmmo, savedMag;
+    private float savedHP;
     private List<gunStats> savedGuns = new();
 
     /* [Header("Follower")]
@@ -120,6 +116,8 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        menuLists = new Stack<GameObject>();
 
         music.loop = true;
 
@@ -160,6 +158,11 @@ public class gameManager : MonoBehaviour
             gameGoalCountOrig = gameGoalCount;
             SpawnEnemies();
         }
+    }
+
+    private void Start()
+    {
+        Time.timeScale = 1f;
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
@@ -170,6 +173,11 @@ public class gameManager : MonoBehaviour
             playerStaminaBar.enabled = false;
             goldCount.enabled = false;
 
+            menuLists.Push(menuMain);
+            menuActive = menuLists.Peek();
+
+            menuActive.SetActive(true);
+            menuBackground.SetActive(true);
         }
         else
         {
@@ -179,30 +187,18 @@ public class gameManager : MonoBehaviour
             gameGoalCountText.enabled = true;
             playerStaminaBar.enabled = true;
             goldCount.enabled = true;
+            menuBackground.SetActive(false);
         }
 
-
-
-
-    }
-
-    private void Start()
-    {
-        Time.timeScale = 1f;
-
         //playAudio(arenaClip, transform, 0.1f/*, false*/);
-
-        
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel") || SceneManager.GetActiveScene().name == "MainMenu")
+        if (Input.GetButtonDown("Cancel") && SceneManager.GetActiveScene().name != "MainMenu")
         {
-            if (menuLists.Peek() == menuMain)
-                return;
+            
            
                 if (menuActive == null)
                 {
@@ -344,13 +340,13 @@ public class gameManager : MonoBehaviour
     public void savePlayerState()
     {
         if (playerScript == null) return;
-        playerScript.savePlayerData(out savedGold, out savedUpgrades, out savedHP, out savedAmmo, out savedMag, out savedGuns);
+        playerScript.savePlayerData(out savedGold, out savedUpgrades, out savedHP, out savedAmmo, out savedMag);
     }
 
     public void loadPlayerState()
     {
         if (playerScript == null) return;
-        playerScript.loadPlayerData(savedGold, savedUpgrades, savedHP, savedAmmo, savedMag, savedGuns);
+        playerScript.loadPlayerData(savedGold, savedUpgrades, savedHP, savedAmmo, savedMag);
     }
 
 
@@ -404,6 +400,11 @@ public class gameManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void menufeedback(AudioClip audio, float volume)
+    {
+        menuFeedBack.PlayOneShot(audio, volume);
+    }
+
     //public void playAudio(AudioClip clipAudio, Transform transform, float volume/*, bool loops*/)
     //{
 
@@ -444,5 +445,27 @@ public class gameManager : MonoBehaviour
     //        //}
     //    }
     //}
+    public void LogMenuStack()    
+    {
+        Debug.Log("=== MENU STACK CONTENTS ===");
+        int count = 0;
+        foreach (var menu in menuLists)
+        {
+            Debug.Log($"[{count}] {menu.name}");
+            count++;
+        }
+        Debug.Log("=== END ===");
+    }
 
+    public void newmenu(GameObject newMenu)
+    {
+        if (menuActive != null)
+            menuActive.SetActive(false);  
+
+        menuLists.Push(newMenu);
+        menuActive = newMenu;
+        menuActive.SetActive(true);  
+
+        LogMenuStack();
+    }
 }

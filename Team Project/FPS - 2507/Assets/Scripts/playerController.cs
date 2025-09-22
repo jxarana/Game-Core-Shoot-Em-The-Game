@@ -2,6 +2,8 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
+
 //using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,14 +25,14 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] public Animator animator;
 
     [Header("General Stats")]
-    [SerializeField] int HPOrig;
+    [SerializeField] float HPOrig;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpVel;
     [SerializeField] int jumpMax;
     [SerializeField] int gravity;
     [SerializeField] int dashMax;
-    [SerializeField] int deathDepth; // Set the height that the player can fall to before dieing
+    /*[SerializeField] int deathDepth;*/ // Set the height that the player can fall to before dieing
     [SerializeField] int dashCd;
     [SerializeField] Transform followTarget;
     //[SerializeField] Transform camPivot;
@@ -42,6 +44,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] float climbSpeed;
     [SerializeField] float maxClimbTime;
     [SerializeField] int parryForce;
+    [SerializeField] JunkGun myGun;
     private float climbTimer;
 
     [SerializeField] float detectLength;
@@ -59,7 +62,6 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] int maxAmmo;
 
 
-    [SerializeField] List<gunStats> gunList = new List<gunStats>();
     [SerializeField] List<itemPickUp> itemList = new List<itemPickUp>();
 
     [Header("Slam")]
@@ -101,13 +103,11 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] float reloadVol;
     [SerializeField] AudioClip[] audStep;
     [SerializeField] float audStepVol;
-    [SerializeField] AudioClip[] audArena;
-    [SerializeField] float audArenaVol;
 
     [Header("Buffs")]
     bool immortality = false;
     bool unlimitedAmmo = false;
-    int damageMult = 1;
+    public int damageMult = 1;
     int extraSpeed = 0;
 
     [Header("Crouch")]
@@ -117,6 +117,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     private float height;
     private Vector3 center;
     private bool crouched;
+    private bool lastBitOfLife = false;
 
     public float crouchSpeed = 1.0f;
 
@@ -140,7 +141,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     Vector3 playerVel;
 
     int jumpCount;
-    int HP;
+    float HP;
     int speedOrig;
     int gunListPos;
     bool IsDead;
@@ -182,7 +183,6 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         jumpMax = jumpMax + upgradeableStats.maxJumps;
         stamina = staminaOrig;
         followTarget = GameObject.FindGameObjectWithTag("followTarget").transform;
-        playerSounds.PlayOneShot(audArena[Random.Range(0, audArena.Length)], audArenaVol);
         normalCam = GameObject.FindGameObjectWithTag("NormalCam").GetComponent<CinemachineCamera>();
         aimCam = GameObject.FindGameObjectWithTag("AimCam").GetComponent<CinemachineCamera>();
         reticle = GameObject.FindGameObjectWithTag("Reticle");
@@ -191,6 +191,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         aimCam.Priority = 5;
         center = controller.center;
         height = controller.height;
+        myGun = GameObject.FindWithTag("MyGun").GetComponent<JunkGun>();
 
         updatePlayerUI();
     }
@@ -407,12 +408,12 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         }
         if (Input.GetButtonDown("Fire1"))
         {
-            if (!isGrappling && gunList.Count > 0 && gunList[gunListPos].ammoCurr > 0 && magCurrent > 0 && shootTimer > shootRate)
+            if (!isGrappling && myGun.inMag > 0 && shootTimer > myGun.fireRate)
             {
                 shoot();
                 updatePlayerUI();
             }
-            else if (!isGrappling && shootTimer > shootRate && magCurrent == 0)
+            else if (!isGrappling && shootTimer > myGun.fireRate && myGun.inMag == 0)
             {
                 reload();
                 updatePlayerUI();
@@ -421,13 +422,13 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
         if (Input.GetButtonDown("Reload"))
         {
-            if (magCurrent != magMax)
+            if (myGun.inMag != myGun.magMax)
             {
                 reload();
                 updatePlayerUI();
             }
         }
-        selectGun();
+       
         if (isClimbing)
         {
             climbingMovement();
@@ -500,6 +501,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             aimCam.gameObject.SetActive(true);
             reticle.SetActive(true);
             animator.SetBool("IsAiming", true);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, aimCam.transform.eulerAngles.y + 45f, 0f), Time.deltaTime * 15f);
         }
         if (Input.GetButtonUp("Aim"))
         {
@@ -604,31 +606,31 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         shootTimer = 0;
         if (!unlimitedAmmo)
         {
-            gunList[gunListPos].ammoCurr--;
+            myGun.inMag--;
         }
-        playerSounds.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootVol);
+         myGun.gunSound.PlayOneShot(myGun.soundEffect, gameManager.instance.audioLevels.effectVol);
 
-        RaycastHit hit;
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
-        {
-            //Debug.Log(hit.collider.name);
-            Instantiate(gunList[gunListPos].hitEffect, hit.point, Quaternion.identity);
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-            if (dmg != null)
-            {
-                dmg.takeDamage(shootDamage + dmgUp * damageMult);
-            }
-        }
+      
+         Instantiate(myGun.randomBullet(),myGun.shootPos.position, aimCam.transform.rotation);      
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
         if (!immortality)
         {
-            HP -= amount;
-
+            if (!lastBitOfLife && HP > (HPOrig * .041))
+            {
+                HP -= amount;
+            }
+            else if(!lastBitOfLife && HP < (HPOrig * .041))
+            {
+                lastBitOfLife = true;
+            }
+            else if(lastBitOfLife)
+            {
+                HP -= (amount / 3);
+            }
             updatePlayerUI();
 
             StartCoroutine(damageFlashScreen());
@@ -650,9 +652,9 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
         gameManager.instance.playerStaminaBar.fillAmount = (float)stamina / staminaOrig;
-        gameManager.instance.ammoBar.fillAmount = (float)magCurrent / magMax;
-        gameManager.instance.inMagCount.text = magCurrent.ToString();
-        gameManager.instance.currAmmoCount.text = currentAmmo.ToString();
+        gameManager.instance.ammoBar.fillAmount = (float)myGun.inMag / myGun.magMax;
+        gameManager.instance.inMagCount.text = myGun.magMax.ToString();
+        gameManager.instance.currAmmoCount.text = myGun.inMag.ToString();
         gameManager.instance.goldCountUI.text = goldCount.ToString();
 
     }
@@ -667,13 +669,9 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
     void reload()
     {
-        if (Input.GetButtonDown("Reload"))
-        {
-            gunList[gunListPos].ammoCurr = gunList[gunListPos].ammoMax;
-            magCurrent = magMax;
-            currentAmmo -= magMax;
-            playerSounds.PlayOneShot(playerReloadClip[Random.Range(0, playerReloadClip.Length)], reloadVol);
-        }
+      myGun.inMag = myGun.magMax; 
+      playerSounds.PlayOneShot(playerReloadClip[Random.Range(0, playerReloadClip.Length)], reloadVol);
+       
     }
 
     public void replenishAmmo()
@@ -905,57 +903,28 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
        // keyModel.GetComponent<MeshRenderer>().sharedMaterial = item.keyItem.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
-    public void getGunStats(gunStats gun)
-    {
-        gunList.Add(gun);
-        gunListPos = gunList.Count - 1;
+   
 
-        changeGun();
-    }
-
-    void changeGun()
-    {
-
-        shootDamage = gunList[gunListPos].shootDamage;
-        shootDist = gunList[gunListPos].shootDist;
-        shootRate = gunList[gunListPos].shootRate;
-
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].model.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].model.GetComponent<MeshRenderer>().sharedMaterial;
-    }
-
-    void selectGun()
-    {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
-        {
-            gunListPos++;
-            changeGun();
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
-        {
-            gunListPos--;
-            changeGun();
-        }
-    }
-
-    public void savePlayerData(out int gold, out int upgrades, out int hp, out int ammo, out int mag, out List<gunStats> guns)
+   
+   
+    public void savePlayerData(out int gold, out int upgrades, out float hp, out int ammo, out int mag )
     {
         gold = goldCount;
         upgrades = upgradePoints;
         hp = HP;
         ammo = currentAmmo;
         mag = magCurrent;
-        guns = new List<gunStats>(gunList);
+      
     }
 
-    public void loadPlayerData(int gold, int upgrades, int hp, int ammo, int mag, List<gunStats> guns)
+    public void loadPlayerData(int gold, int upgrades, float hp, int ammo, int mag)
     {
         goldCount = gold;
         upgradePoints = upgrades;
         HP = hp;
         currentAmmo = ammo;
         magCurrent = mag;
-        gunList = new List<gunStats>(guns);
+        
 
         updatePlayerUI();
     }
