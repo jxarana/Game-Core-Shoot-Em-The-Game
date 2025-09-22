@@ -205,7 +205,15 @@ public class enemyAI : MonoBehaviour, IDamage
 
         Quaternion lookRotation = Quaternion.LookRotation(direction);
 
-        Instantiate(bullet, shootPos.position, lookRotation);
+        GameObject newBullet = Instantiate(bullet, shootPos.position, lookRotation);
+
+        Collider[] enemyColliders = GetComponentsInChildren<Collider>();
+        Collider bulletCollider = newBullet.GetComponent<Collider>();
+
+        foreach(Collider col in enemyColliders)
+        {
+            Physics.IgnoreCollision(bulletCollider, col);
+        }
     }
 
     private void disableRagdoll()
