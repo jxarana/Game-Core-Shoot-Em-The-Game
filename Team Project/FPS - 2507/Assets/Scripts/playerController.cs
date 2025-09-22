@@ -25,7 +25,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [SerializeField] public Animator animator;
 
     [Header("General Stats")]
-    [SerializeField] int HPOrig;
+    [SerializeField] float HPOrig;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpVel;
@@ -117,6 +117,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     private float height;
     private Vector3 center;
     private bool crouched;
+    private bool lastBitOfLife = false;
 
     public float crouchSpeed = 1.0f;
 
@@ -140,7 +141,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     Vector3 playerVel;
 
     int jumpCount;
-    int HP;
+    float HP;
     int speedOrig;
     int gunListPos;
     bool IsDead;
@@ -614,12 +615,22 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
          Instantiate(myGun.randomBullet(),myGun.shootPos.position, aimCam.transform.rotation);      
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
         if (!immortality)
         {
-            HP -= amount;
-
+            if (!lastBitOfLife && HP > (HPOrig * .041))
+            {
+                HP -= amount;
+            }
+            else if(!lastBitOfLife && HP < (HPOrig * .041))
+            {
+                lastBitOfLife = true;
+            }
+            else if(lastBitOfLife)
+            {
+                HP -= (amount / 3);
+            }
             updatePlayerUI();
 
             StartCoroutine(damageFlashScreen());
@@ -896,7 +907,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
    
    
-    public void savePlayerData(out int gold, out int upgrades, out int hp, out int ammo, out int mag )
+    public void savePlayerData(out int gold, out int upgrades, out float hp, out int ammo, out int mag )
     {
         gold = goldCount;
         upgrades = upgradePoints;
@@ -906,7 +917,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
       
     }
 
-    public void loadPlayerData(int gold, int upgrades, int hp, int ammo, int mag)
+    public void loadPlayerData(int gold, int upgrades, float hp, int ammo, int mag)
     {
         goldCount = gold;
         upgradePoints = upgrades;
