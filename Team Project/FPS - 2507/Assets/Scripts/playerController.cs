@@ -205,6 +205,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     // Update is called once per frame
     void Update()
     {
+        Aim();
+
         // Regenerate stamina only if not doing stamina-draining actions
         if (!isSprinting && !isGrappling && !isClimbing && !isMantling && stamina < staminaOrig)
         {
@@ -228,7 +230,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
         sprint();
         movement();
-        Aim();
+        
         if (!controller.isGrounded && Input.GetKey(KeyCode.Space))
         {
             TryMantle();
