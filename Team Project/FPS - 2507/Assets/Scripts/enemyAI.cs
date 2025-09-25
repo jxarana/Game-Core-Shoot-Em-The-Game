@@ -109,7 +109,7 @@ public class enemyAI : MonoBehaviour, IDamage
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
-            if (hit.collider.CompareTag("Player") && angleToPlayer <= fov)
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= fov && HP > 0f)
             {
                 shootTimer += Time.deltaTime;
 
