@@ -791,7 +791,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     }
     private void climbingMovement()
     {
-        if (stamina > 0)
+        if (stamina > 0 && !isGrappling)
         {
             stamina -= climbStaminaCost * Time.deltaTime;
             stamina = Mathf.Clamp(stamina, 0, staminaOrig);
@@ -800,7 +800,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             //Move upward while stamina is still available
             playerVel = new Vector3(playerVel.y, climbSpeed, playerVel.z);
         }
-        else
+        else if(stamina <= 0 && isGrappling)
         {
             //Stop climbing if stamina runs out
             stopClimbing();
