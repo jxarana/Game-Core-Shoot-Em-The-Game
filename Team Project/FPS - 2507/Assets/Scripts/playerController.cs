@@ -167,6 +167,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
     private Rigidbody[] ragdollRigidBodies;
 
+    public bool isShooting;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -606,6 +608,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     void shoot()
     {
         shootTimer = 0;
+        isShooting = true;
         if (!unlimitedAmmo)
         {
             myGun.inMag--;
@@ -1020,7 +1023,4 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         yield return new WaitForSeconds(duration);
         extraSpeed = 0;
     }
-
-
-
 }
