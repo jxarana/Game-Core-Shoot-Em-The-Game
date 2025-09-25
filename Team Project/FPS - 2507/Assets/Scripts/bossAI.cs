@@ -60,7 +60,7 @@ public class bossAI : MonoBehaviour, IDamage
     void Start()
     {
         colorOrg = model.material.color;
-        gameManager.instance.updateGameGoal(0);
+        gameManager.instance.updateGameGoal(-5);
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
 
@@ -87,7 +87,7 @@ public class bossAI : MonoBehaviour, IDamage
                 attack();
                 break;
             case BossState.dead:
-                death();
+                
                 break;
             case BossState.orbit:
                 orbit();
@@ -116,7 +116,7 @@ public class bossAI : MonoBehaviour, IDamage
         gameManager.instance.updateGameGoal(-1);
         //enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], deathVol);
         enableRagdoll();
-        Destroy(gameObject, 3);
+        Destroy(gameObject);
     }
 
     private void chase()
