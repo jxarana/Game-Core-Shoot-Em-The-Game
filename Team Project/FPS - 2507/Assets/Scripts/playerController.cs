@@ -167,6 +167,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
     private Rigidbody[] ragdollRigidBodies;
 
+    public bool isShooting;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -205,6 +207,8 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     // Update is called once per frame
     void Update()
     {
+        Aim();
+
         // Regenerate stamina only if not doing stamina-draining actions
         if (!isSprinting && !isGrappling && !isClimbing && !isMantling && stamina < staminaOrig)
         {
@@ -228,7 +232,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
         sprint();
         movement();
-        Aim();
+        
         if (!controller.isGrounded && Input.GetKey(KeyCode.Space))
         {
             TryMantle();
@@ -604,6 +608,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     void shoot()
     {
         shootTimer = 0;
+        isShooting = true;
         if (!unlimitedAmmo)
         {
             myGun.inMag--;
@@ -789,7 +794,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     }
     private void climbingMovement()
     {
-        if (stamina > 0)
+        if (stamina > 0 && !isGrappling)
         {
             stamina -= climbStaminaCost * Time.deltaTime;
             stamina = Mathf.Clamp(stamina, 0, staminaOrig);
@@ -798,7 +803,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             //Move upward while stamina is still available
             playerVel = new Vector3(playerVel.y, climbSpeed, playerVel.z);
         }
-        else
+        else if(stamina <= 0 && isGrappling)
         {
             //Stop climbing if stamina runs out
             stopClimbing();
@@ -1018,7 +1023,4 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         yield return new WaitForSeconds(duration);
         extraSpeed = 0;
     }
-
-
-
 }

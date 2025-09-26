@@ -109,7 +109,7 @@ public class enemyAI : MonoBehaviour, IDamage
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
-            if (hit.collider.CompareTag("Player") && angleToPlayer <= fov)
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= fov && HP > 0)
             {
                 shootTimer += Time.deltaTime;
 
@@ -123,10 +123,11 @@ public class enemyAI : MonoBehaviour, IDamage
                 if (agent.remainingDistance <= agent.stoppingDistance)
                     faceTarget();
 
+                agent.stoppingDistance = stoppingDistOrig;
                 return true;
             }
         }
-        agent.stoppingDistance = stoppingDistOrig;
+        agent.stoppingDistance = 0;
         return false;
     }
 

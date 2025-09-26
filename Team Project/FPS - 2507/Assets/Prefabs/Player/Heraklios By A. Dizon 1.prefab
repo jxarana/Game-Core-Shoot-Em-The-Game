@@ -1202,7 +1202,7 @@ MonoBehaviour:
   maxClimbTime: 10
   parryForce: 0
   myGun: {fileID: 1939628018697805050}
-  detectLength: 15
+  detectLength: 1
   sphereCastRadius: 0.25
   maxWallLookAngle: 30
   goldCount: 0
