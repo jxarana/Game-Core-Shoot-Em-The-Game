@@ -15,6 +15,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] float deathVol;
     [SerializeField] ParticleSystem deathAnim;
     [SerializeField] ParticleSystem healAnim;
+    [SerializeField] LayerMask visionMask;
 
     [SerializeField] int goldDropped;
     [SerializeField] float HP;
@@ -107,7 +108,7 @@ public class enemyAI : MonoBehaviour, IDamage
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
         RaycastHit hit;
-        if (Physics.Raycast(headPos.position, playerDir, out hit))
+        if (Physics.Raycast(headPos.position, playerDir, out hit, 100f, visionMask))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer <= fov && HP > 0)
             {
@@ -127,7 +128,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 return true;
             }
         }
-        agent.stoppingDistance = 0;
+
         return false;
     }
 
