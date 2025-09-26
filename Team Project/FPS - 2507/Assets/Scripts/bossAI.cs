@@ -64,8 +64,8 @@ public class bossAI : MonoBehaviour, IDamage
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
 
-        pickPatrolArea();
-        changeState(BossState.roam);
+        //pickPatrolArea();
+        //changeState(BossState.roam);
     }
 
     // Update is called once per frame
@@ -242,23 +242,25 @@ public class bossAI : MonoBehaviour, IDamage
 
                     //agent.SetDestination(gameManager.instance.player.transform.position);
 
-                    //if (agent.remainingDistance <= agent.stoppingDistance)
-                    //    faceTarget();
+                    if (agent.remainingDistance <= agent.stoppingDistance)
+                        faceTarget();
+
                     lastKnownPos = gameManager.instance.player.transform.position;
                     hasLastPos = true;
+                    agent.stoppingDistance = stoppingDistOrig;
                     return true;
                 }
             }
         }
-        agent.stoppingDistance = stoppingDistOrig;
+        agent.stoppingDistance = 0;
         return false;
     }
 
-    //void faceTarget()
-    //{
-    //    Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
-    //    transform.rotation = Quaternion.Lerp(transform.rotation, rot, faceTargetSpeed * Time.deltaTime);
-    //}
+    void faceTarget()
+    {
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, faceTargetSpeed * Time.deltaTime);
+    }
 
     public void FacePlayerInstantly()
     {
