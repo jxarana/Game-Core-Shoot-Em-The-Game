@@ -11,8 +11,16 @@ public class buttonFunctions : MonoBehaviour
 
     public void restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        gameManager.instance.stateUnpause();
+        if(gameManager.instance.menuActive == gameManager.instance.menuPause)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 5 && gameManager.instance.menuActive == gameManager.instance.menuWin || 
+            gameManager.instance.menuActive == gameManager.instance.menuLose)
+        {
+            SceneManager.LoadScene("Level_1");
+        }
+            gameManager.instance.stateUnpause();
     }
 
     public void loadNextLevel()

@@ -11,9 +11,9 @@ public class gameManager : MonoBehaviour
 {
     public static gameManager instance;
     [SerializeField] public GameObject menuActive;
-    [SerializeField] GameObject menuPause;
+    [SerializeField] public GameObject menuPause;
     [SerializeField] GameObject menuLevelComplete;
-    [SerializeField] GameObject menuWin;
+    [SerializeField] public GameObject menuWin;
     [SerializeField] public GameObject menuLose;
     [SerializeField] GameObject menuUnlocks;
     [SerializeField] public GameObject menuMain;

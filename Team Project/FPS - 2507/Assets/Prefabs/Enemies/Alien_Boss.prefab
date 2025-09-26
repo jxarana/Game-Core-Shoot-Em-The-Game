@@ -4548,7 +4548,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6956772517121600344}
-  - component: {fileID: 7955177873054722611}
+  - component: {fileID: 1558143623495414612}
   - component: {fileID: 3104164425129671240}
   - component: {fileID: 4699759754259145854}
   - component: {fileID: 1188236525807116014}
@@ -4583,7 +4583,7 @@ Transform:
   - {fileID: 4373337192262291460}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7955177873054722611
+--- !u!114 &1558143623495414612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4612,15 +4612,9 @@ MonoBehaviour:
   faceTargetSpeed: 20
   roamDist: 50
   roamPauseTime: 2
-  patrolArea:
-  - {fileID: 2882195025180439447, guid: 33c03f27b9c8e7348828062ada47e526, type: 3}
-  - {fileID: 8854337088515803015, guid: e1eddabeafb738f4883bd68241b3b21d, type: 3}
-  - {fileID: 1418300256555779120, guid: 7eb1acd3e6a727e47b44b293ebfbd916, type: 3}
-  - {fileID: 1104556828438491017, guid: 50d15fd3faac0804b9dcf99544094f5b, type: 3}
-  - {fileID: 6751034820982651151, guid: 77b5a34a03e6e5f458aefbf3dc0f6fa7, type: 3}
-  - {fileID: 149986829378825842, guid: 32dcb016dd8370640b9d3cfb229da9b2, type: 3}
+  patrolArea: []
   bullet: {fileID: 332599942535682412, guid: 5999f875ee801ef44ac5ece67382422d, type: 3}
-  shootRate: 1
+  shootRate: 0.5
   centerOfMass: {fileID: 1295536682167973492}
 --- !u!95 &3104164425129671240
 Animator:
@@ -4658,7 +4652,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 5
+  m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
