@@ -11,6 +11,9 @@ public class tutorialTrigger : MonoBehaviour
     // Tracks whether the player is inside this trigger zone
     private bool playerInside = false;
 
+    //Tracks whether the player has already seen this tutorial (to prevent repeat activations)
+    private bool playerAlreadySeenTutorial = false;
+
     // Tracks whether the tutorial panel is currently shown
     private bool panelActive = false;
 
@@ -40,13 +43,14 @@ public class tutorialTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Activate the panel only if it isn't already active and the player enters the trigger
-        if (!panelActive && other.CompareTag("Player"))
+        if (!panelActive && other.CompareTag("Player") && !playerAlreadySeenTutorial)
         {
             gameManager.instance.menuActive = tutorialPanel;
             tutorialPanel.SetActive(true);
             gameManager.instance.statePause();
             panelActive = true;
             playerInside = true;
+            playerAlreadySeenTutorial = true; // Mark that the player has seen this tutorial
         }
     }
 }

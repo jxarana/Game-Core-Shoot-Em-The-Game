@@ -1315,7 +1315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 0}
-  rotationalSpeed: 100
+  rotationalSpeed: 2
   bottomClamp: -40
   topClamp: 70
 --- !u!143 &9210948822570621407

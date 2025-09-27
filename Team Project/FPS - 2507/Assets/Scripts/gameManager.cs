@@ -272,6 +272,7 @@ public class gameManager : MonoBehaviour
         timeScaleNew = Time.timeScale;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        playerScript.StopSprinting();
     }
 
     public void stateUnpause()
