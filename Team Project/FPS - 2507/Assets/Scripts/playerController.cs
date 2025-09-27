@@ -557,7 +557,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         isPlayingStep = false;
     }
 
-    void StopSprinting()
+    public void StopSprinting()
     {
         if (isSprinting)
         {

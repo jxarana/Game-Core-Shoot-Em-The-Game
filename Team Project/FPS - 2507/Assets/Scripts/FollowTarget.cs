@@ -5,7 +5,7 @@ public class FollowTarget : MonoBehaviour
 {
     [SerializeField] private Transform followTarget;
 
-    [SerializeField] private float rotationalSpeed = 100f;
+    [SerializeField] private float rotationalSpeed = 10f;
     [SerializeField] private float bottomClamp = -40f;
     [SerializeField] private float topClamp = 70f;
 
@@ -23,12 +23,13 @@ public class FollowTarget : MonoBehaviour
     }
     private void LateUpdate()
     {
+        if(gameManager.instance.isPaused) { return; }
         CameraLogic();
     }
     private void CameraLogic()
     {
-        float mouseX = Input.GetAxis("Mouse X") * rotationalSpeed * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * rotationalSpeed * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * rotationalSpeed;
+        float mouseY = Input.GetAxis("Mouse Y") * rotationalSpeed;
 
         cinemachineTargetPitch = UpdateRotation(cinemachineTargetPitch, mouseY, bottomClamp, topClamp, true);
         cinemachineTargetYaw = UpdateRotation(cinemachineTargetYaw, mouseX, float.MinValue, float.MaxValue, false);
