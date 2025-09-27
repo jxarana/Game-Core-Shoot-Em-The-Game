@@ -10,6 +10,7 @@ public class damage : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] GameObject shooter;
 
+    [Header("Bullet Settings")]
     [SerializeField] int damageAmount;
     [SerializeField] float damageRate;
     [SerializeField] int speed;
