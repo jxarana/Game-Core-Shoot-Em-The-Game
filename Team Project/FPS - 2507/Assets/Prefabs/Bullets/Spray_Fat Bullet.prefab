@@ -172,8 +172,11 @@ MonoBehaviour:
   damageRate: 0
   speed: 50
   horizontalSpeed: 0
-  destroyTime: 3
+  destroyTime: 20
   heal: 1
+  destroyOrig: 0
   shouldsplit: 0
+  splitAfter: 0
   splitAngle: 0
   splitBullets: 0
+  flightTime: 0
