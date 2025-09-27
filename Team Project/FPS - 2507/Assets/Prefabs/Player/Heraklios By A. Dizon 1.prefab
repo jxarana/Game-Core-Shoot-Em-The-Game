@@ -1279,6 +1279,7 @@ MonoBehaviour:
   dashCooldown: 0
   dmgUp: 0
   isGrappling: 0
+  isShooting: 0
 --- !u!114 &3035057207467824559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1314,7 +1315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 0}
-  rotationalSpeed: 70
+  rotationalSpeed: 100
   bottomClamp: -40
   topClamp: 70
 --- !u!143 &9210948822570621407
