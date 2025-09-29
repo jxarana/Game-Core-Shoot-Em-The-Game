@@ -173,9 +173,9 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            gameManager.instance.playerScript.goldCount += goldDropped;
+            gameManager.instance.playerScript.upgradeableStats.dollarBills += goldDropped;
             gameManager.instance.updateGameGoal(-1);
-            //enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], deathVol);
+            enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], gameManager.instance.audioLevels.effectVol);
             enableRagdoll();
             Destroy(gameObject, 3);
         }
