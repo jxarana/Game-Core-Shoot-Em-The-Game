@@ -154,13 +154,19 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.newmenu(gameManager.instance.menuSettings);
 
 
-
         
 
-        gameManager.instance.musicVol.value = gameManager.instance.audioLevels.musicVol * 100;
-        gameManager.instance.effectsVol.value = gameManager.instance.audioLevels.effectVol * 100;
-        gameManager.instance.masterVol.value = gameManager.instance.audioLevels.masterVol * 100;
-        gameManager.instance.menuVol.value = gameManager.instance.audioLevels.menuFeedBackVol * 100;
+        gameManager.instance.masterVol.value = gameManager.instance.audioLevels.masterVol;
+        gameManager.instance.musicVol.value = gameManager.instance.audioLevels.musicVol;
+        gameManager.instance.effectsVol.value = gameManager.instance.audioLevels.effectVol;
+       
+        gameManager.instance.menuVol.value = gameManager.instance.audioLevels.menuFeedBackVol;
+
+        gameManager.instance.masterVolVal.text = gameManager.instance.audioLevels.masterVol.ToString();
+        gameManager.instance.musicVolVal.text = gameManager.instance.audioLevels.musicVol.ToString ();
+        gameManager.instance.effectsVolVal.text = gameManager.instance.audioLevels.effectVol.ToString();
+        gameManager.instance.menuVolVal.text = gameManager.instance.audioLevels.menuFeedBackVol.ToString();
+
 
         /*  
           gameManager.instance.masterVolVal.text = gameManager.instance.masterVol.value.ToString();
@@ -170,7 +176,7 @@ public class buttonFunctions : MonoBehaviour
 
 
         */
-
+        
 
         gameManager.instance.menufeedback(gameManager.instance.buttonClick, gameManager.instance.audioLevels.menuFeedBackVol);
         gameManager.instance.LogMenuStack();  
