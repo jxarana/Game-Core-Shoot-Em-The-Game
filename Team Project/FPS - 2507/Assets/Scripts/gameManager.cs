@@ -222,7 +222,7 @@ public class gameManager : MonoBehaviour
                     stateUnpause();
                     music.clip = gameMusic;
                 }
-            }
+               }
 
         }
 
