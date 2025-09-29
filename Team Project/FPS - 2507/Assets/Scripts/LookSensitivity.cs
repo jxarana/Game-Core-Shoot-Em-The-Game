@@ -1,3 +1,25 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9ec95df9202c1404a3e5451a6f0215e6841e5ae6363dc8171838fb8510e38d03
-size 708
+using UnityEngine;
+using Unity.Cinemachine;
+
+public class LookSensitivity : MonoBehaviour, AxisState.IInputAxisProvider
+{
+    [SerializeField] private float sensitivity = 3f;
+    [SerializeField] private CinemachineInputProvider provider;
+
+    public float GetAxisValue(int axis)
+    {
+        return provider.GetAxisValue(axis) * sensitivity;
+    }
+
+    public void SetSensitivity(float value)
+    {
+        sensitivity = Mathf.Clamp(value, 0.1f, 10f);
+        PlayerPrefs.SetFloat("MouseSensitivity", sensitivity);
+    }
+
+    private void Start()
+    {
+        if (PlayerPrefs.HasKey("MouseSensitivity"))
+            sensitivity = PlayerPrefs.GetFloat("MouseSensitivity");
+    }
+}

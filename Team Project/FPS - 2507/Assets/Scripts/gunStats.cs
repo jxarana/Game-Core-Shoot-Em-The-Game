@@ -1,3 +1,30 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:afce7ad2a3b7249536cb494efae158a5d2ec5c6f729b41f79055ea6926b35379
-size 425
+using UnityEngine;
+using System.Collections.Generic;
+
+[CreateAssetMenu]
+
+public class gunStats : ScriptableObject
+{
+    public GameObject model;
+
+
+
+    [SerializeField] List<damage> bullet = new List<damage>();
+
+
+
+
+   
+
+    [Range(1, 10)] public int shootDamage;
+    [Range(5, 1000)] public int shootDist;
+    [Range(0.1f, 3)] public float shootRate;
+    public int ammoCurr;
+    [Range(5, 50)] public int ammoMax;
+
+   
+
+    public ParticleSystem hitEffect;
+    public AudioClip[] shootSound;
+    [Range(0, 1)] public float shootVol;
+}
