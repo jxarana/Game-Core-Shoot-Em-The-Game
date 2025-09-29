@@ -15,6 +15,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] float deathVol;
     [SerializeField] ParticleSystem deathAnim;
     [SerializeField] ParticleSystem healAnim;
+    [SerializeField] LayerMask visionMask;
 
     [SerializeField] int goldDropped;
     [SerializeField] float HP;
@@ -107,9 +108,9 @@ public class enemyAI : MonoBehaviour, IDamage
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
         RaycastHit hit;
-        if (Physics.Raycast(headPos.position, playerDir, out hit))
+        if (Physics.Raycast(headPos.position, playerDir, out hit, 100f, visionMask))
         {
-            if (hit.collider.CompareTag("Player") && angleToPlayer <= fov)
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= fov && HP > 0)
             {
                 shootTimer += Time.deltaTime;
 
@@ -123,10 +124,11 @@ public class enemyAI : MonoBehaviour, IDamage
                 if (agent.remainingDistance <= agent.stoppingDistance)
                     faceTarget();
 
+                agent.stoppingDistance = stoppingDistOrig;
                 return true;
             }
         }
-        agent.stoppingDistance = stoppingDistOrig;
+
         return false;
     }
 
@@ -171,9 +173,10 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            gameManager.instance.playerScript.goldCount += goldDropped;
+            gameManager.instance.playerScript.upgradeableStats.dollarBills += goldDropped;
+            gameManager.instance.goldCountUI.text = gameManager.instance.playerScript.upgradeableStats.dollarBills.ToString();
             gameManager.instance.updateGameGoal(-1);
-            //enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], deathVol);
+            enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], gameManager.instance.audioLevels.effectVol);
             enableRagdoll();
             Destroy(gameObject, 3);
         }

@@ -23,12 +23,13 @@ public class FollowTarget : MonoBehaviour
     }
     private void LateUpdate()
     {
+        if(gameManager.instance.isPaused) { return; }
         CameraLogic();
     }
     private void CameraLogic()
     {
-        float mouseX = GetMouseInput("Mouse X");
-        float mouseY = GetMouseInput("Mouse Y");
+        float mouseX = Input.GetAxis("Mouse X") * rotationalSpeed;
+        float mouseY = Input.GetAxis("Mouse Y") * rotationalSpeed;
 
         cinemachineTargetPitch = UpdateRotation(cinemachineTargetPitch, mouseY, bottomClamp, topClamp, true);
         cinemachineTargetYaw = UpdateRotation(cinemachineTargetYaw, mouseX, float.MinValue, float.MaxValue, false);
@@ -45,9 +46,9 @@ public class FollowTarget : MonoBehaviour
         currentRotation += isXAxis ? -input : input;
         return Mathf.Clamp(currentRotation, min, max);
     }
-    private float GetMouseInput(string axis)
-    {
-        return Input.GetAxis(axis) * rotationalSpeed * Time.deltaTime;
-    }
+    //private float GetMouseInput(string axis)
+    //{
+    //    return Input.GetAxis(axis) * rotationalSpeed * Time.deltaTime;
+    //}
 
 }

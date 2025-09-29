@@ -60,12 +60,12 @@ public class bossAI : MonoBehaviour, IDamage
     void Start()
     {
         colorOrg = model.material.color;
-        gameManager.instance.updateGameGoal(0);
+        gameManager.instance.updateGameGoal(-5);
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
 
-        pickPatrolArea();
-        changeState(BossState.roam);
+        //pickPatrolArea();
+        //changeState(BossState.roam);
     }
 
     // Update is called once per frame
@@ -87,7 +87,7 @@ public class bossAI : MonoBehaviour, IDamage
                 attack();
                 break;
             case BossState.dead:
-                death();
+                
                 break;
             case BossState.orbit:
                 orbit();
@@ -116,7 +116,7 @@ public class bossAI : MonoBehaviour, IDamage
         gameManager.instance.updateGameGoal(-1);
         //enemySounds.PlayOneShot(enemydeathClip[Random.Range(0, enemydeathClip.Length)], deathVol);
         enableRagdoll();
-        Destroy(gameObject, 3);
+        Destroy(gameObject);
     }
 
     private void chase()
@@ -242,23 +242,25 @@ public class bossAI : MonoBehaviour, IDamage
 
                     //agent.SetDestination(gameManager.instance.player.transform.position);
 
-                    //if (agent.remainingDistance <= agent.stoppingDistance)
-                    //    faceTarget();
+                    if (agent.remainingDistance <= agent.stoppingDistance)
+                        faceTarget();
+
                     lastKnownPos = gameManager.instance.player.transform.position;
                     hasLastPos = true;
+                    agent.stoppingDistance = stoppingDistOrig;
                     return true;
                 }
             }
         }
-        agent.stoppingDistance = stoppingDistOrig;
+        agent.stoppingDistance = 0;
         return false;
     }
 
-    //void faceTarget()
-    //{
-    //    Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
-    //    transform.rotation = Quaternion.Lerp(transform.rotation, rot, faceTargetSpeed * Time.deltaTime);
-    //}
+    void faceTarget()
+    {
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, faceTargetSpeed * Time.deltaTime);
+    }
 
     public void FacePlayerInstantly()
     {
