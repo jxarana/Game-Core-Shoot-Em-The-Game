@@ -11,7 +11,7 @@ public class follower : MonoBehaviour , IDamage// should only be used on levels 
     [SerializeField] NavMeshAgent agent;
 
     [Header("Stats")]
-    [SerializeField] int health = 100;
+    [SerializeField] float health = 100;
     [SerializeField] int fear = 0;
 
     [Header("Fear Gains")]
@@ -60,7 +60,7 @@ public class follower : MonoBehaviour , IDamage// should only be used on levels 
             isFeared = true;
         }
     }
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
         health -= amount;
         fear += hurtFear;
