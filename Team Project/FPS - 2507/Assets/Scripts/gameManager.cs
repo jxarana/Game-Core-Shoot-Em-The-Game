@@ -46,7 +46,10 @@ public class gameManager : MonoBehaviour
     [SerializeField] public AudioClip gameMusic;
 
 
-   
+
+
+
+
 
     [Header("Settings")]
     [SerializeField] public Slider masterVol;
@@ -78,7 +81,7 @@ public class gameManager : MonoBehaviour
     public bool isPaused;
     public GameObject player;
     public playerController playerScript;
-   
+
 
     float timeScaleOrig;
     float timeScaleNew;
@@ -98,7 +101,7 @@ public class gameManager : MonoBehaviour
      Transform followerSpawn;
     */
 
-    [Header("Player")] 
+    [Header("Player")]
     public GameObject playerPrefab;
     Transform playerSpawnPoint;
 
@@ -151,7 +154,7 @@ public class gameManager : MonoBehaviour
         }
 
         loadPlayerState();
-       
+
         if (!isShopScene)
         {
             gameGoalCount = numberOfEnemiesToSpawn + toughEnemies.Count();
@@ -188,7 +191,10 @@ public class gameManager : MonoBehaviour
             playerStaminaBar.enabled = true;
             goldCount.enabled = true;
             menuBackground.SetActive(false);
+            goldCount.text = playerScript.upgradeableStats.dollarBills.ToString();
         }
+
+        music.Play();
 
         //playAudio(arenaClip, transform, 0.1f/*, false*/);
     }
@@ -198,36 +204,45 @@ public class gameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel") && SceneManager.GetActiveScene().name != "MainMenu")
         {
-            
-           
-                if (menuActive == null)
+
+
+            if (menuActive == null)
+            {
+                music.clip = menuMusic;
+                statePause();
+                menuLists.Push(menuPause);
+                menuActive = menuLists.Peek();
+                menuActive.SetActive(true);
+            }
+            else if (menuLists.Count > 0)
+            {
+                menuLists.Pop();
+                if (menuLists.Count == 0)
                 {
-                    music.clip = menuMusic;
-                    statePause();
-                    menuLists.Push(menuPause);
-                    menuActive = menuLists.Peek();
-                    menuActive.SetActive(true);
+                    stateUnpause();
+                    music.clip = gameMusic;
                 }
-                else if (menuLists.Count > 0)
-                {
-                    menuLists.Pop();
-                    if (menuLists.Count == 0)
-                    {
-                        stateUnpause();
-                        music.clip = gameMusic;
-                    }
-                }
-            
+            }
+
         }
 
-        if(menuActive == menuSettings)
+        if (menuActive == menuSettings)
         {
-            musicVolVal.text = musicVol.ToString();
-            masterVolVal.text = masterVol.ToString();
-            effectsVolVal.text = effectsVol.ToString();
-            menuVolVal.text = menuVol.ToString();
+            float masterHolder = masterVol.value * 100;
+            float musicHolder = musicVol.value * 100;
+            float effectHolder = effectsVol.value * 100;
+            float menuHolder = menuVol.value * 100;
+
+
+            masterVolVal.text = masterHolder.ToString("F0");
+            musicVolVal.text = musicHolder.ToString("F0");
+            effectsVolVal.text = effectHolder.ToString("F0");
+            menuVolVal.text = menuHolder.ToString("F0");
+
         }
-       
+
+
+
 
     }
 
@@ -272,6 +287,7 @@ public class gameManager : MonoBehaviour
         timeScaleNew = Time.timeScale;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        playerScript.StopSprinting();
     }
 
     public void stateUnpause()
@@ -374,7 +390,7 @@ public class gameManager : MonoBehaviour
     public void openShop()
     {
         statePause();
-        goldCount.text = playerScript.goldCount.ToString();
+        goldCount.text = playerScript.upgradeableStats.dollarBills.ToString();
         unlockCount.text = playerScript.upgradePoints.ToString();
         menuActive = menuShop;
         menuActive.SetActive(true);
@@ -445,7 +461,7 @@ public class gameManager : MonoBehaviour
     //        //}
     //    }
     //}
-    public void LogMenuStack()    
+    public void LogMenuStack()
     {
         Debug.Log("=== MENU STACK CONTENTS ===");
         int count = 0;
@@ -460,11 +476,11 @@ public class gameManager : MonoBehaviour
     public void newmenu(GameObject newMenu)
     {
         if (menuActive != null)
-            menuActive.SetActive(false);  
+            menuActive.SetActive(false);
 
         menuLists.Push(newMenu);
         menuActive = newMenu;
-        menuActive.SetActive(true);  
+        menuActive.SetActive(true);
 
         LogMenuStack();
     }

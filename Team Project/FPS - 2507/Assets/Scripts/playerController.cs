@@ -94,15 +94,15 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     [Header("Audio Settings:")]
     [SerializeField] AudioSource playerSounds;
     [SerializeField] AudioClip[] playerSoundsClip;
-    [SerializeField] float audJumpVol;
+    
     [SerializeField] AudioClip[] deathClip;
-    [SerializeField] float deathVolume;
+    
     [SerializeField] AudioClip[] playerHurtClip;
-    [SerializeField] float hurtVol;
+    
     [SerializeField] AudioClip[] playerReloadClip;
-    [SerializeField] float reloadVol;
+    
     [SerializeField] AudioClip[] audStep;
-    [SerializeField] float audStepVol;
+    
 
     [Header("Buffs")]
     bool immortality = false;
@@ -472,7 +472,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
             {
                 playerVel += transform.up * jumpVel;
                 jumpCount++;
-                playerSounds.PlayOneShot(playerSoundsClip[Random.Range(0, playerSoundsClip.Length)], audJumpVol);
+                playerSounds.PlayOneShot(playerSoundsClip[Random.Range(0, playerSoundsClip.Length)], gameManager.instance.audioLevels.calcEffectVol());
                 animator.SetTrigger("Jump");
 
                 if (isSprinting == true)
@@ -546,7 +546,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     IEnumerator playStep()
     {
         isPlayingStep = true;
-        playerSounds.PlayOneShot(audStep[Random.Range(0, audStep.Length)], audStepVol);
+        playerSounds.PlayOneShot(audStep[Random.Range(0, audStep.Length)], gameManager.instance.audioLevels.calcEffectVol());
 
         if (isSprinting)
             yield return new WaitForSeconds(0.3f);
@@ -557,7 +557,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         isPlayingStep = false;
     }
 
-    void StopSprinting()
+    public void StopSprinting()
     {
         if (isSprinting)
         {
@@ -613,7 +613,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
         {
             myGun.inMag--;
         }
-         myGun.gunSound.PlayOneShot(myGun.soundEffect, gameManager.instance.audioLevels.effectVol);
+         myGun.gunSound.PlayOneShot(myGun.soundEffect, gameManager.instance.audioLevels.calcEffectVol());
 
 
       
@@ -640,7 +640,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
 
             StartCoroutine(damageFlashScreen());
 
-            playerSounds.PlayOneShot(playerHurtClip[Random.Range(0, playerHurtClip.Length)], hurtVol);
+            playerSounds.PlayOneShot(playerHurtClip[Random.Range(0, playerHurtClip.Length)], gameManager.instance.audioLevels.calcEffectVol());
 
             if (HP <= 0)
             {
@@ -648,7 +648,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
                 IsDead = true;
                 enableRagdoll();
                 StartCoroutine(activateLoseMenuAfterDelay(3f));
-                playerSounds.PlayOneShot(deathClip[Random.Range(0, deathClip.Length)], deathVolume);
+                playerSounds.PlayOneShot(deathClip[Random.Range(0, deathClip.Length)], gameManager.instance.audioLevels.calcEffectVol());
             }
         }
     }
@@ -675,7 +675,7 @@ public class playerController : MonoBehaviour, IDamage, IInventorySystem, ICanGr
     void reload()
     {
       myGun.inMag = myGun.magMax; 
-      playerSounds.PlayOneShot(playerReloadClip[Random.Range(0, playerReloadClip.Length)], reloadVol);
+      playerSounds.PlayOneShot(playerReloadClip[Random.Range(0, playerReloadClip.Length)], gameManager.instance.audioLevels.calcEffectVol());
        
     }
 

@@ -595,7 +595,7 @@ MonoBehaviour:
   damageRate: 0
   speed: 50
   horizontalSpeed: 0
-  destroyTime: 3
+  destroyTime: 20
   heal: 0
   destroyOrig: 1
   shouldsplit: 1
