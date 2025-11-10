@@ -1,12 +1,11 @@
-using UnityEngine;
+
 using System.Collections;
-using UnityEngine.AI;
-using UnityEngine.UIElements;
+using UnityEngine;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] UnityEngine.AI.NavMeshAgent agent;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] Animator anim;
@@ -95,8 +94,8 @@ public class enemyAI : MonoBehaviour, IDamage
         Vector3 ranPos = Random.insideUnitSphere * roamDist;
         ranPos += startingPos;
 
-        NavMeshHit hit;
-        NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
+        UnityEngine.AI.NavMeshHit hit;
+        UnityEngine.AI.NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
         agent.SetDestination(hit.position);
     }
 

@@ -1,6 +1,7 @@
-using UnityEngine;
-using UnityEngine.AI;
 
+
+
+using UnityEngine;
 
 public class follower : MonoBehaviour , IDamage// should only be used on levels with a complete flat ground for now
 
@@ -8,7 +9,7 @@ public class follower : MonoBehaviour , IDamage// should only be used on levels 
 
 {
     [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] UnityEngine.AI.NavMeshAgent agent;
 
     [Header("Stats")]
     [SerializeField] float health = 100;
