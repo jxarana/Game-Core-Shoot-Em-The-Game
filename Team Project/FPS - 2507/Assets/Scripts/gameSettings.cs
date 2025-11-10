@@ -3,10 +3,10 @@ using UnityEngine;
 [CreateAssetMenu]
 public class gameSettings : ScriptableObject
 {
-    [Range(0, 1)] public float masterVol;
-    [Range(0, 1)] public float musicVol;
-    [Range(0, 1)] public float menuFeedBackVol;
-    [Range(0, 1)] public float effectVol;
+    [Range(0, 1)] public float masterVol = 1f;
+    [Range(0, 1)] public float musicVol = 1f;
+    [Range(0, 1)] public float menuFeedBackVol = 1f;
+    [Range(0, 1)] public float effectVol = 1f;
 
 
 

@@ -193,7 +193,7 @@ public class gameManager : MonoBehaviour
             menuBackground.SetActive(false);
             goldCount.text = playerScript.upgradeableStats.dollarBills.ToString();
         }
-
+        ApplyAudioSettings();
         music.Play();
 
         //playAudio(arenaClip, transform, 0.1f/*, false*/);
@@ -233,6 +233,8 @@ public class gameManager : MonoBehaviour
             float effectHolder = effectsVol.value * 100;
             float menuHolder = menuVol.value * 100;
 
+            music.volume = masterVol.value * musicVol.value;
+            menuFeedBack.volume = masterVol.value * menuVol.value;
 
             masterVolVal.text = masterHolder.ToString("F0");
             musicVolVal.text = musicHolder.ToString("F0");
@@ -421,46 +423,60 @@ public class gameManager : MonoBehaviour
         menuFeedBack.PlayOneShot(audio, volume);
     }
 
-    //public void playAudio(AudioClip clipAudio, Transform transform, float volume/*, bool loops*/)
-    //{
+    void ApplyAudioSettings()
+    {
+        float master = masterVol.value;
+        float musicLevel = musicVol.value;
+        float menuLevel = menuVol.value;
+        float effectsLevel = effectsVol.value;
 
-    //    if (!menuActive)
-    //    {
-    //        //if (loops == true)
-    //        //{
-    //        audioSource.clip = clipAudio;
+        music.volume = master * musicLevel;
+        menuFeedBack.volume = master * menuLevel;
 
-    //        // assigning the volume
-    //        audioSource.volume = volume;
+        audioLevels.masterVol = master;
+        audioLevels.musicVol = musicLevel;
+        audioLevels.menuFeedBackVol = menuLevel;
+        audioLevels.effectVol = effectsLevel;
+    }
 
-    //        //audioSource.loop = true;
+    public void OnMasterVolumeChanged(float value)
+    {
+        audioLevels.masterVol = value;
+        ApplyAudioSettings();
+    }
 
-    //        // plays sound
-    //        audioSource.Play();
+    // Called when Music Volume slider changes
+    public void OnMusicVolumeChanged(float value)
+    {
+        audioLevels.musicVol = value;
+        ApplyAudioSettings();
+    }
 
-    //        //assigns length of audio
-    //        float clipDuration = audioSource.clip.length;
+    // Called when Menu Volume slider changes
+    public void OnMenuVolumeChanged(float value)
+    {
+        audioLevels.menuFeedBackVol = value;
+        ApplyAudioSettings();
+    }
 
-    //        Destroy(gameObject, clipDuration);
-    //        //}
+    // Called when Effects Volume slider changes
+    public void OnEffectsVolumeChanged(float value)
+    {
+        audioLevels.effectVol = value;
+        ApplyAudioSettings();
+    }
 
-    //        //else if (loops == false)
-    //        //{
-    //        //    audioSource.clip = clipAudio;
+    public void LoadAudioSettings()
+    {
+        // Load slider values from ScriptableObject
+        masterVol.value = audioLevels.masterVol;
+        musicVol.value = audioLevels.musicVol;
+        menuVol.value = audioLevels.menuFeedBackVol;
+        effectsVol.value = audioLevels.effectVol;
 
-    //        //    // assigning the volume
-    //        //    audioSource.volume = volume;
+        ApplyAudioSettings();
+    }
 
-    //        //    audioSource.loop = loops;
-
-    //        //    // plays sound
-    //        //    audioSource.Play();
-
-    //        //    // assigns length of audio
-    //        //    float clipDuration = audioSource.clip.length;
-    //        //}
-    //    }
-    //}
     public void LogMenuStack()
     {
         Debug.Log("=== MENU STACK CONTENTS ===");
