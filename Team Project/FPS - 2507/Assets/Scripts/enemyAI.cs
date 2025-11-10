@@ -1,11 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:29199043878549a88fad31dae507945e8ee188df29a5924e71290e6c48f58953
-size 5383
+
+using System.Collections;
+using UnityEngine;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] UnityEngine.AI.NavMeshAgent agent;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] Animator anim;
@@ -94,8 +94,8 @@ public class enemyAI : MonoBehaviour, IDamage
         Vector3 ranPos = Random.insideUnitSphere * roamDist;
         ranPos += startingPos;
 
-        NavMeshHit hit;
-        NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
+        UnityEngine.AI.NavMeshHit hit;
+        UnityEngine.AI.NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
         agent.SetDestination(hit.position);
     }
 
